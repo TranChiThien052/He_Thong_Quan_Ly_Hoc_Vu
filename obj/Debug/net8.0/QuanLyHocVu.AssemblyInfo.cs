@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QuanLyHocVu")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e24d9c545f21434a03834a04a6464a45f8cd423d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7357d89376d066119c6a623179b4742b7e42d1e5")]
 [assembly: System.Reflection.AssemblyProductAttribute("QuanLyHocVu")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QuanLyHocVu")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
