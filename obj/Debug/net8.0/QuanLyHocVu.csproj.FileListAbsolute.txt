@@ -28,3 +28,4 @@ C:\Users\Lenovo\OneDrive\Desktop\ThucTapChuyenNganh\QuanLyHocVu\obj\Debug\net8.0
 C:\Users\Lenovo\OneDrive\Desktop\ThucTapChuyenNganh\QuanLyHocVu\obj\Debug\net8.0\QuanLyHocVu.pdb
 C:\Users\Lenovo\OneDrive\Desktop\ThucTapChuyenNganh\QuanLyHocVu\obj\Debug\net8.0\QuanLyHocVu.genruntimeconfig.cache
 C:\Users\Lenovo\OneDrive\Desktop\ThucTapChuyenNganh\QuanLyHocVu\obj\Debug\net8.0\ref\QuanLyHocVu.dll
+C:\Users\Lenovo\OneDrive\Desktop\ThucTapChuyenNganh\QuanLyHocVu\obj\Debug\net8.0\QuanLyHocVu.sourcelink.json

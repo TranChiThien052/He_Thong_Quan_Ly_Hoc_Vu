@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\ThucTapChuyenNganh\\QuanLyHocVu\\QuanLyHocVu.csproj": {}
+    "c:\\Users\\Lenovo\\OneDrive\\Desktop\\ThucTapChuyenNganh\\QuanLyHocVu\\QuanLyHocVu.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\ThucTapChuyenNganh\\QuanLyHocVu\\QuanLyHocVu.csproj": {
+    "c:\\Users\\Lenovo\\OneDrive\\Desktop\\ThucTapChuyenNganh\\QuanLyHocVu\\QuanLyHocVu.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lenovo\\OneDrive\\Desktop\\ThucTapChuyenNganh\\QuanLyHocVu\\QuanLyHocVu.csproj",
+        "projectUniqueName": "c:\\Users\\Lenovo\\OneDrive\\Desktop\\ThucTapChuyenNganh\\QuanLyHocVu\\QuanLyHocVu.csproj",
         "projectName": "QuanLyHocVu",
-        "projectPath": "C:\\Users\\Lenovo\\OneDrive\\Desktop\\ThucTapChuyenNganh\\QuanLyHocVu\\QuanLyHocVu.csproj",
+        "projectPath": "c:\\Users\\Lenovo\\OneDrive\\Desktop\\ThucTapChuyenNganh\\QuanLyHocVu\\QuanLyHocVu.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lenovo\\OneDrive\\Desktop\\ThucTapChuyenNganh\\QuanLyHocVu\\obj\\",
+        "outputPath": "c:\\Users\\Lenovo\\OneDrive\\Desktop\\ThucTapChuyenNganh\\QuanLyHocVu\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config"
