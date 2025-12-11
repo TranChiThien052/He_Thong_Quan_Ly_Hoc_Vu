@@ -1,0 +1,91 @@
+@{
+    ViewData["Title"] = "Quản lý";
+}
+
+
+
+<header class="topbar">
+    <h1>Quản lý sinh viên</h1>
+</header>
+
+<!-- Table -->
+<section class="card" id="list-section">
+    <div class="card-header"><h2>Danh sách sinh viên</h2></div>
+    <div class="table-wrap">
+        <table class="table" id="student-table">
+            <thead>
+                <tr>
+                    <th>Số thứ tự</th>
+                    <th>Mã sinh viên</th>
+                    <th>Tên sinh viên</th>
+                    <th>Trạng thái học</th>
+                    <th>Mã ngành</th>
+                    <th>Niên khóa</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>DH5220xxx</td>
+                    <td>Nguyễn Thị B</td>
+                    <td>Đang học</td>
+                    <td>TH</td>
+                    <td>2023-2027</td>
+                    <td><button class="btn btn-small edit-btn">Sửa</button></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>DH5220xxx</td>
+                    <td>Đặng Văn C</td>
+                    <td>Đang học</td>
+                    <td>QT</td>
+                    <td>2022-2026</td>
+                    <td><button class="btn btn-small edit-btn">Sửa</button></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>DH5200xxx</td>
+                    <td>Hồ Văn D</td>
+                    <td>Tốt nghiệp</td>
+                    <td>QT</td>
+                    <td>2020-2024</td>
+                    <td><button class="btn btn-small edit-btn">Sửa</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- Edit Form -->
+<section class="card" id="edit-form" style="display:none;">
+    <div class="card-header"><h2>Chỉnh sửa thông tin sinh viên</h2></div>
+    <form class="form">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="student-id">Mã số sinh viên</label>
+                <input type="text" id="student-id" />
+            </div>
+            <div class="form-group">
+                <label for="student-name">Họ và tên</label>
+                <input type="text" id="student-name" />
+            </div>
+            <div class="form-group">
+                <label for="status">Trạng thái học</label>
+                <input type="text" id="status" />
+            </div>
+            <div class="form-group">
+                <label for="major">Mã ngành</label>
+                <input type="text" id="major" />
+            </div>
+            <div class="form-group">
+                <label for="course">Niên khóa</label>
+                <input type="text" id="course" />
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="button" class="btn" id="cancel-btn">Hủy</button>
+            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+        </div>
+    </form>
+</section>
