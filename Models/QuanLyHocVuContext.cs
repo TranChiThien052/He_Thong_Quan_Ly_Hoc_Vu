@@ -1,0 +1,407 @@
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+
+namespace QuanLyHocVu.Models;
+
+public partial class QuanLyHocVuContext : DbContext
+{
+    public QuanLyHocVuContext()
+    {
+    }
+
+    public QuanLyHocVuContext(DbContextOptions<QuanLyHocVuContext> options)
+        : base(options)
+    {
+    }
+
+    public virtual DbSet<CanBo> CanBos { get; set; }
+
+    public virtual DbSet<ChuongTrinhDaoTao> ChuongTrinhDaoTaos { get; set; }
+
+    public virtual DbSet<DangKyHocPhan> DangKyHocPhans { get; set; }
+
+    public virtual DbSet<DiemCongTacXaHoi> DiemCongTacXaHois { get; set; }
+
+    public virtual DbSet<DiemRenLuyen> DiemRenLuyens { get; set; }
+
+    public virtual DbSet<GiangVien> GiangViens { get; set; }
+
+    public virtual DbSet<HoatDongCtxh> HoatDongCtxhs { get; set; }
+
+    public virtual DbSet<HocKy> HocKies { get; set; }
+
+    public virtual DbSet<HocPhi> HocPhis { get; set; }
+
+    public virtual DbSet<Khoa> Khoas { get; set; }
+
+    public virtual DbSet<LopHocPhan> LopHocPhans { get; set; }
+
+    public virtual DbSet<MonHoc> MonHocs { get; set; }
+
+    public virtual DbSet<Nganh> Nganhs { get; set; }
+
+    public virtual DbSet<NguoiDung> NguoiDungs { get; set; }
+
+    public virtual DbSet<PhongHoc> PhongHocs { get; set; }
+
+    public virtual DbSet<SinhVien> SinhViens { get; set; }
+
+    public virtual DbSet<SinhVienHoatDongCtxh> SinhVienHoatDongCtxhs { get; set; }
+
+    public virtual DbSet<TaiKhoan> TaiKhoans { get; set; }
+
+    public virtual DbSet<VTongDiemCtxh> VTongDiemCtxhs { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=localhost;Database=QuanLyHocVu;Trusted_Connection=True;TrustServerCertificate=True");
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<CanBo>(entity =>
+        {
+            entity.HasKey(e => e.MaNguoiDung).HasName("PK__CanBo__C539D762853468B8");
+
+            entity.ToTable("CanBo");
+
+            entity.Property(e => e.MaNguoiDung).HasMaxLength(10);
+            entity.Property(e => e.TinhTrangCongTac).HasMaxLength(50);
+
+            entity.HasOne(d => d.MaNguoiDungNavigation).WithOne(p => p.CanBo)
+                .HasForeignKey<CanBo>(d => d.MaNguoiDung)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__CanBo__MaNguoiDu__4F7CD00D");
+        });
+
+        modelBuilder.Entity<ChuongTrinhDaoTao>(entity =>
+        {
+            entity.HasKey(e => e.MaCtdt).HasName("PK__ChuongTr__1E4E40E44E000967");
+
+            entity.ToTable("ChuongTrinhDaoTao");
+
+            entity.HasIndex(e => e.MaNganh, "UQ__ChuongTr__A2CEF50C3B68DCA1").IsUnique();
+
+            entity.Property(e => e.MaCtdt)
+                .HasMaxLength(10)
+                .HasColumnName("MaCTDT");
+            entity.Property(e => e.MaNganh).HasMaxLength(10);
+            entity.Property(e => e.TenCtdt)
+                .HasMaxLength(100)
+                .HasColumnName("TenCTDT");
+
+            entity.HasOne(d => d.MaNganhNavigation).WithOne(p => p.ChuongTrinhDaoTao)
+                .HasForeignKey<ChuongTrinhDaoTao>(d => d.MaNganh)
+                .HasConstraintName("FK__ChuongTri__MaNga__403A8C7D");
+        });
+
+        modelBuilder.Entity<DangKyHocPhan>(entity =>
+        {
+            entity.HasKey(e => new { e.MaSinhVien, e.MaLopHocPhan }).HasName("PK__DangKyHo__1BBF66B85BAAA26B");
+
+            entity.ToTable("DangKyHocPhan");
+
+            entity.Property(e => e.MaSinhVien).HasMaxLength(10);
+            entity.Property(e => e.MaLopHocPhan).HasMaxLength(10);
+            entity.Property(e => e.TrangThai).HasMaxLength(20);
+
+            entity.HasOne(d => d.MaLopHocPhanNavigation).WithMany(p => p.DangKyHocPhans)
+                .HasForeignKey(d => d.MaLopHocPhan)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__DangKyHoc__MaLop__628FA481");
+
+            entity.HasOne(d => d.MaSinhVienNavigation).WithMany(p => p.DangKyHocPhans)
+                .HasForeignKey(d => d.MaSinhVien)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__DangKyHoc__MaSin__619B8048");
+        });
+
+        modelBuilder.Entity<DiemCongTacXaHoi>(entity =>
+        {
+            entity.HasKey(e => e.MaSinhVien).HasName("PK__DiemCong__939AE775E1723318");
+
+            entity.ToTable("DiemCongTacXaHoi");
+
+            entity.Property(e => e.MaSinhVien).HasMaxLength(10);
+            entity.Property(e => e.GhiChu).HasMaxLength(200);
+
+            entity.HasOne(d => d.MaSinhVienNavigation).WithOne(p => p.DiemCongTacXaHoi)
+                .HasForeignKey<DiemCongTacXaHoi>(d => d.MaSinhVien)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__DiemCongT__MaSin__797309D9");
+        });
+
+        modelBuilder.Entity<DiemRenLuyen>(entity =>
+        {
+            entity.HasKey(e => new { e.MaSinhVien, e.MaHocKy }).HasName("PK__DiemRenL__8271B264F00AD658");
+
+            entity.ToTable("DiemRenLuyen");
+
+            entity.Property(e => e.MaSinhVien).HasMaxLength(10);
+            entity.Property(e => e.MaHocKy).HasMaxLength(10);
+            entity.Property(e => e.GhiChu).HasMaxLength(200);
+            entity.Property(e => e.XepLoai).HasMaxLength(20);
+
+            entity.HasOne(d => d.MaHocKyNavigation).WithMany(p => p.DiemRenLuyens)
+                .HasForeignKey(d => d.MaHocKy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__DiemRenLu__MaHoc__70DDC3D8");
+
+            entity.HasOne(d => d.MaSinhVienNavigation).WithMany(p => p.DiemRenLuyens)
+                .HasForeignKey(d => d.MaSinhVien)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__DiemRenLu__MaSin__6FE99F9F");
+        });
+
+        modelBuilder.Entity<GiangVien>(entity =>
+        {
+            entity.HasKey(e => e.MaNguoiDung).HasName("PK__GiangVie__C539D762B2C910A5");
+
+            entity.ToTable("GiangVien");
+
+            entity.Property(e => e.MaNguoiDung).HasMaxLength(10);
+            entity.Property(e => e.ChuyenMon).HasMaxLength(100);
+            entity.Property(e => e.MaKhoa).HasMaxLength(10);
+            entity.Property(e => e.TinhTrangCongTac).HasMaxLength(50);
+
+            entity.HasOne(d => d.MaKhoaNavigation).WithMany(p => p.GiangViens)
+                .HasForeignKey(d => d.MaKhoa)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__GiangVien__MaKho__4CA06362");
+
+            entity.HasOne(d => d.MaNguoiDungNavigation).WithOne(p => p.GiangVien)
+                .HasForeignKey<GiangVien>(d => d.MaNguoiDung)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__GiangVien__MaNgu__4BAC3F29");
+        });
+
+        modelBuilder.Entity<HoatDongCtxh>(entity =>
+        {
+            entity.HasKey(e => e.MaHoatDong).HasName("PK__HoatDong__BD808BE705646F0D");
+
+            entity.ToTable("HoatDongCTXH");
+
+            entity.Property(e => e.MaHoatDong).HasMaxLength(10);
+            entity.Property(e => e.GhiChu).HasMaxLength(200);
+            entity.Property(e => e.TenHoatDong).HasMaxLength(200);
+        });
+
+        modelBuilder.Entity<HocKy>(entity =>
+        {
+            entity.HasKey(e => e.MaHocKy).HasName("PK__HocKy__1EB55110DB90B806");
+
+            entity.ToTable("HocKy");
+
+            entity.HasIndex(e => new { e.NamHoc, e.HocKySo }, "UQ_HocKy").IsUnique();
+
+            entity.Property(e => e.MaHocKy).HasMaxLength(10);
+            entity.Property(e => e.NamHoc).HasMaxLength(20);
+        });
+
+        modelBuilder.Entity<HocPhi>(entity =>
+        {
+            entity.HasKey(e => e.MaHocPhi).HasName("PK__HocPhi__929232A2C5A48D72");
+
+            entity.ToTable("HocPhi");
+
+            entity.Property(e => e.MaHocPhi).HasMaxLength(10);
+            entity.Property(e => e.GiaTheoTin).HasColumnType("decimal(10, 2)");
+        });
+
+        modelBuilder.Entity<Khoa>(entity =>
+        {
+            entity.HasKey(e => e.MaKhoa).HasName("PK__Khoa__6539040518C9B122");
+
+            entity.ToTable("Khoa");
+
+            entity.Property(e => e.MaKhoa).HasMaxLength(10);
+            entity.Property(e => e.TenKhoa).HasMaxLength(100);
+
+            entity.HasMany(d => d.MaNganhs).WithMany(p => p.MaKhoas)
+                .UsingEntity<Dictionary<string, object>>(
+                    "KhoaNganh",
+                    r => r.HasOne<Nganh>().WithMany()
+                        .HasForeignKey("MaNganh")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__Khoa_Ngan__MaNga__571DF1D5"),
+                    l => l.HasOne<Khoa>().WithMany()
+                        .HasForeignKey("MaKhoa")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__Khoa_Ngan__MaKho__5629CD9C"),
+                    j =>
+                    {
+                        j.HasKey("MaKhoa", "MaNganh").HasName("PK__Khoa_Nga__AF15EB55B424169C");
+                        j.ToTable("Khoa_Nganh");
+                        j.IndexerProperty<string>("MaKhoa").HasMaxLength(10);
+                        j.IndexerProperty<string>("MaNganh").HasMaxLength(10);
+                    });
+        });
+
+        modelBuilder.Entity<LopHocPhan>(entity =>
+        {
+            entity.HasKey(e => e.MaLopHocPhan).HasName("PK__LopHocPh__82581CD9760E06F3");
+
+            entity.ToTable("LopHocPhan");
+
+            entity.Property(e => e.MaLopHocPhan).HasMaxLength(10);
+            entity.Property(e => e.MaGiangVien).HasMaxLength(10);
+            entity.Property(e => e.MaHocKy).HasMaxLength(10);
+            entity.Property(e => e.MaMonHoc).HasMaxLength(10);
+            entity.Property(e => e.PhongHoc).HasMaxLength(10);
+
+            entity.HasOne(d => d.MaGiangVienNavigation).WithMany(p => p.LopHocPhans)
+                .HasForeignKey(d => d.MaGiangVien)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__LopHocPha__MaGia__5DCAEF64");
+
+            entity.HasOne(d => d.MaHocKyNavigation).WithMany(p => p.LopHocPhans)
+                .HasForeignKey(d => d.MaHocKy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__LopHocPha__MaHoc__5EBF139D");
+
+            entity.HasOne(d => d.MaMonHocNavigation).WithMany(p => p.LopHocPhans)
+                .HasForeignKey(d => d.MaMonHoc)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__LopHocPha__MaMon__5CD6CB2B");
+
+            entity.HasOne(d => d.PhongHocNavigation).WithMany(p => p.LopHocPhans)
+                .HasForeignKey(d => d.PhongHoc)
+                .HasConstraintName("FK__LopHocPha__Phong__7E37BEF6");
+        });
+
+        modelBuilder.Entity<MonHoc>(entity =>
+        {
+            entity.HasKey(e => e.MaMonHoc).HasName("PK__MonHoc__4127737F4C7C7279");
+
+            entity.ToTable("MonHoc");
+
+            entity.Property(e => e.MaMonHoc).HasMaxLength(10);
+            entity.Property(e => e.LoaiMon).HasMaxLength(50);
+            entity.Property(e => e.MaHocPhi).HasMaxLength(10);
+            entity.Property(e => e.TenMonHoc).HasMaxLength(100);
+
+            entity.HasOne(d => d.MaHocPhiNavigation).WithMany(p => p.MonHocs)
+                .HasForeignKey(d => d.MaHocPhi)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__MonHoc__MaHocPhi__44FF419A");
+        });
+
+        modelBuilder.Entity<Nganh>(entity =>
+        {
+            entity.HasKey(e => e.MaNganh).HasName("PK__Nganh__A2CEF50D0800C777");
+
+            entity.ToTable("Nganh");
+
+            entity.Property(e => e.MaNganh).HasMaxLength(10);
+            entity.Property(e => e.TenNganh).HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<NguoiDung>(entity =>
+        {
+            entity.HasKey(e => e.MaNguoiDung).HasName("PK__NguoiDun__C539D76269338DAE");
+
+            entity.ToTable("NguoiDung");
+
+            entity.HasIndex(e => e.Cccd, "UQ__NguoiDun__A955A0AA6815457B").IsUnique();
+
+            entity.HasIndex(e => e.Email, "UQ__NguoiDun__A9D105340F98FDDF").IsUnique();
+
+            entity.Property(e => e.MaNguoiDung).HasMaxLength(10);
+            entity.Property(e => e.Cccd)
+                .HasMaxLength(20)
+                .HasColumnName("CCCD");
+            entity.Property(e => e.DiaChiTamTru).HasMaxLength(200);
+            entity.Property(e => e.DiaChiThuongTru).HasMaxLength(200);
+            entity.Property(e => e.Email).HasMaxLength(100);
+            entity.Property(e => e.HoTen).HasMaxLength(100);
+            entity.Property(e => e.QueQuan).HasMaxLength(100);
+            entity.Property(e => e.SoDienThoai).HasMaxLength(20);
+        });
+
+        modelBuilder.Entity<PhongHoc>(entity =>
+        {
+            entity.HasKey(e => e.MaPhong).HasName("PK__PhongHoc__20BD5E5BD4EAFBF3");
+
+            entity.ToTable("PhongHoc");
+
+            entity.Property(e => e.MaPhong).HasMaxLength(10);
+            entity.Property(e => e.Khu).HasMaxLength(50);
+            entity.Property(e => e.LoaiPhong).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<SinhVien>(entity =>
+        {
+            entity.HasKey(e => e.MaNguoiDung).HasName("PK__SinhVien__C539D76299B9EFBD");
+
+            entity.ToTable("SinhVien");
+
+            entity.Property(e => e.MaNguoiDung).HasMaxLength(10);
+            entity.Property(e => e.MaNganh).HasMaxLength(10);
+            entity.Property(e => e.NienKhoa).HasMaxLength(20);
+            entity.Property(e => e.TinhTrangHoc).HasMaxLength(50);
+
+            entity.HasOne(d => d.MaNganhNavigation).WithMany(p => p.SinhViens)
+                .HasForeignKey(d => d.MaNganh)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__SinhVien__MaNgan__48CFD27E");
+
+            entity.HasOne(d => d.MaNguoiDungNavigation).WithOne(p => p.SinhVien)
+                .HasForeignKey<SinhVien>(d => d.MaNguoiDung)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__SinhVien__MaNguo__47DBAE45");
+        });
+
+        modelBuilder.Entity<SinhVienHoatDongCtxh>(entity =>
+        {
+            entity.HasKey(e => new { e.MaSinhVien, e.MaHoatDong }).HasName("PK__SinhVien__F842EFCBFCAD311B");
+
+            entity.ToTable("SinhVien_HoatDongCTXH");
+
+            entity.Property(e => e.MaSinhVien).HasMaxLength(10);
+            entity.Property(e => e.MaHoatDong).HasMaxLength(10);
+            entity.Property(e => e.GhiChu).HasMaxLength(200);
+
+            entity.HasOne(d => d.MaHoatDongNavigation).WithMany(p => p.SinhVienHoatDongCtxhs)
+                .HasForeignKey(d => d.MaHoatDong)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__SinhVien___MaHoa__76969D2E");
+
+            entity.HasOne(d => d.MaSinhVienNavigation).WithMany(p => p.SinhVienHoatDongCtxhs)
+                .HasForeignKey(d => d.MaSinhVien)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__SinhVien___MaSin__75A278F5");
+        });
+
+        modelBuilder.Entity<TaiKhoan>(entity =>
+        {
+            entity.HasKey(e => e.MaNguoiDung).HasName("PK__TaiKhoan__C539D76297452ADA");
+
+            entity.ToTable("TaiKhoan");
+
+            entity.HasIndex(e => e.TenDangNhap, "UQ__TaiKhoan__55F68FC0E598A387").IsUnique();
+
+            entity.Property(e => e.MaNguoiDung).HasMaxLength(10);
+            entity.Property(e => e.MatKhau).HasMaxLength(200);
+            entity.Property(e => e.TenDangNhap).HasMaxLength(50);
+            entity.Property(e => e.TrangThai).HasMaxLength(20);
+
+            entity.HasOne(d => d.MaNguoiDungNavigation).WithOne(p => p.TaiKhoan)
+                .HasForeignKey<TaiKhoan>(d => d.MaNguoiDung)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__TaiKhoan__MaNguo__534D60F1");
+        });
+
+        modelBuilder.Entity<VTongDiemCtxh>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("v_TongDiemCTXH");
+
+            entity.Property(e => e.MaSinhVien).HasMaxLength(10);
+        });
+
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+}
