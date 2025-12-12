@@ -19,5 +19,10 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
             var data = _service.GetAll();
             return View(data);
         }
+
+        public IActionResult Delete(string id){
+            _service.Delete(id);
+            return RedirectToAction("Index");
+        }
     }
 }
