@@ -1,14 +1,11 @@
 @model IEnumerable<QuanLyHocVu.Models.LopHocPhan>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Danh sách Lớp Học Phần";
 }
 
-<h1>Index</h1>
+<h1>Danh sách Lớp Học Phần</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -49,21 +46,19 @@
                 @Html.DisplayFor(modelItem => item.NgayKetThuc)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MaGiangVienNavigation.MaNguoiDung)
+                @Html.DisplayFor(modelItem => item.MaGiangVienNavigation.HoTen)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MaHocKyNavigation.MaHocKy)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MaMonHocNavigation.MaMonHoc)
+                @Html.DisplayFor(modelItem => item.MaMonHocNavigation.TenMonHoc)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PhongHocNavigation.MaPhong)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.MaLopHocPhan">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaLopHocPhan">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaLopHocPhan">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.MaLopHocPhan">Details</a>
             </td>
         </tr>
 }

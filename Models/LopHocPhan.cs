@@ -13,11 +13,11 @@ public partial class LopHocPhan
 
     public string MaHocKy { get; set; } = null!;
 
-    public DateOnly? NgayHoc { get; set; }
+    public string CaHoc { get; set; }
 
-    public TimeOnly? GioBatDau { get; set; }
+    public DateOnly? NgayBatDau { get; set; }
 
-    public TimeOnly? GioKetThuc { get; set; }
+    public DateOnly? NgayKetThuc { get; set; }
 
     public string? PhongHoc { get; set; }
 
