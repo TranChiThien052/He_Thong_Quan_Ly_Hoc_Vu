@@ -1,0 +1,48 @@
+@model QuanLyHocVu.Models.PhongHoc
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>PhongHoc</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MaPhong" class="control-label"></label>
+                <input asp-for="MaPhong" class="form-control" />
+                <span asp-validation-for="MaPhong" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tang" class="control-label"></label>
+                <input asp-for="Tang" class="form-control" />
+                <span asp-validation-for="Tang" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Khu" class="control-label"></label>
+                <input asp-for="Khu" class="form-control" />
+                <span asp-validation-for="Khu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LoaiPhong" class="control-label"></label>
+                <input asp-for="LoaiPhong" class="form-control" />
+                <span asp-validation-for="LoaiPhong" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
