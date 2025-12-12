@@ -1,0 +1,41 @@
+@model IEnumerable<QuanLyHocVu.Models.CanBo>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TinhTrangCongTac)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaNguoiDungNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TinhTrangCongTac)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaNguoiDungNavigation.MaNguoiDung)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MaNguoiDung">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MaNguoiDung">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MaNguoiDung">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

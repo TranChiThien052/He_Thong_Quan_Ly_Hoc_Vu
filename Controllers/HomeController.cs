@@ -2,7 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using QuanLyHocVu.Models;
 
-namespace MvcMovies.Controllers;
+namespace QuanLyHocVu.Controllers;
 
 public class HomeController : Controller
 {
