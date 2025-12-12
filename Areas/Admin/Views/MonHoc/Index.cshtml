@@ -2,34 +2,41 @@
 
 @{
     ViewData["Title"] = "Quản lý Môn học (Admin)";
-    // Layout = "~/Views/Shared/_Layout.cshtml"; // Dùng layout chính tạm thời
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Dùng layout chính tạm thời
 }
 
-<h2>Hệ thống Quản trị - Danh sách Môn học</h2>
-<p>
-    <a href="#" class="btn btn-primary">Thêm mới Môn học</a>
-</p>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Mã MH</th>
-            <th>Tên Môn Học</th>
-            <th>Số Tín Chỉ</th>
-            <th>Thao tác</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.MaMonHoc</td>
-                <td>@item.TenMonHoc</td>
-                <td>@item.SoTinChi</td>
-                <td>
-                    <a href="#">Sửa</a> | <a href="#">Xóa</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<header class="topbar">
+        <h1>Quản lý môn học</h1>
+        <div class="actions">
+          <input type="text" placeholder="Tìm kiếm môn học..." class="search-input" />
+          <button class="btn btn-primary">+ Thêm môn học</button>
+        </div>
+      </header>
+
+      <!-- Table -->
+      <section class="card">
+        <div class="card-header"><h2>Danh sách môn học</h2></div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Mã môn học</th>
+                <th>Tên môn học</th>
+                <th>Số tín chỉ</th>
+                <th>Loại môn</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.MaMonHoc</td><td>@item.TenMonHoc</td><td>@item.SoTinChi</td><td>@item.LoaiMon</td>
+                    <td><button class="btn btn-small">Sửa</button><button class="btn btn-small btn-danger">Xóa</button></td>
+                </tr>
+            }
+            </tbody>
+          </table>
+        </div>
+      </section>

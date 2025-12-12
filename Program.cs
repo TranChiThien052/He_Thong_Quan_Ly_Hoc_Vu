@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
@@ -7,16 +8,16 @@ builder.Services.AddDbContext<QuanLyHocVu.Models.QuanLyHocVuContext>(options =>
 
 // Đăng ký Service vào Container
 builder.Services.AddScoped<QuanLyHocVu.Services.IMonHocService, QuanLyHocVu.Services.MonHocService>();
-builder.Services.AddScoped<QuanLyHocVu.Services.ISinhVienService, QuanLyHocVu.Services.SinhVienService>();
-builder.Services.AddScoped<QuanLyHocVu.Services.IGiangVienService, QuanLyHocVu.Services.GiangVienService>();
-builder.Services.AddScoped<QuanLyHocVu.Services.ILopHocPhanService, QuanLyHocVu.Services.LopHocPhanService>();
-builder.Services.AddScoped<QuanLyHocVu.Services.IDangKyHocPhanService, QuanLyHocVu.Services.DangKyHocPhanService>();
-builder.Services.AddScoped<QuanLyHocVu.Services.IKhoaService, QuanLyHocVu.Services.KhoaService>();
-builder.Services.AddScoped<QuanLyHocVu.Services.INganhService, QuanLyHocVu.Services.NganhService>();
-builder.Services.AddScoped<QuanLyHocVu.Services.IHocKyService, QuanLyHocVu.Services.HocKyService>();
-builder.Services.AddScoped<QuanLyHocVu.Services.IPhongHocService, QuanLyHocVu.Services.PhongHocService>();
-builder.Services.AddScoped<QuanLyHocVu.Services.IChuongTrinhDaoTaoService, QuanLyHocVu.Services.ChuongTrinhDaoTaoService>();
-builder.Services.AddScoped<QuanLyHocVu.Services.IHocPhiService, QuanLyHocVu.Services.HocPhiService>();
+// builder.Services.AddScoped<QuanLyHocVu.Services.ISinhVienService, QuanLyHocVu.Services.SinhVienService>();
+// builder.Services.AddScoped<QuanLyHocVu.Services.IGiangVienService, QuanLyHocVu.Services.GiangVienService>();
+// builder.Services.AddScoped<QuanLyHocVu.Services.ILopHocPhanService, QuanLyHocVu.Services.LopHocPhanService>();
+// builder.Services.AddScoped<QuanLyHocVu.Services.IDangKyHocPhanService, QuanLyHocVu.Services.DangKyHocPhanService>();
+// builder.Services.AddScoped<QuanLyHocVu.Services.IKhoaService, QuanLyHocVu.Services.KhoaService>();
+// builder.Services.AddScoped<QuanLyHocVu.Services.INganhService, QuanLyHocVu.Services.NganhService>();
+// builder.Services.AddScoped<QuanLyHocVu.Services.IHocKyService, QuanLyHocVu.Services.HocKyService>();
+// builder.Services.AddScoped<QuanLyHocVu.Services.IPhongHocService, QuanLyHocVu.Services.PhongHocService>();
+// builder.Services.AddScoped<QuanLyHocVu.Services.IChuongTrinhDaoTaoService, QuanLyHocVu.Services.ChuongTrinhDaoTaoService>();
+// builder.Services.AddScoped<QuanLyHocVu.Services.IHocPhiService, QuanLyHocVu.Services.HocPhiService>();
 
 // Thêm Authentication Service
 builder.Services.AddAuthentication(Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme)
