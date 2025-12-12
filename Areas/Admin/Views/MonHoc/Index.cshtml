@@ -33,7 +33,10 @@
             {
                 <tr>
                     <td>@item.MaMonHoc</td><td>@item.TenMonHoc</td><td>@item.SoTinChi</td><td>@item.LoaiMon</td>
-                    <td><button class="btn btn-small">Sửa</button><button class="btn btn-small btn-danger">Xóa</button></td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.MaMonHoc" class="btn btn-small">Sửa</a>
+                        <a asp-action="Delete" asp-route-id="@item.MaMonHoc" class="btn btn-small btn-danger">Xóa</a>
+                    </td>
                 </tr>
             }
             </tbody>
