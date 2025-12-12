@@ -1,0 +1,35 @@
+@model IEnumerable<QuanLyHocVu.Models.MonHoc>
+
+@{
+    ViewData["Title"] = "Quản lý Môn học (Admin)";
+    // Layout = "~/Views/Shared/_Layout.cshtml"; // Dùng layout chính tạm thời
+}
+
+<h2>Hệ thống Quản trị - Danh sách Môn học</h2>
+<p>
+    <a href="#" class="btn btn-primary">Thêm mới Môn học</a>
+</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Mã MH</th>
+            <th>Tên Môn Học</th>
+            <th>Số Tín Chỉ</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.MaMonHoc</td>
+                <td>@item.TenMonHoc</td>
+                <td>@item.SoTinChi</td>
+                <td>
+                    <a href="#">Sửa</a> | <a href="#">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -7657,19 +7657,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\gamin\\.nuget\\packages\\": {}
+    "C:\\Users\\Lenovo\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\doAn_QLHV\\He_Thong_Quan_Ly_Hoc_Vu\\QuanLyHocVu.csproj",
+      "projectUniqueName": "c:\\Users\\Lenovo\\OneDrive\\Desktop\\ThucTapChuyenNganh\\QuanLyHocVu\\QuanLyHocVu.csproj",
       "projectName": "QuanLyHocVu",
-      "projectPath": "D:\\doAn_QLHV\\He_Thong_Quan_Ly_Hoc_Vu\\QuanLyHocVu.csproj",
-      "packagesPath": "C:\\Users\\gamin\\.nuget\\packages\\",
-      "outputPath": "D:\\doAn_QLHV\\He_Thong_Quan_Ly_Hoc_Vu\\obj\\",
+      "projectPath": "c:\\Users\\Lenovo\\OneDrive\\Desktop\\ThucTapChuyenNganh\\QuanLyHocVu\\QuanLyHocVu.csproj",
+      "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
+      "outputPath": "c:\\Users\\Lenovo\\OneDrive\\Desktop\\ThucTapChuyenNganh\\QuanLyHocVu\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\gamin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"

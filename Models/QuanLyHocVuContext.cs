@@ -61,17 +61,9 @@ public partial class QuanLyHocVuContext : DbContext
     {
         modelBuilder.Entity<CanBo>(entity =>
         {
-            entity.HasKey(e => e.MaNguoiDung).HasName("PK__CanBo__C539D762853468B8");
-
             entity.ToTable("CanBo");
 
-            entity.Property(e => e.MaNguoiDung).HasMaxLength(10);
             entity.Property(e => e.TinhTrangCongTac).HasMaxLength(50);
-
-            entity.HasOne(d => d.MaNguoiDungNavigation).WithOne(p => p.CanBo)
-                .HasForeignKey<CanBo>(d => d.MaNguoiDung)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__CanBo__MaNguoiDu__4F7CD00D");
         });
 
         modelBuilder.Entity<ChuongTrinhDaoTao>(entity =>
@@ -155,11 +147,8 @@ public partial class QuanLyHocVuContext : DbContext
 
         modelBuilder.Entity<GiangVien>(entity =>
         {
-            entity.HasKey(e => e.MaNguoiDung).HasName("PK__GiangVie__C539D762B2C910A5");
-
             entity.ToTable("GiangVien");
 
-            entity.Property(e => e.MaNguoiDung).HasMaxLength(10);
             entity.Property(e => e.ChuyenMon).HasMaxLength(100);
             entity.Property(e => e.MaKhoa).HasMaxLength(10);
             entity.Property(e => e.TinhTrangCongTac).HasMaxLength(50);
@@ -168,11 +157,6 @@ public partial class QuanLyHocVuContext : DbContext
                 .HasForeignKey(d => d.MaKhoa)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__GiangVien__MaKho__4CA06362");
-
-            entity.HasOne(d => d.MaNguoiDungNavigation).WithOne(p => p.GiangVien)
-                .HasForeignKey<GiangVien>(d => d.MaNguoiDung)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__GiangVien__MaNgu__4BAC3F29");
         });
 
         modelBuilder.Entity<HoatDongCtxh>(entity =>
@@ -331,11 +315,8 @@ public partial class QuanLyHocVuContext : DbContext
 
         modelBuilder.Entity<SinhVien>(entity =>
         {
-            entity.HasKey(e => e.MaNguoiDung).HasName("PK__SinhVien__C539D76299B9EFBD");
-
             entity.ToTable("SinhVien");
 
-            entity.Property(e => e.MaNguoiDung).HasMaxLength(10);
             entity.Property(e => e.MaNganh).HasMaxLength(10);
             entity.Property(e => e.NienKhoa).HasMaxLength(20);
             entity.Property(e => e.TinhTrangHoc).HasMaxLength(50);
@@ -344,11 +325,6 @@ public partial class QuanLyHocVuContext : DbContext
                 .HasForeignKey(d => d.MaNganh)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__SinhVien__MaNgan__48CFD27E");
-
-            entity.HasOne(d => d.MaNguoiDungNavigation).WithOne(p => p.SinhVien)
-                .HasForeignKey<SinhVien>(d => d.MaNguoiDung)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__SinhVien__MaNguo__47DBAE45");
         });
 
         modelBuilder.Entity<SinhVienHoatDongCtxh>(entity =>

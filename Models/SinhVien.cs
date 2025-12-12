@@ -3,10 +3,8 @@ using System.Collections.Generic;
 
 namespace QuanLyHocVu.Models;
 
-public partial class SinhVien
+public partial class SinhVien : NguoiDung
 {
-    public string MaNguoiDung { get; set; } = null!;
-
     public string MaNganh { get; set; } = null!;
 
     public string? NienKhoa { get; set; }
@@ -20,8 +18,6 @@ public partial class SinhVien
     public virtual ICollection<DiemRenLuyen> DiemRenLuyens { get; set; } = new List<DiemRenLuyen>();
 
     public virtual Nganh MaNganhNavigation { get; set; } = null!;
-
-    public virtual NguoiDung MaNguoiDungNavigation { get; set; } = null!;
 
     public virtual ICollection<SinhVienHoatDongCtxh> SinhVienHoatDongCtxhs { get; set; } = new List<SinhVienHoatDongCtxh>();
 }

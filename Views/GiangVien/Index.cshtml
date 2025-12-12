@@ -22,7 +22,7 @@
                 @Html.DisplayNameFor(model => model.MaKhoaNavigation)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MaNguoiDungNavigation)
+                @Html.DisplayNameFor(model => model.HoTen)
             </th>
             <th></th>
         </tr>
@@ -37,10 +37,10 @@
                 @Html.DisplayFor(modelItem => item.TinhTrangCongTac)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MaKhoaNavigation.MaKhoa)
+                @Html.DisplayFor(modelItem => item.MaKhoaNavigation.TenKhoa)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MaNguoiDungNavigation.MaNguoiDung)
+                @Html.DisplayFor(modelItem => item.HoTen)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.MaNguoiDung">Edit</a> |

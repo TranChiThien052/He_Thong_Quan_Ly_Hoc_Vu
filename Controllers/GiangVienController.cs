@@ -21,7 +21,7 @@ namespace QuanLyHocVu.Controllers
         // GET: GiangVien
         public async Task<IActionResult> Index()
         {
-            var quanLyHocVuContext = _context.GiangViens.Include(g => g.MaKhoaNavigation).Include(g => g.MaNguoiDungNavigation);
+            var quanLyHocVuContext = _context.GiangViens.Include(g => g.MaKhoaNavigation);
             return View(await quanLyHocVuContext.ToListAsync());
         }
 
@@ -35,7 +35,6 @@ namespace QuanLyHocVu.Controllers
 
             var giangVien = await _context.GiangViens
                 .Include(g => g.MaKhoaNavigation)
-                .Include(g => g.MaNguoiDungNavigation)
                 .FirstOrDefaultAsync(m => m.MaNguoiDung == id);
             if (giangVien == null)
             {
@@ -49,7 +48,6 @@ namespace QuanLyHocVu.Controllers
         public IActionResult Create()
         {
             ViewData["MaKhoa"] = new SelectList(_context.Khoas, "MaKhoa", "MaKhoa");
-            ViewData["MaNguoiDung"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung");
             return View();
         }
 
@@ -58,7 +56,7 @@ namespace QuanLyHocVu.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaNguoiDung,ChuyenMon,MaKhoa,TinhTrangCongTac")] GiangVien giangVien)
+        public async Task<IActionResult> Create([Bind("MaNguoiDung,HoTen,ChuyenMon,MaKhoa,TinhTrangCongTac,Email,SoDienThoai")] GiangVien giangVien)
         {
             if (ModelState.IsValid)
             {
@@ -67,7 +65,6 @@ namespace QuanLyHocVu.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MaKhoa"] = new SelectList(_context.Khoas, "MaKhoa", "MaKhoa", giangVien.MaKhoa);
-            ViewData["MaNguoiDung"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", giangVien.MaNguoiDung);
             return View(giangVien);
         }
 
@@ -85,7 +82,6 @@ namespace QuanLyHocVu.Controllers
                 return NotFound();
             }
             ViewData["MaKhoa"] = new SelectList(_context.Khoas, "MaKhoa", "MaKhoa", giangVien.MaKhoa);
-            ViewData["MaNguoiDung"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", giangVien.MaNguoiDung);
             return View(giangVien);
         }
 
@@ -94,7 +90,7 @@ namespace QuanLyHocVu.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("MaNguoiDung,ChuyenMon,MaKhoa,TinhTrangCongTac")] GiangVien giangVien)
+        public async Task<IActionResult> Edit(string id, [Bind("MaNguoiDung,HoTen,ChuyenMon,MaKhoa,TinhTrangCongTac,Email,SoDienThoai")] GiangVien giangVien)
         {
             if (id != giangVien.MaNguoiDung)
             {
@@ -122,7 +118,6 @@ namespace QuanLyHocVu.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MaKhoa"] = new SelectList(_context.Khoas, "MaKhoa", "MaKhoa", giangVien.MaKhoa);
-            ViewData["MaNguoiDung"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", giangVien.MaNguoiDung);
             return View(giangVien);
         }
 
@@ -136,7 +131,6 @@ namespace QuanLyHocVu.Controllers
 
             var giangVien = await _context.GiangViens
                 .Include(g => g.MaKhoaNavigation)
-                .Include(g => g.MaNguoiDungNavigation)
                 .FirstOrDefaultAsync(m => m.MaNguoiDung == id);
             if (giangVien == null)
             {

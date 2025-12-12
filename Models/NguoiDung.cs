@@ -23,11 +23,5 @@ public partial class NguoiDung
 
     public string? DiaChiTamTru { get; set; }
 
-    public virtual CanBo? CanBo { get; set; }
-
-    public virtual GiangVien? GiangVien { get; set; }
-
-    public virtual SinhVien? SinhVien { get; set; }
-
     public virtual TaiKhoan? TaiKhoan { get; set; }
 }

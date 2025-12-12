@@ -21,7 +21,7 @@ namespace QuanLyHocVu.Controllers
         // GET: CanBo
         public async Task<IActionResult> Index()
         {
-            var quanLyHocVuContext = _context.CanBos.Include(c => c.MaNguoiDungNavigation);
+            var quanLyHocVuContext = _context.CanBos;
             return View(await quanLyHocVuContext.ToListAsync());
         }
 
@@ -34,7 +34,6 @@ namespace QuanLyHocVu.Controllers
             }
 
             var canBo = await _context.CanBos
-                .Include(c => c.MaNguoiDungNavigation)
                 .FirstOrDefaultAsync(m => m.MaNguoiDung == id);
             if (canBo == null)
             {
@@ -47,7 +46,6 @@ namespace QuanLyHocVu.Controllers
         // GET: CanBo/Create
         public IActionResult Create()
         {
-            ViewData["MaNguoiDung"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung");
             return View();
         }
 
@@ -56,7 +54,7 @@ namespace QuanLyHocVu.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaNguoiDung,TinhTrangCongTac")] CanBo canBo)
+        public async Task<IActionResult> Create([Bind("MaNguoiDung,HoTen,TinhTrangCongTac,Email,SoDienThoai")] CanBo canBo)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +62,6 @@ namespace QuanLyHocVu.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaNguoiDung"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", canBo.MaNguoiDung);
             return View(canBo);
         }
 
@@ -81,7 +78,6 @@ namespace QuanLyHocVu.Controllers
             {
                 return NotFound();
             }
-            ViewData["MaNguoiDung"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", canBo.MaNguoiDung);
             return View(canBo);
         }
 
@@ -90,7 +86,7 @@ namespace QuanLyHocVu.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("MaNguoiDung,TinhTrangCongTac")] CanBo canBo)
+        public async Task<IActionResult> Edit(string id, [Bind("MaNguoiDung,HoTen,TinhTrangCongTac,Email,SoDienThoai")] CanBo canBo)
         {
             if (id != canBo.MaNguoiDung)
             {
@@ -117,7 +113,6 @@ namespace QuanLyHocVu.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaNguoiDung"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", canBo.MaNguoiDung);
             return View(canBo);
         }
 
@@ -130,7 +125,6 @@ namespace QuanLyHocVu.Controllers
             }
 
             var canBo = await _context.CanBos
-                .Include(c => c.MaNguoiDungNavigation)
                 .FirstOrDefaultAsync(m => m.MaNguoiDung == id);
             if (canBo == null)
             {

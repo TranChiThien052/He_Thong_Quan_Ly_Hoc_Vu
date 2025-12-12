@@ -1,0 +1,31 @@
+@model IEnumerable<QuanLyHocVu.Models.MonHoc>
+
+@{
+    ViewData["Title"] = "Môn học của tôi";
+    // Layout = "~/Views/Shared/_Layout.cshtml"; 
+}
+
+<h2>Cổng thông tin Sinh viên - Môn học</h2>
+
+<div class="alert alert-info">
+    Danh sách các môn học thuộc chương trình đào tạo của bạn.
+</div>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@item.TenMonHoc</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@item.MaMonHoc</h6>
+                    <p class="card-text">
+                        Số tín chỉ: <strong>@item.SoTinChi</strong><br/>
+                        Loại môn: @item.LoaiMon
+                    </p>
+                    <a href="#" class="card-link">Xem đề cương</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

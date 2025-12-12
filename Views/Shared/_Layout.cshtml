@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@ViewData["Title"] - QUẢN LÝ SINH VIÊN</title>
+    <title>@ViewData["Title"] - QU?N L� SINH VI�N</title>
     <link rel="stylesheet" href="~/css/style.css" />
 </head>
 <body>
@@ -12,24 +12,24 @@
         <aside class="sidebar">
             <div class="brand">
                 <div class="brand-logo"> <a asp-controller="Home" asp-action="Index"><img src="~/img/logo.jpg" alt="Logo" style="height: 30px; vertical-align: middle; margin-right: 5px;" /> STU</a></div>
-                <div class="brand-name">Trường Đại Học Công Nghệ Sài Gòn</div>
+                <div class="brand-name">Tru?ng �?i H?c C�ng Ngh? S�i G�n</div>
             </div>
             <nav class="menu">
                 <ul>
                     <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Admin" ? "active" : "")">
-                        <a asp-controller="Admin" asp-action="Index">Quản lý sinh viên</a>
+                        <a asp-controller="Admin" asp-action="Index">Qu?n l� sinh vi�n</a>
                     </li>
                     <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "GiangVien" ? "active" : "")">
-                        <a href="#">Quản lý giảng viên</a>
+                        <a href="#">Qu?n l� gi?ng vi�n</a>
                     </li>
                     <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "MonHoc" ? "active" : "")">
-                        <a href="#">Quản lý môn học</a>
+                        <a href="#">Qu?n l� m�n h?c</a>
                     </li>
                     <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "DaoTao" ? "active" : "")">
-                        <a href="#">Quản lý chương trình đào tạo</a>
+                        <a href="#">Qu?n l� chuong tr�nh d�o t?o</a>
                     </li>
                     <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "TaiKhoan" ? "active" : "")">
-                        <a href="#">Quản lý tài khoản</a>
+                        <a href="#">Qu?n l� t�i kho?n</a>
                     </li>
                 </ul>
             </nav>
