@@ -1,0 +1,14 @@
+using QuanLyHocVu.Models;
+using System.Collections.Generic;
+
+namespace QuanLyHocVu.Services
+{
+    public interface ISinhVienService
+    {
+        List<SinhVien> GetAll();
+        SinhVien GetById(string id);
+        void Add(SinhVien sinhVien);
+        void Update(SinhVien sinhVien);
+        void Delete(string id);
+    }
+}
