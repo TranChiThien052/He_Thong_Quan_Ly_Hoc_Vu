@@ -22,5 +22,28 @@ namespace QuanLyHocVu.Services
         {
             return _context.MonHocs.FirstOrDefault(m => m.MaMonHoc == id);
         }
+
+        public void Add(MonHoc monHoc)
+        {
+            _context.MonHocs.Add(monHoc);
+            _context.SaveChanges();
+        }
+
+        public void Update(MonHoc monHoc)
+        {
+            _context.MonHocs.Update(monHoc);
+            _context.SaveChanges();
+        }
+
+        public void Delete(string id)
+        {
+            var monHoc = _context.MonHocs.FirstOrDefault(m => m.MaMonHoc == id);
+            if (monHoc != null)
+            {
+                _context.MonHocs.Remove(monHoc);
+                _context.SaveChanges();
+            }
+        }
     }
+    
 }

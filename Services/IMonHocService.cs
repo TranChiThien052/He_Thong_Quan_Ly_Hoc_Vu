@@ -7,6 +7,8 @@ namespace QuanLyHocVu.Services
     {
         List<MonHoc> GetAll();
         MonHoc GetById(string id);
-        // Sau này có thể thêm: List<MonHoc> GetBySinhVien(string maSV);
+        void Add(MonHoc monHoc);
+        void Update(MonHoc monHoc);
+        void Delete(string id);
     }
 }
