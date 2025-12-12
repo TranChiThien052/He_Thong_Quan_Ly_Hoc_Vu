@@ -103,9 +103,8 @@ CREATE TABLE LopHocPhan (
     MaMonHoc NVARCHAR(10) NOT NULL,
     MaGiangVien NVARCHAR(10) NOT NULL,
     MaHocKy NVARCHAR(10) NOT NULL,
-    CaHoc CHAR(4),
-    NgayBatDau DATE,
-    NgayKetThuc DATE,
+    CaHoc INT,
+    NgayHoc NCHAR(10), 
     PhongHoc NVARCHAR(10),
     FOREIGN KEY (MaMonHoc) REFERENCES MonHoc(MaMonHoc),
     FOREIGN KEY (MaGiangVien) REFERENCES GiangVien(MaNguoiDung),
@@ -157,4 +156,15 @@ CREATE TABLE DiemCongTacXaHoi (
     TongDiem INT,
     GhiChu NVARCHAR(200),
     FOREIGN KEY (MaSinhVien) REFERENCES SinhVien(MaNguoiDung)
+);
+
+CREATE TABLE DiemHocPhan (
+    MaSinhVien NVARCHAR(10),
+    MaLopHocPhan NVARCHAR(10),
+    DiemChuyenCan DECIMAL(5,2) NULL,
+    DiemGiuaKy DECIMAL(5,2) NULL,
+    DiemCuoiKy DECIMAL(5,2) NULL,
+    PRIMARY KEY (MaSinhVien, MaLopHocPhan),
+    FOREIGN KEY (MaSinhVien) REFERENCES SinhVien(MaNguoiDung),
+    FOREIGN KEY (MaLopHocPhan) REFERENCES LopHocPhan(MaLopHocPhan)
 );

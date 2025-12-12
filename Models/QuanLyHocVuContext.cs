@@ -51,8 +51,6 @@ public partial class QuanLyHocVuContext : DbContext
 
     public virtual DbSet<TaiKhoan> TaiKhoans { get; set; }
 
-    public virtual DbSet<VTongDiemCtxh> VTongDiemCtxhs { get; set; }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
@@ -369,15 +367,6 @@ public partial class QuanLyHocVuContext : DbContext
                 .HasForeignKey<TaiKhoan>(d => d.MaNguoiDung)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__TaiKhoan__MaNguo__534D60F1");
-        });
-
-        modelBuilder.Entity<VTongDiemCtxh>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("v_TongDiemCTXH");
-
-            entity.Property(e => e.MaSinhVien).HasMaxLength(10);
         });
 
         OnModelCreatingPartial(modelBuilder);

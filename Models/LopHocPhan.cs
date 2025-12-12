@@ -13,11 +13,9 @@ public partial class LopHocPhan
 
     public string MaHocKy { get; set; } = null!;
 
-    public string CaHoc { get; set; }
+    public int CaHoc { get; set; }
 
-    public DateOnly? NgayBatDau { get; set; }
-
-    public DateOnly? NgayKetThuc { get; set; }
+    public string NgayHoc { get; set; }
 
     public string? PhongHoc { get; set; }
 

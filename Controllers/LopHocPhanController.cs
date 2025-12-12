@@ -62,7 +62,7 @@ namespace QuanLyHocVu.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaLopHocPhan,MaMonHoc,MaGiangVien,MaHocKy,NgayHoc,GioBatDau,GioKetThuc,PhongHoc")] LopHocPhan lopHocPhan)
+        public async Task<IActionResult> Create([Bind("MaLopHocPhan,MaMonHoc,MaGiangVien,MaHocKy,CaHoc,NgayHoc,PhongHoc")] LopHocPhan lopHocPhan)
         {
             if (ModelState.IsValid)
             {
@@ -102,7 +102,7 @@ namespace QuanLyHocVu.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("MaLopHocPhan,MaMonHoc,MaGiangVien,MaHocKy,NgayHoc,GioBatDau,GioKetThuc,PhongHoc")] LopHocPhan lopHocPhan)
+        public async Task<IActionResult> Edit(string id, [Bind("MaLopHocPhan,MaMonHoc,MaGiangVien,MaHocKy,CaHoc,NgayHoc,PhongHoc")] LopHocPhan lopHocPhan)
         {
             if (id != lopHocPhan.MaLopHocPhan)
             {
