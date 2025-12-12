@@ -158,12 +158,3 @@ CREATE TABLE DiemCongTacXaHoi (
     GhiChu NVARCHAR(200),
     FOREIGN KEY (MaSinhVien) REFERENCES SinhVien(MaNguoiDung)
 );
-
-CREATE VIEW v_TongDiemCTXH AS
-SELECT 
-    sv.MaNguoiDung AS MaSinhVien,
-    SUM(ISNULL(svhd.DiemThucTe, hd.Diem)) AS TongDiem
-FROM SinhVien_HoatDongCTXH svhd
-JOIN HoatDongCTXH hd ON svhd.MaHoatDong = hd.MaHoatDong
-JOIN SinhVien sv ON sv.MaNguoiDung = svhd.MaSinhVien
-GROUP BY sv.MaNguoiDung;
