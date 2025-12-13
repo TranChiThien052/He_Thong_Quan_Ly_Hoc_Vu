@@ -10,6 +10,7 @@ builder.Services.AddDbContext<QuanLyHocVu.Models.QuanLyHocVuContext>(options =>
 builder.Services.AddScoped<QuanLyHocVu.Services.IMonHocService, QuanLyHocVu.Services.MonHocService>();
 builder.Services.AddScoped<QuanLyHocVu.Services.ISinhVienService, QuanLyHocVu.Services.SinhVienService>();
 builder.Services.AddScoped<QuanLyHocVu.Services.IGiangVienService, QuanLyHocVu.Services.GiangVienService>();
+builder.Services.AddScoped<QuanLyHocVu.Services.ICanBoService, QuanLyHocVu.Services.CanBoService>();
 builder.Services.AddScoped<QuanLyHocVu.Services.ILopHocPhanService, QuanLyHocVu.Services.LopHocPhanService>();
 builder.Services.AddScoped<QuanLyHocVu.Services.IDangKyHocPhanService, QuanLyHocVu.Services.DangKyHocPhanService>();
 builder.Services.AddScoped<QuanLyHocVu.Services.IKhoaService, QuanLyHocVu.Services.KhoaService>();

@@ -21,6 +21,8 @@ public partial class QuanLyHocVuContext : DbContext
 
     public virtual DbSet<DangKyHocPhan> DangKyHocPhans { get; set; }
 
+    public virtual DbSet<DiemHocPhan> DiemHocPhans { get; set; }
+
     public virtual DbSet<DiemCongTacXaHoi> DiemCongTacXaHois { get; set; }
 
     public virtual DbSet<DiemRenLuyen> DiemRenLuyens { get; set; }
@@ -108,6 +110,26 @@ public partial class QuanLyHocVuContext : DbContext
                 .HasForeignKey(d => d.MaSinhVien)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__DangKyHoc__MaSin__619B8048");
+        });
+
+        modelBuilder.Entity<DiemHocPhan>(entity =>
+        {
+            entity.HasKey(e => new { e.MaSinhVien, e.MaLopHocPhan });
+
+            entity.ToTable("DiemHocPhan");
+
+            entity.Property(e => e.MaSinhVien).HasMaxLength(10);
+            entity.Property(e => e.MaLopHocPhan).HasMaxLength(10);
+
+            entity.HasOne(d => d.MaLopHocPhanNavigation).WithMany(p => p.DiemHocPhans)
+                .HasForeignKey(d => d.MaLopHocPhan)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DiemHocPhan_LopHocPhan");
+
+            entity.HasOne(d => d.MaSinhVienNavigation).WithMany(p => p.DiemHocPhans)
+                .HasForeignKey(d => d.MaSinhVien)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DiemHocPhan_SinhVien");
         });
 
         modelBuilder.Entity<DiemCongTacXaHoi>(entity =>

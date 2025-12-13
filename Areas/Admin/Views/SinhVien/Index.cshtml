@@ -1,0 +1,219 @@
+@model IEnumerable<QuanLyHocVu.Models.SinhVien>
+
+@{
+    ViewData["Title"] = "Quản Lý Sinh Viên";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Danh Sách Sinh Viên</h1>
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <i class="fas fa-table me-1"></i>
+            Thông Tin Sinh Viên
+        </div>
+        <div class="card-body">
+            <!-- Form tìm kiếm/lọc -->
+            <form method="get" asp-action="Index" class="mb-4">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Niên Khóa</label>
+                        <input type="text" name="nienKhoa" class="form-control" placeholder="VD: 2024-2028" value="@ViewBag.CurrentNienKhoa" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Ngành</label>
+                        <select name="maNganh" class="form-select" asp-items="ViewBag.MaNganh">
+                            <option value="">-- Tất cả ngành --</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Mã Sinh Viên</label>
+                        <input type="text" name="maSinhVien" class="form-control" placeholder="VD: DH12400001" value="@ViewBag.CurrentMaSinhVien" />
+                    </div>
+                    <div class="col-md-3 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary me-2">
+                            <i class="fas fa-search"></i> Tìm kiếm
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-redo"></i> Làm mới
+                        </a>
+                    </div>
+                </div>
+            </form>
+            
+            <!-- Hidden form for anti-forgery token -->
+            <form id="tokenForm" style="display:none;">
+                @Html.AntiForgeryToken()
+            </form>
+            
+            <hr />
+            <div class="d-flex justify-content-between mb-3">
+                <div>
+                    <button type="button" id="btnCreateAccountBulk" class="btn btn-success" disabled>
+                        <i class="fas fa-user-plus"></i> Tạo tài khoản cho sinh viên
+                    </button>
+                </div>
+                <div>
+                    <a asp-action="Create" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Thêm Mới
+                    </a>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped" id="datatablesSimple">
+                    <thead class="table-dark">
+                        <tr>
+                            <th><input type="checkbox" id="selectAll" /></th>
+                            <th>Mã SV</th>
+                            <th>Họ Tên</th>
+                            <th>Email</th>
+                            <th>Số Điện Thoại</th>
+                            <th>Ngành</th>
+                            <th>Niên Khóa</th>
+                            <th>Tình Trạng</th>
+                            <th>Thao Tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    <input type="checkbox" class="student-checkbox" value="@item.MaNguoiDung" />
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaNguoiDung)
+                                </td>
+                                <td class="fw-bold text-primary">
+                                    @Html.DisplayFor(modelItem => item.HoTen)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SoDienThoai)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaNganhNavigation.TenNganh)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NienKhoa)
+                                </td>
+                                <td>
+                                    <span class="badge @(item.TinhTrangHoc == "Đang học" ? "bg-success" : "bg-warning text-dark")">
+                                        @Html.DisplayFor(modelItem => item.TinhTrangHoc)
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a asp-action="Edit" asp-route-id="@item.MaNguoiDung" class="btn" title="Sửa">
+                                            Chi tiết
+                                        </a>
+                                        @if (item.TaiKhoan == null)
+                                        {
+                                            <span class="btn disabled" title="Chưa có tài khoản">
+                                                Chưa có tài khoản
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <a asp-area="Admin" asp-controller="TaiKhoan" asp-action="Edit" asp-route-id="@item.MaNguoiDung" class="btn" title="Sửa tài khoản">
+                                                Sửa tài khoản
+                                            </a>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 0.5rem;
+        border: none;
+    }
+    .card-header {
+        border-top-left-radius: 0.5rem !important;
+        border-top-right-radius: 0.5rem !important;
+        font-weight: 600;
+    }
+    .table thead th {
+        vertical-align: middle;
+        text-align: center;
+    }
+    .table tbody td {
+        vertical-align: middle;
+    }
+    .btn-group .btn {
+        margin: 0 2px;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        // Select all checkbox functionality
+        const selectAllCheckbox = document.getElementById('selectAll');
+        const studentCheckboxes = document.querySelectorAll('.student-checkbox');
+        const btnCreateAccountBulk = document.getElementById('btnCreateAccountBulk');
+
+        selectAllCheckbox.addEventListener('change', function() {
+            studentCheckboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+            updateBulkButton();
+        });
+
+        // Update bulk button state when individual checkboxes change
+        studentCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateBulkButton);
+        });
+
+        function updateBulkButton() {
+            const checkedCount = document.querySelectorAll('.student-checkbox:checked').length;
+            btnCreateAccountBulk.disabled = checkedCount === 0;
+        }
+
+        // Bulk create account
+        btnCreateAccountBulk.addEventListener('click', function() {
+            const selectedIds = Array.from(document.querySelectorAll('.student-checkbox:checked'))
+                .map(cb => cb.value);
+            
+            if (selectedIds.length === 0) {
+                alert('Vui lòng chọn ít nhất một sinh viên!');
+                return;
+            }
+
+            if (confirm(`Bạn có chắc muốn tạo tài khoản cho ${selectedIds.length} sinh viên đã chọn?`)) {
+                // Send POST request to TaiKhoan controller
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '@Url.Action("CreateAccountBulk", "TaiKhoan", new { area = "Admin" })';
+                
+                selectedIds.forEach(id => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'studentIds';
+                    input.value = id;
+                    form.appendChild(input);
+                });
+
+                // Add anti-forgery token
+                const token = document.querySelector('input[name="__RequestVerificationToken"]');
+                if (token) {
+                    const tokenInput = document.createElement('input');
+                    tokenInput.type = 'hidden';
+                    tokenInput.name = '__RequestVerificationToken';
+                    tokenInput.value = token.value;
+                    form.appendChild(tokenInput);
+                }
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
+    </script>
+}
