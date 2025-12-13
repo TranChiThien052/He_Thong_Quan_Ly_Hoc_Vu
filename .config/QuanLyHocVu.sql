@@ -104,7 +104,7 @@ CREATE TABLE LopHocPhan (
     MaGiangVien NVARCHAR(10) NOT NULL,
     MaHocKy NVARCHAR(10) NOT NULL,
     CaHoc INT,
-    NgayHoc NCHAR(10), 
+    NgayHoc NVARCHAR(10), 
     PhongHoc NVARCHAR(10),
     FOREIGN KEY (MaMonHoc) REFERENCES MonHoc(MaMonHoc),
     FOREIGN KEY (MaGiangVien) REFERENCES GiangVien(MaNguoiDung),
