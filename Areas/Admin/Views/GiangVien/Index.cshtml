@@ -8,7 +8,6 @@
     <h1 class="mt-4">Danh Sách Giảng Viên</h1>
     <div class="card mb-4 shadow-sm">
         <div class="card-header bg-primary text-white">
-            <i class="fas fa-table me-1"></i>
             Thông Tin Giảng Viên
         </div>
         <div class="card-body">
@@ -37,10 +36,15 @@
             </form>
             
             <hr />
-            <div class="d-flex justify-content-end mb-3">
+            <div class="d-flex justify-content-between mb-3">
+                <div>
+                     <button type="button" id="btnCreateAccountBulk" class="btn btn-success" disabled>
+                        Tạo tài khoản
+                    </button>
+                </div>
                 <div>
                     <a asp-action="Create" class="btn btn-primary">
-                        <i class="fas fa-plus"></i> Thêm Mới
+                        + Thêm Mới
                     </a>
                 </div>
             </div>
@@ -48,6 +52,7 @@
                 <table class="table table-bordered table-hover table-striped" id="datatablesSimple">
                     <thead class="table-dark">
                         <tr>
+                            <th><input type="checkbox" id="selectAll" /></th>
                             <th>Mã GV</th>
                             <th>Họ Tên</th>
                             <th>Email</th>
@@ -62,6 +67,9 @@
                         @foreach (var item in Model)
                         {
                             <tr>
+                                <td class="text-center">
+                                    <input type="checkbox" class="teacher-checkbox" value="@item.MaNguoiDung" />
+                                </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.MaNguoiDung)
                                 </td>
@@ -113,6 +121,11 @@
     </div>
 </div>
 
+<!-- Hidden form for anti-forgery token -->
+<form id="tokenForm" style="display:none;">
+    @Html.AntiForgeryToken()
+</form>
+
 <style>
     .card {
         border-radius: 0.5rem;
@@ -134,3 +147,68 @@
         margin: 0 2px;
     }
 </style>
+
+@section Scripts {
+    <script>
+        // Select all checkbox functionality
+        const selectAllCheckbox = document.getElementById('selectAll');
+        const teacherCheckboxes = document.querySelectorAll('.teacher-checkbox');
+        const btnCreateAccountBulk = document.getElementById('btnCreateAccountBulk');
+
+        selectAllCheckbox.addEventListener('change', function() {
+            teacherCheckboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+            updateBulkButton();
+        });
+
+        // Update bulk button state when individual checkboxes change
+        teacherCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateBulkButton);
+        });
+
+        function updateBulkButton() {
+            const checkedCount = document.querySelectorAll('.teacher-checkbox:checked').length;
+            btnCreateAccountBulk.disabled = checkedCount === 0;
+        }
+
+        // Bulk create account
+        btnCreateAccountBulk.addEventListener('click', function() {
+            const selectedIds = Array.from(document.querySelectorAll('.teacher-checkbox:checked'))
+                .map(cb => cb.value);
+            
+            if (selectedIds.length === 0) {
+                alert('Vui lòng chọn ít nhất một giảng viên!');
+                return;
+            }
+
+            if (confirm(`Bạn có chắc muốn tạo tài khoản cho ${selectedIds.length} giảng viên đã chọn?`)) {
+                // Send POST request to TaiKhoan controller
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '@Url.Action("CreateAccountBulkForGiangVien", "TaiKhoan", new { area = "Admin" })';
+                
+                selectedIds.forEach(id => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'giangVienIds';
+                    input.value = id;
+                    form.appendChild(input);
+                });
+
+                // Add anti-forgery token
+                const token = document.querySelector('#tokenForm input[name="__RequestVerificationToken"]');
+                if (token) {
+                    const tokenInput = document.createElement('input');
+                    tokenInput.type = 'hidden';
+                    tokenInput.name = '__RequestVerificationToken';
+                    tokenInput.value = token.value;
+                    form.appendChild(tokenInput);
+                }
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
+    </script>
+}

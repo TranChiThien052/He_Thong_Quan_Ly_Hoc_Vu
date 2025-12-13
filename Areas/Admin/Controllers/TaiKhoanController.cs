@@ -9,11 +9,13 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
     {
         private readonly QuanLyHocVuContext _context;
         private readonly Services.ISinhVienService _sinhVienService;
+        private readonly Services.IGiangVienService _giangVienService;
 
-        public TaiKhoanController(QuanLyHocVuContext context, Services.ISinhVienService sinhVienService)
+        public TaiKhoanController(QuanLyHocVuContext context, Services.ISinhVienService sinhVienService, Services.IGiangVienService giangVienService)
         {
             _context = context;
             _sinhVienService = sinhVienService;
+            _giangVienService = giangVienService;
         }
 
         // GET: Admin/TaiKhoan
@@ -86,6 +88,66 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
             return RedirectToAction("Index", "SinhVien");
         }
 
+        // POST: Admin/TaiKhoan/CreateAccountBulkForGiangVien
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateAccountBulkForGiangVien([FromForm] List<string> giangVienIds)
+        {
+            try
+            {
+                if (giangVienIds == null || giangVienIds.Count == 0)
+                {
+                    TempData["ErrorMessage"] = "Không có giảng viên nào được chọn!";
+                    return RedirectToAction("Index", "GiangVien");
+                }
+
+                int successCount = 0;
+                int errorCount = 0;
+
+                foreach (var id in giangVienIds)
+                {
+                    try
+                    {
+                        var giangVien = _giangVienService.GetById(id);
+                        if (giangVien == null || giangVien.TaiKhoan != null)
+                        {
+                            errorCount++;
+                            continue;
+                        }
+
+                        var taiKhoan = new TaiKhoan
+                        {
+                            MaNguoiDung = giangVien.MaNguoiDung,
+                            TenDangNhap = giangVien.MaNguoiDung,
+                            MatKhau = giangVien.MaNguoiDung,
+                            TrangThai = "Hoạt động"
+                        };
+
+                        _context.TaiKhoans.Add(taiKhoan);
+                        successCount++;
+                    }
+                    catch (Exception)
+                    {
+                        errorCount++;
+                    }
+                }
+
+                _context.SaveChanges();
+
+                TempData["SuccessMessage"] = $"Tạo thành công {successCount} tài khoản giảng viên!";
+                if (errorCount > 0)
+                {
+                    TempData["WarningMessage"] = $"Có {errorCount} giảng viên không thể tạo tài khoản (đã có tài khoản hoặc không tồn tại).";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Lỗi khi lưu dữ liệu: {ex.Message}";
+            }
+
+            return RedirectToAction("Index", "GiangVien");
+        }
+
         // GET: Admin/TaiKhoan/Edit/5
         public IActionResult Edit(string id)
         {
@@ -125,6 +187,13 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
                     _context.Update(taiKhoan);
                     _context.SaveChanges();
                     TempData["SuccessMessage"] = "Cập nhật tài khoản thành công!";
+                    
+                    // Determine where to redirect based on user role (prefix check)
+                    string referer = Request.Headers["Referer"].ToString();
+                    if (referer.Contains("GiangVien"))
+                    {
+                         return RedirectToAction("Index", "GiangVien");
+                    }
                     return RedirectToAction("Index", "SinhVien");
                 }
                 catch (DbUpdateConcurrencyException)
