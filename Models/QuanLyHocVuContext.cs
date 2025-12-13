@@ -19,6 +19,8 @@ public partial class QuanLyHocVuContext : DbContext
 
     public virtual DbSet<ChuongTrinhDaoTao> ChuongTrinhDaoTaos { get; set; }
 
+    public virtual DbSet<ChiTietChuongTrinhDaoTao> ChiTietChuongTrinhDaoTaos { get; set; }
+
     public virtual DbSet<DangKyHocPhan> DangKyHocPhans { get; set; }
 
     public virtual DbSet<DiemHocPhan> DiemHocPhans { get; set; }
@@ -89,6 +91,26 @@ public partial class QuanLyHocVuContext : DbContext
             entity.HasOne(d => d.MaNganhNavigation).WithOne(p => p.ChuongTrinhDaoTao)
                 .HasForeignKey<ChuongTrinhDaoTao>(d => d.MaNganh)
                 .HasConstraintName("FK__ChuongTri__MaNga__403A8C7D");
+        });
+
+        modelBuilder.Entity<ChiTietChuongTrinhDaoTao>(entity =>
+        {
+            entity.HasKey(e => new { e.MaCtdt, e.MaMonHoc });
+
+            entity.ToTable("ChiTietChuongTrinhDaoTao");
+
+            entity.Property(e => e.MaCtdt).HasMaxLength(10).HasColumnName("MaCTDT");
+            entity.Property(e => e.MaMonHoc).HasMaxLength(10);
+
+            entity.HasOne(d => d.MaCtdtNavigation).WithMany(p => p.ChiTietChuongTrinhDaoTaos)
+                .HasForeignKey(d => d.MaCtdt)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ChiTietChuongTrinhDaoTao_ChuongTrinhDaoTao");
+
+            entity.HasOne(d => d.MaMonHocNavigation).WithMany(p => p.ChiTietChuongTrinhDaoTaos)
+                .HasForeignKey(d => d.MaMonHoc)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ChiTietChuongTrinhDaoTao_MonHoc");
         });
 
         modelBuilder.Entity<DangKyHocPhan>(entity =>

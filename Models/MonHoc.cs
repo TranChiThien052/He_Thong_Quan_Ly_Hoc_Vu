@@ -17,5 +17,7 @@ public partial class MonHoc
 
     public virtual ICollection<LopHocPhan> LopHocPhans { get; set; } = new List<LopHocPhan>();
 
+    public virtual ICollection<ChiTietChuongTrinhDaoTao> ChiTietChuongTrinhDaoTaos { get; set; } = new List<ChiTietChuongTrinhDaoTao>();
+
     public virtual HocPhi MaHocPhiNavigation { get; set; } = null!;
 }

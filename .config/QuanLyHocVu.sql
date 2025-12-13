@@ -168,3 +168,12 @@ CREATE TABLE DiemHocPhan (
     FOREIGN KEY (MaSinhVien) REFERENCES SinhVien(MaNguoiDung),
     FOREIGN KEY (MaLopHocPhan) REFERENCES LopHocPhan(MaLopHocPhan)
 );
+
+CREATE TABLE ChiTietChuongTrinh (
+    MaCTDT NVARCHAR(10),
+    MaMonHoc NVARCHAR(10),
+    HocKy INT,
+    PRIMARY KEY (MaCTDT, MaMonHoc),
+    FOREIGN KEY (MaCTDT) REFERENCES ChuongTrinhDaoTao(MaCTDT),
+    FOREIGN KEY (MaMonHoc) REFERENCES MonHoc(MaMonHoc)
+)

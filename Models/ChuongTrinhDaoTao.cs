@@ -12,4 +12,6 @@ public partial class ChuongTrinhDaoTao
     public string? MaNganh { get; set; }
 
     public virtual Nganh? MaNganhNavigation { get; set; }
+
+    public virtual ICollection<ChiTietChuongTrinhDaoTao> ChiTietChuongTrinhDaoTaos { get; set; } = new List<ChiTietChuongTrinhDaoTao>();
 }
