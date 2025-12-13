@@ -11,13 +11,35 @@
 
 <header class="topbar">
         <h1>Quản lý môn học</h1>
-        <div class="actions">
-          <input type="text" placeholder="Tìm kiếm môn học..." class="search-input" />
-          <button type="button" class="btn btn-primary btn-add" onclick="location.href='@Url.Action("Create", "MonHoc", new { area = "Admin" })'">+ Thêm môn học</button>
-        </div>
-      </header>
+</header>
 
       <!-- Table -->
+        <form method="get" asp-action="Index" class="mb-4">
+          <div class="row g-3">
+              <div class="col-md-3">
+                  <label class="form-label fw-bold">Loại môn</label>
+                  <select name="loaiMon" class="form-select" asp-items="ViewBag.LoaiMon">
+                      <option value="">-- Tất cả loại môn --</option>
+                  </select>
+              </div>
+              <div class="col-md-3">
+                  <label class="form-label fw-bold">Tên môn học</label>
+                  <input type="text" name="tenMonHoc" class="form-control" value="@ViewBag.CurrentTenMonHoc" />
+              </div>
+              <div class="col-md-3 d-flex align-items-end">
+                  <button type="submit" class="btn btn-primary me-2">
+                      <i class="fas fa-search"></i> Tìm kiếm
+                  </button>
+                  <a asp-action="Index" class="btn btn-secondary">
+                      <i class="fas fa-redo"></i> Làm mới
+                  </a>
+              </div>
+              <div class="actions">
+                <button type="button" class="btn btn-primary btn-add" onclick="location.href='@Url.Action("Create", "MonHoc", new { area = "Admin" })'">+ Thêm môn học</button>
+              </div>
+          </div>
+      </form>
+
       <section class="card" id="list-subject">
         <div class="card-header"><h2>Danh sách môn học</h2></div>
         <div class="table-wrap">
@@ -45,4 +67,5 @@
           </table>
         </div>
       </section>
+
   

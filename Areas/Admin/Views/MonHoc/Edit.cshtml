@@ -1,41 +1,44 @@
 @model QuanLyHocVu.Models.MonHoc
 
 @{
-    ViewData["Title"] = "Thêm môn học";
+    ViewData["Title"] = "Sửa môn học";
 }
 
 
 @section Styles {
     <link rel="stylesheet" href="~/css/admin/style.css" />
 }
+
 <h1>Quản lý môn học</h1>
-<section class="card" id="add-subject">
-    <div class="card-header"><h2>Thêm môn học</h2></div>
-    <form asp-action="Create" method="post" class="form">
+<section class="card" id="edit-subject">
+    <div class="card-header"><h2>Sửa môn học</h2></div>
+    <form asp-action="Edit" method="post" class="form">
         <div class="form-grid">
             <div class="form-group">
                 <label for="subject-id">Mã môn học</label>
                 <input type="text" id="subject-id" name="MaMonHoc"
-                       value="@ViewBag.NewId" readonly class="form-control" />
+                       value="@Model.MaMonHoc" readonly class="form-control" />
             </div>
             <div class="form-group">
                 <label for="subject-name">Tên môn học</label>
                 <input type="text" id="subject-name" name="TenMonHoc"
-                       class="form-control" required />
+                       value="@Model.TenMonHoc" class="form-control" required />
             </div>
             <div class="form-group">
                 <label for="subject-credit">Số tín chỉ</label>
                 <input type="number" id="subject-credit" name="SoTinChi"
-                       class="form-control" min="0" required />
+                       value="@Model.SoTinChi" class="form-control" min="0" required />
             </div>
             <div class="form-group">
                 <label for="subject-type">Loại môn</label>
-                <select id="subject-type" name="LoaiMon" class="form-control" required>
-                    <!-- <option value="">-- Chọn loại môn --</option> -->
+                <!-- <select id="subject-type" name="LoaiMon" class="form-control" required>
                     <option value="Lý thuyết">Lý thuyết</option>
                     <option value="Thực hành">Thực hành</option>
                     <option value="Đồ án">Đồ án</option>
-                </select>
+                </select> -->
+                @Html.DropDownListFor(model => model.LoaiMon,
+                new SelectList(new[] {"Lý thuyết", "Thực hành", "Đồ án"}, Model.LoaiMon),
+                new { @class = "form-control" , id = "subject-type"})
                 <input type="hidden" id="fee-code" name="MaHocPhi" />
             </div>
         </div>

@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using QuanLyHocVu.Models;
 using QuanLyHocVu.Services;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 
 namespace QuanLyHocVu.Areas.Admin.Controllers
 {
@@ -14,11 +16,24 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
             _service = service;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string loaiMon, string tenMonHoc)
         {
             // Admin thấy toàn bộ danh sách, có thể sau này thêm nút Sửa/Xóa
-            var data = _service.GetAll();
-            return View(data);
+            var monHoc = _service.GetAll();
+            if(!string.IsNullOrEmpty(loaiMon)){
+                monHoc = monHoc.Where(m => m.LoaiMon == loaiMon).ToList();
+            }
+
+            if(!string.IsNullOrEmpty(tenMonHoc)){
+                monHoc = monHoc.Where(m => m.TenMonHoc.Contains(tenMonHoc)).ToList();
+            }
+
+            var loaiMonList = _service.GetAll().Select(m => m.LoaiMon).Distinct().ToList();
+            ViewBag.LoaiMon = new SelectList(loaiMonList);
+            ViewBag.CurrentTenMonHoc = tenMonHoc;
+            ViewBag.CurrentLoaiMon = loaiMon;
+
+            return View(monHoc);
         }
 
         // public IActionResult Delete(string id){
@@ -49,6 +64,18 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
                                    .ToList();
             int next = existing.Any() ? existing.Max() + 1 : 1;
             return prefix + next.ToString("D3");   // MH001, MH002, …
+        }
+
+        public IActionResult Edit(string id){
+            var data = _service.GetById(id);
+            return View(data);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(MonHoc monhoc){
+            _service.Update(monhoc);
+            return RedirectToAction("Index");
         }
     }
 }

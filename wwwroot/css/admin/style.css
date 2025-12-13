@@ -165,3 +165,14 @@
   justify-content: flex-end;
   gap: 10px;
 }
+
+.filter-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  gap: 10px;
+}
+
+.form-control{
+  width: 10vw;
+}
