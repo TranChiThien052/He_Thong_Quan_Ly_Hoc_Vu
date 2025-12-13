@@ -10,5 +10,6 @@ namespace QuanLyHocVu.Services
         void Add(SinhVien sinhVien);
         void Update(SinhVien sinhVien);
         void Delete(string id);
+        string GenerateStudentId(SinhVien sinhVien);
     }
 }

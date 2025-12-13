@@ -1,0 +1,136 @@
+@model IEnumerable<QuanLyHocVu.Models.GiangVien>
+
+@{
+    ViewData["Title"] = "Quản Lý Giảng Viên";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Danh Sách Giảng Viên</h1>
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <i class="fas fa-table me-1"></i>
+            Thông Tin Giảng Viên
+        </div>
+        <div class="card-body">
+            <!-- Form tìm kiếm/lọc -->
+            <form method="get" asp-action="Index" class="mb-4">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Khoa</label>
+                        <select name="maKhoa" class="form-select" asp-items="ViewBag.MaKhoa">
+                            <option value="">-- Tất cả khoa --</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Mã Giảng Viên</label>
+                        <input type="text" name="maGiangVien" class="form-control" placeholder="VD: GV010001" value="@ViewBag.CurrentMaGiangVien" />
+                    </div>
+                    <div class="col-md-3 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary me-2">
+                            <i class="fas fa-search"></i> Tìm kiếm
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-redo"></i> Làm mới
+                        </a>
+                    </div>
+                </div>
+            </form>
+            
+            <hr />
+            <div class="d-flex justify-content-end mb-3">
+                <div>
+                    <a asp-action="Create" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Thêm Mới
+                    </a>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped" id="datatablesSimple">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Mã GV</th>
+                            <th>Họ Tên</th>
+                            <th>Email</th>
+                            <th>Số Điện Thoại</th>
+                            <th>Khoa</th>
+                            <th>Chuyên Môn</th>
+                            <th>Tình Trạng</th>
+                            <th>Thao Tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaNguoiDung)
+                                </td>
+                                <td class="fw-bold text-primary">
+                                    @Html.DisplayFor(modelItem => item.HoTen)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SoDienThoai)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaKhoaNavigation.TenKhoa)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ChuyenMon)
+                                </td>
+                                <td>
+                                    <span class="badge @(item.TinhTrangCongTac == "Đang công tác" ? "bg-success" : "bg-warning text-dark")">
+                                        @Html.DisplayFor(modelItem => item.TinhTrangCongTac)
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a asp-action="Edit" asp-route-id="@item.MaNguoiDung" class="btn" title="Sửa">
+                                            Chi tiết
+                                        </a>
+                                        @if (item.TaiKhoan == null)
+                                        {
+                                            <span class="btn disabled" title="Chưa có tài khoản">
+                                                Chưa có tài khoản
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <a asp-area="Admin" asp-controller="TaiKhoan" asp-action="Edit" asp-route-id="@item.MaNguoiDung" class="btn" title="Sửa tài khoản">
+                                                Sửa tài khoản
+                                            </a>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 0.5rem;
+        border: none;
+    }
+    .card-header {
+        border-top-left-radius: 0.5rem !important;
+        border-top-right-radius: 0.5rem !important;
+        font-weight: 600;
+    }
+    .table thead th {
+        vertical-align: middle;
+        text-align: center;
+    }
+    .table tbody td {
+        vertical-align: middle;
+    }
+    .btn-group .btn {
+        margin: 0 2px;
+    }
+</style>

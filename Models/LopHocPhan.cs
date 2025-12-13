@@ -28,4 +28,6 @@ public partial class LopHocPhan
     public virtual MonHoc MaMonHocNavigation { get; set; } = null!;
 
     public virtual PhongHoc? PhongHocNavigation { get; set; }
+
+    public virtual ICollection<DiemHocPhan> DiemHocPhans { get; set; } = new List<DiemHocPhan>();
 }
