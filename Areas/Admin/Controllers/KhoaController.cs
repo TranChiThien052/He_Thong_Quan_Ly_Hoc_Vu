@@ -24,7 +24,7 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("MaNganh,TenNganh")] QuanLyHocVu.Models.Khoa khoa)
+        public IActionResult Create([Bind("MaKhoa,TenKhoa")] QuanLyHocVu.Models.Khoa khoa)
         {
             _service.Add(khoa);
             return RedirectToAction("Index", "KhoaNganh");

@@ -4,27 +4,30 @@ using Microsoft.EntityFrameworkCore;
 using QuanLyHocVu.Models;
 using QuanLyHocVu.Services;
 
-namespace QuanLyHocVu.Areas.Admin.Controllers;
+namespace QuanLyHocVu.Areas.Admin.Controllers
 
-public class KhoaNganhController : Controller
 {
-    private readonly QuanLyHocVuContext _context;
-    private readonly IKhoaService _khoaService;
-    private readonly INganhService _nganhService;
-
-    public KhoaNganhController(QuanLyHocVuContext context, IKhoaService khoaService, INganhService nganhService)
+    [Area("Admin")]
+    public class KhoaNganhController : Controller
     {
-        _context = context;
-        _khoaService = khoaService;
-        _nganhService = nganhService;
-    }
+        private readonly QuanLyHocVuContext _context;
+        private readonly IKhoaService _khoaService;
+        private readonly INganhService _nganhService;
 
-    public IActionResult Index()
-    {
-        var khoas = _khoaService.GetAll();
-        var nganhs = _nganhService.GetAll();
-        ViewBag.Khoas = khoas;
-        ViewBag.Nganhs = nganhs;
-        return View();
+        public KhoaNganhController(QuanLyHocVuContext context, IKhoaService khoaService, INganhService nganhService)
+        {
+            _context = context;
+            _khoaService = khoaService;
+            _nganhService = nganhService;
+        }
+
+        public IActionResult Index()
+        {
+            var khoas = _khoaService.GetAll();
+            var nganhs = _nganhService.GetAll();
+            ViewBag.Khoas = khoas;
+            ViewBag.Nganhs = nganhs;
+            return View();
+        }
     }
 }

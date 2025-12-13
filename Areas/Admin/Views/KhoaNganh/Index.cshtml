@@ -1,0 +1,71 @@
+
+@{
+    ViewData["Title"] = "Quản lý Khoa-Ngành";
+}
+
+@section Styles {
+    <!-- Liên kết CSS cục bộ -->
+    <link rel="stylesheet" href="~/css/admin/style.css" />
+}
+
+<div class="container bg-white p-4 rounded shadow-sm">
+    <h3 class="mb-4">Quản lý Khoa - Ngành</h3>
+
+    <!-- Danh sách Khoa -->
+    <div class="mb-5">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5>Danh sách Khoa</h5>
+        <div>
+          <a asp-controller="Khoa" asp-action="Create" class="btn btn-primary">+ Thêm Khoa</a>
+          <button class="btn btn-warning btn-sm">Sửa</button>
+          <!-- <button class="btn btn-danger btn-sm">Xóa</button> -->
+        </div>
+      </div>
+      <table class="table table-bordered table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Mã Khoa</th>
+            <th>Tên Khoa</th>
+          </tr>
+        </thead>
+        <tbody>
+        @foreach(var khoa in ViewBag.Khoas)
+        {
+          <tr>
+            <td>@khoa.MaKhoa</td>
+            <td>@khoa.TenKhoa</td>
+          </tr>
+        }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Danh sách Ngành -->
+    <div>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5>Danh sách Ngành</h5>
+        <div>
+          <a asp-controller="Nganh" asp-action="Create" class="btn btn-primary">+ Thêm Ngành</a>
+          <button class="btn btn-warning btn-sm">Sửa</button>
+          <!-- <button class="btn btn-danger btn-sm">Xóa</button> -->
+        </div>
+      </div>
+      <table class="table table-bordered table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Mã Ngành</th>
+            <th>Tên Ngành</th>
+          </tr>
+        </thead>
+        <tbody>
+        @foreach(var nganh in ViewBag.Nganhs)
+        {
+          <tr>
+            <td>@nganh.MaNganh</td>
+            <td>@nganh.TenNganh</td>
+          </tr>
+        }
+        </tbody>
+      </table>
+    </div>
+  </div>

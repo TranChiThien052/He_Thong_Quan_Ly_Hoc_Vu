@@ -1,0 +1,25 @@
+@model QuanLyHocVu.Models.Khoa
+@{
+    ViewData["Title"] = "Thêm Khoa";
+}
+
+<div class="container bg-white p-4 rounded shadow-sm" style="max-width: 600px;">
+    <h4 class="mb-4">Thêm Khoa</h4>
+
+    <form asp-action="Create" method="post">
+      <div class="mb-3">
+        <label asp-for="MaKhoa" class="form-label">Mã Khoa</label>
+        <input type="text" class="form-control" asp-for="MaKhoa" placeholder="VD: K001">
+      </div>
+
+      <div class="mb-3">
+        <label asp-for="TenKhoa" class="form-label">Tên Khoa</label>
+        <input type="text" class="form-control" asp-for="TenKhoa" placeholder="VD: Khoa Công nghệ thông tin">
+      </div>
+
+      <div class="d-flex justify-content-end mt-4">
+        <a asp-controller="KhoaNganh" asp-action="Index" class="btn btn-secondary me-2">Hủy</a>
+        <button type="submit" class="btn btn-primary">Lưu</button>
+      </div>
+    </form>
+  </div>

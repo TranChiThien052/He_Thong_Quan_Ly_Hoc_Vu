@@ -19,14 +19,14 @@
               <div class="col-md-3">
                   <label class="form-label fw-bold">Loại môn</label>
                   <select name="loaiMon" class="form-select" asp-items="ViewBag.LoaiMon">
-                      <option value="">-- Tất cả loại môn --</option>
+                      <option value="">Tất cả</option>
                   </select>
               </div>
               <div class="col-md-3">
                   <label class="form-label fw-bold">Tên môn học</label>
                   <input type="text" name="tenMonHoc" class="form-control" value="@ViewBag.CurrentTenMonHoc" />
               </div>
-              <div class="col-md-3 d-flex align-items-end">
+              <div class="col-md-4 d-flex align-items-end">
                   <button type="submit" class="btn btn-primary me-2">
                       <i class="fas fa-search"></i> Tìm kiếm
                   </button>
