@@ -2,20 +2,26 @@
 
 @{
     ViewData["Title"] = "Quản lý Môn học (Admin)";
-    Layout = "~/Views/Shared/_Layout.cshtml"; // Dùng layout chính tạm thời
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section Styles {
+    <!-- Liên kết CSS cục bộ -->
+    <link rel="stylesheet" href="~/css/admin/style.css" />
+}
+
 
 
 <header class="topbar">
         <h1>Quản lý môn học</h1>
         <div class="actions">
           <input type="text" placeholder="Tìm kiếm môn học..." class="search-input" />
-          <button class="btn btn-primary">+ Thêm môn học</button>
+          <button type="button" class="btn btn-primary btn-add" onclick="location.href='@Url.Action("Create", "MonHoc", new { area = "Admin" })'">+ Thêm môn học</button>
         </div>
       </header>
 
       <!-- Table -->
-      <section class="card">
+      <section class="card" id="list-subject">
         <div class="card-header"><h2>Danh sách môn học</h2></div>
         <div class="table-wrap">
           <table class="table">
@@ -35,7 +41,6 @@
                     <td>@item.MaMonHoc</td><td>@item.TenMonHoc</td><td>@item.SoTinChi</td><td>@item.LoaiMon</td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.MaMonHoc" class="btn btn-small">Sửa</a>
-                        <a asp-action="Delete" asp-route-id="@item.MaMonHoc" class="btn btn-small btn-danger">Xóa</a>
                     </td>
                 </tr>
             }
@@ -43,3 +48,4 @@
           </table>
         </div>
       </section>
+  

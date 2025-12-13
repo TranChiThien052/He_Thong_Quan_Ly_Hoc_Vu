@@ -1,0 +1,67 @@
+@model QuanLyHocVu.Models.MonHoc
+
+@{
+    ViewData["Title"] = "Thêm môn học";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin/style.css" />
+}
+
+<section class="card" id="add-subject">
+    <div class="card-header"><h2>Thêm môn học</h2></div>
+    <form asp-action="Create" method="post" class="form">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="subject-id">Mã môn học</label>
+                <input type="text" id="subject-id" name="MaMonHoc"
+                       value="@ViewBag.NewId" readonly class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="subject-name">Tên môn học</label>
+                <input type="text" id="subject-name" name="TenMonHoc"
+                       class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="subject-credit">Số tín chỉ</label>
+                <input type="number" id="subject-credit" name="SoTinChi"
+                       class="form-control" min="0" required />
+            </div>
+            <div class="form-group">
+                <label for="subject-type">Loại môn</label>
+                <select id="subject-type" name="LoaiMon" class="form-control" required>
+                    <!-- <option value="">-- Chọn loại môn --</option> -->
+                    <option value="Lý thuyết">Lý thuyết</option>
+                    <option value="Thực hành">Thực hành</option>
+                    <option value="Đồ án">Đồ án</option>
+                </select>
+                <input type="hidden" id="fee-code" name="MaHocPhi" />
+            </div>
+        </div>
+        <div class="form-actions">
+            <a asp-action="Index" class="btn btn-huy">Hủy</a>
+            <button type="submit" class="btn btn-primary">Lưu</button>
+        </div>
+    </form>
+</section>
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const typeSelect = document.getElementById('subject-type');
+            const feeInput = document.getElementById('fee-code');
+            function updateFee() {
+                const val = typeSelect.value;
+                let code = '';
+                if (val === 'Lý thuyết') code = 'HPLT';
+                else if (val === 'Thực hành') code = 'HPTH';
+                else if (val === 'Đồ án') code = 'HPDA';
+                feeInput.value = code;
+            }
+            typeSelect.addEventListener('change', updateFee);
+            // khởi tạo ngay khi tải trang
+            updateFee();
+        });
+    </script>
+}

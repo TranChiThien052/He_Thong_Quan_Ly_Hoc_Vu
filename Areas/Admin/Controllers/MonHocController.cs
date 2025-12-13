@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using QuanLyHocVu.Models;
 using QuanLyHocVu.Services;
 
 namespace QuanLyHocVu.Areas.Admin.Controllers
@@ -20,9 +21,34 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
             return View(data);
         }
 
-        public IActionResult Delete(string id){
-            _service.Delete(id);
+        // public IActionResult Delete(string id){
+        //     _service.Delete(id);
+        //     return RedirectToAction("Index");
+        // }
+
+        public IActionResult Create(){
+            var newId= GenerateNextId();
+            ViewBag.Newid = newId;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(MonHoc monhoc)
+        {
+            _service.Add(monhoc);
             return RedirectToAction("Index");
+        }
+        private string GenerateNextId()
+        {
+            const string prefix = "MH";
+            var existing = _service.GetAll()
+                                   .Select(m => m.MaMonHoc)
+                                   .Where(id => id.StartsWith(prefix))
+                                   .Select(id => int.Parse(id.Substring(prefix.Length)))
+                                   .ToList();
+            int next = existing.Any() ? existing.Max() + 1 : 1;
+            return prefix + next.ToString("D3");   // MH001, MH002, …
         }
     }
 }

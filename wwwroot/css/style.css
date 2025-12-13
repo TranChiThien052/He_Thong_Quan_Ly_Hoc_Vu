@@ -167,16 +167,7 @@ html, body {
   border-color: #d1d5db;
   transform: translateY(-1px);
 }
-.btn-primary {
-  background: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
-}
-.btn-primary:hover {
-  background: var(--primary-hover);
-  border-color: var(--primary-hover);
-}
-.btn-small { padding: 6px 10px; font-size: 13px; }
+
 
 /* Filters */
 .filters {
