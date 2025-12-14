@@ -3,6 +3,7 @@
   color: #fff;
   border-color: var(--primary);
 }
+
 .btn-primary:hover {
   background: var(--primary-hover);
   border-color: var(--primary-hover);

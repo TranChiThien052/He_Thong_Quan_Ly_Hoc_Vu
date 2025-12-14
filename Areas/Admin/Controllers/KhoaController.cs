@@ -46,7 +46,7 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([Bind("TenKhoa")] Khoa khoa)
+        public IActionResult Edit([Bind("MaKhoa,TenKhoa")] Khoa khoa)
         {
             _service.Update(khoa);
             return RedirectToAction("Index", "KhoaNganh");
