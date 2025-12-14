@@ -1,22 +1,22 @@
 @model QuanLyHocVu.Models.Nganh
 
 @{
-    ViewData["Title"] = "Thêm Ngành";
+    ViewData["Title"] = "Sửa Ngành";
 }
 
     <div class="container bg-white p-4 rounded shadow-sm">
-        <h4 class="mb-4 text-primary">Thêm Ngành</h4>
+        <h4 class="mb-4 text-primary">Sửa Ngành</h4>
 
-        <form asp-action="Create" method="post">
+        <form asp-action="Edit" method="post">
             <!-- Mã ngành -->
             <div class="mb-4">
                 <label asp-for="MaNganh" class="form-label">Mã Ngành</label>
-                <input type="text" class="form-control" asp-for="MaNganh" placeholder="Nhập mã ngành (ví dụ: CNTT)">
+                <input type="text" class="form-control" asp-for="MaNganh" readonly>
             </div>
             <!-- Tên ngành -->
             <div class="mb-4">
                 <label asp-for="TenNganh" class="form-label">Tên Ngành</label>
-                <input type="text" class="form-control" asp-for="TenNganh" placeholder="Nhập tên ngành">
+                <input type="text" class="form-control" asp-for="TenNganh">
             </div>
 
             <!-- Danh sách ngành dạng bảng -->
