@@ -36,5 +36,28 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
             _nganhService.Add(nganh);
             return RedirectToAction("Index", "KhoaNganh");
         }
+
+        public IActionResult Edit(string id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+            var nganh = _nganhService.GetById(id);
+            if(nganh == null)
+            {
+                return NotFound();
+            }
+            ViewBag.Khoas = _khoaService.GetAll();
+            return View(nganh);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit([Bind("MaNganh,TenNganh")] Nganh nganh)
+        {
+            _nganhService.Update(nganh);
+            return RedirectToAction("Index", "KhoaNganh");
+        }
     }
 }
