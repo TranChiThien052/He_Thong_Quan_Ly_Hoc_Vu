@@ -12,11 +12,7 @@
     <form class="row g-3 mb-4">
         <div class="col-md-4">
             <label for="nganh" class="form-label">Ngành</label>
-            <select class="form-select" id="nganh">
-                <option selected>Tất cả</option>
-                <option value="CNTT">Công nghệ thông tin</option>
-                <option value="KTQT">Kinh tế quốc tế</option>
-                <option value="QTKD">Quản trị kinh doanh</option>
+            <select class="form-select" id="nganh" asp-items="ViewBag.Nganhs">
             </select>
         </div>
         <div class="col-md-5">
@@ -38,23 +34,19 @@
     <h4 class="mb-3 text-success">Thêm chương trình đào tạo</h4>
 
     <!-- Form thêm chương trình -->
-    <form class="row g-3">
+    <form class="row g-3" asp-action="Create" method="post">
     <div class="col-md-2">
         <label for="maCTDTMoi" class="form-label">Mã CTĐT</label>
-        <input type="text" class="form-control" id="maCTDTMoi" placeholder="VD: CNTT2024">
+        <input type="text" class="form-control" id="maCTDTMoi" name="maCTDTMoi" placeholder="VD: CNTT2024" required>
     </div>
     <div class="col-md-4">
         <label for="tenCTDTMoi" class="form-label">Tên CTĐT</label>
-        <input type="text" class="form-control" id="tenCTDTMoi" placeholder="VD: Công nghệ thông tin nâng cao">
+        <input type="text" class="form-control" id="tenCTDTMoi" name="tenCTDTMoi" placeholder="VD: Công nghệ thông tin nâng cao" required>
     </div>
     <div class="col-md-4">
         <label for="nganhMoi" class="form-label">Ngành</label>
         <div class="d-flex gap-2">
-            <select class="form-select h-100" id="nganhMoi">
-                <option selected disabled>-- Chọn ngành --</option>
-                <option value="CNTT">Công nghệ thông tin</option>
-                <option value="KTQT">Kinh tế quốc tế</option>
-                <option value="QTKD">Quản trị kinh doanh</option>
+            <select class="form-select h-100" id="nganhMoi" name="nganhMoi" asp-items="ViewBag.Nganhs">
             </select>
             <button type="submit" class="btn btn-success h-100">Thêm</button>
         </div>
@@ -74,26 +66,22 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>CNTT2023</td>
-                <td>Công nghệ thông tin</td>
-                <td>abc</td>
-                <td>140</td>
-                <td>
-                    <a href="#" class="btn btn-sm btn-warning">Sửa</a>
-                    <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-                </td>
-            </tr>
-            <tr>
-                <td>KTQT2023</td>
-                <td>Kinh tế quốc tế</td>
-                <td>xyz</td>
-                <td>135</td>
-                <td>
-                    <a href="#" class="btn btn-sm btn-warning">Sửa</a>
-                    <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-                </td>
-            </tr>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.MaCtdt</td>
+                        <td>@item.TenCtdt</td>
+                        <td>@item.MaNganhNavigation?.TenNganh</td>
+                        <td>@item.ChiTietChuongTrinhDaoTaos.Sum(ct => ct.MaMonHocNavigation?.SoTinChi ?? 0)</td>
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = item.MaCtdt })" class="btn btn-sm btn-warning">Sửa</a>
+                            <a href="@Url.Action("Delete", new { id = item.MaCtdt })" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc muốn xóa không?');">Xóa</a>
+                        </td>
+                    </tr>
+                }
+            }
         </tbody>
     </table>
 

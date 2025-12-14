@@ -100,7 +100,7 @@ public partial class QuanLyHocVuContext : DbContext
         {
             entity.HasKey(e => new { e.MaCtdt, e.MaMonHoc });
 
-            entity.ToTable("ChiTietChuongTrinhDaoTao");
+            entity.ToTable("ChiTietChuongTrinh");
 
             entity.Property(e => e.MaCtdt).HasMaxLength(10).HasColumnName("MaCTDT");
             entity.Property(e => e.MaMonHoc).HasMaxLength(10);

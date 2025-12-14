@@ -20,6 +20,7 @@ builder.Services.AddScoped<QuanLyHocVu.Services.IPhongHocService, QuanLyHocVu.Se
 builder.Services.AddScoped<QuanLyHocVu.Services.IChuongTrinhDaoTaoService, QuanLyHocVu.Services.ChuongTrinhDaoTaoService>();
 builder.Services.AddScoped<QuanLyHocVu.Services.IHocPhiService, QuanLyHocVu.Services.HocPhiService>();
 builder.Services.AddScoped<QuanLyHocVu.Services.IKhoaNganhService, QuanLyHocVu.Services.KhoaNganhService>();
+builder.Services.AddScoped<QuanLyHocVu.Services.IChiTietChuongTrinhService, QuanLyHocVu.Services.ChiTietChuongTrinhService>();
 
 
 // Thêm Authentication Service

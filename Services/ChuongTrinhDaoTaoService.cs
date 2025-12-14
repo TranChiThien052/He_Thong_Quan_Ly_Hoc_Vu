@@ -18,6 +18,8 @@ namespace QuanLyHocVu.Services
         {
             return _context.ChuongTrinhDaoTaos
                 .Include(c => c.MaNganhNavigation)
+                .Include(c => c.ChiTietChuongTrinhDaoTaos)
+                .ThenInclude(ct => ct.MaMonHocNavigation)
                 .ToList();
         }
 

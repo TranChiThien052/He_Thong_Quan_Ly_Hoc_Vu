@@ -1,0 +1,177 @@
+@model QuanLyHocVu.Models.ChuongTrinhDaoTao
+@{
+    var allMonHoc = Html.Raw(ViewBag.AllMonHocJson);
+    var chiTiet = Html.Raw(ViewBag.ChiTietJson);
+}
+
+<div class="container bg-white p-4 rounded shadow-sm">
+    <h4 class="mb-4 text-primary">Sửa chương trình đào tạo</h4>
+
+    <!-- Form thông tin chương trình -->
+    <form id="formCTDT">
+      <div class="row g-3 mb-4">
+        <div class="col-md-4">
+          <label for="maCTDT" class="form-label">Mã CTĐT</label>
+          <input type="text" class="form-control" id="maCTDT" value="@Model.MaCtdt" readonly>
+        </div>
+        <div class="col-md-4">
+          <label for="tenCTDT" class="form-label">Tên CTĐT</label>
+          <input type="text" class="form-control" id="tenCTDT" value="@Model.TenCtdt" disabled>
+        </div>
+        <div class="col-md-4">
+          <label for="nganh" class="form-label">Ngành</label>
+            <select class="form-select" id="nganh" disabled asp-items="ViewBag.Nganhs"></select>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end gap-2 mb-4">
+        <a href="/Admin/ChuongTrinhDaoTao" class="btn btn-secondary">Hủy</a>
+        <button type="button" class="btn btn-primary" onclick="luuDuLieu()">Lưu</button>
+      </div>
+    </form>
+
+    <hr>
+
+    <!-- Thêm môn học -->
+    <div class="row g-2 mb-3">
+      <div class="col-md-6">
+        <input type="text" class="form-control" id="tenMonHoc" placeholder="Nhập tên môn học..." oninput="timMonHoc()">
+        <div id="goiYMonHoc" class="list-group position-absolute w-50 z-1"></div>
+      </div>
+      <div class="col-md-3">
+        <select class="form-select" id="hocKy">
+          <option disabled selected value="">Chọn học kỳ</option>
+          <script>
+            for (let i = 1; i <= 8; i++) {
+              document.write(`<option value="${i}">Học kỳ ${i}</option>`);
+            }
+          </script>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <button class="btn btn-success w-100" onclick="themMonHoc()">Thêm</button>
+      </div>
+    </div>
+
+    <!-- Danh sách môn học -->
+    <table class="table table-bordered table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>Mã môn học</th>
+          <th>Tên môn học</th>
+          <th>Học kỳ</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody id="danhSachMonHoc">
+        <!-- JS sẽ render danh sách tại đây -->
+      </tbody>
+    </table>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Initialize data from Server
+    let danhSachMonHoc = @chiTiet;
+    const danhSachGoc = @allMonHoc;
+
+    // Initial render
+    document.addEventListener('DOMContentLoaded', () => {
+        capNhatBang();
+    });
+
+    function timMonHoc() {
+      const input = document.getElementById("tenMonHoc").value.toLowerCase();
+      const goiY = document.getElementById("goiYMonHoc");
+      goiY.innerHTML = "";
+      if (input.length === 0) return;
+
+      const ketQua = danhSachGoc.filter(m => m.TenMonHoc.toLowerCase().includes(input));
+      ketQua.forEach(mon => {
+        const item = document.createElement("button");
+        item.className = "list-group-item list-group-item-action";
+        item.textContent = mon.TenMonHoc;
+        item.onclick = () => {
+          document.getElementById("tenMonHoc").value = mon.TenMonHoc;
+          document.getElementById("tenMonHoc").dataset.ma = mon.MaMonHoc; // Store ID
+          goiY.innerHTML = "";
+        };
+        goiY.appendChild(item);
+      });
+    }
+
+    function themMonHoc() {
+      const tenInput = document.getElementById("tenMonHoc");
+      const ten = tenInput.value.trim();
+      const ma = tenInput.dataset.ma;
+      const hocKy = document.getElementById("hocKy").value;
+
+      if (!ma || !hocKy) return alert("Vui lòng chọn môn học từ danh sách gợi ý và chọn học kỳ.");
+      
+      // Check duplicate
+      const exists = danhSachMonHoc.some(x => x.MaMonHoc === ma);
+      if(exists) return alert("Môn học này đã có trong danh sách");
+
+      danhSachMonHoc.push({ MaMonHoc: ma, TenMonHoc: ten, HocKy: parseInt(hocKy) });
+      capNhatBang();
+      
+      // Reset input
+      tenInput.value = "";
+      delete tenInput.dataset.ma;
+      document.getElementById("hocKy").value = "";
+    }
+
+    function xoaMonHoc(index) {
+      if(!confirm("Bạn có chắc muốn xóa môn học này?")) return;
+      danhSachMonHoc.splice(index, 1);
+      capNhatBang();
+    }
+
+    function capNhatBang() {
+      const tbody = document.getElementById("danhSachMonHoc");
+      tbody.innerHTML = "";
+      danhSachMonHoc.forEach((mon, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${mon.MaMonHoc}</td>
+          <td>${mon.TenMonHoc}</td>
+          <td>Học kỳ ${mon.HocKy}</td>
+          <td><button class="btn btn-sm btn-danger" onclick="xoaMonHoc(${index})">Xóa</button></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    async function luuDuLieu() {
+        const maCTDT = document.getElementById("maCTDT").value;
+        
+        // Map directly to Model properties: MaCtdt, MaMonHoc, HocKy
+        const data = danhSachMonHoc.map(m => ({
+            MaCtdt: maCTDT,     // Although we pass in query param, property check might require it or it's good practice
+            MaMonHoc: m.MaMonHoc,
+            HocKy: parseInt(m.HocKy)
+        }));
+
+        try {
+            // Pass maCTDT via query string to identify the parent
+            const response = await fetch(`/Admin/ChuongTrinhDaoTao/SaveChiTiet?maCTDT=${maCTDT}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data) // Send the List directly
+            });
+
+            if (response.ok) {
+                alert("Lưu thành công!");
+                window.location.reload();
+            } else {
+                alert("Có lỗi xảy ra khi lưu.");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Lỗi kết nối.");
+        }
+    }
+  </script>
