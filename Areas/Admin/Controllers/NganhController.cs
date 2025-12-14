@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using QuanLyHocVu.Models;
 using QuanLyHocVu.Services;
 
@@ -51,6 +52,30 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
             var nganh = _nganhService.GetById(id);
             ViewBag.Khoas = _khoaService.GetAll();
             return View(nganh);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit([Bind("MaNganh,TenNganh")] Nganh nganh, List<string> khoa) {
+            _nganhService.Update(nganh);
+            var items = _nganhService.GetById(nganh.MaNganh).KhoaNganhs.ToList();
+            foreach(var item in items) {
+                _khoaNganhService.Delete(item);
+            }
+            foreach (var maKhoa in khoa)
+            {
+                var khoaExisted = _khoaService.GetById(maKhoa);
+                if (khoaExisted != null)
+                {
+                    var khoaNganh = new KhoaNganh
+                    {
+                        MaKhoa = khoaExisted.MaKhoa,
+                        MaNganh = nganh.MaNganh
+                    };
+
+                    _khoaNganhService.Add(khoaNganh);
+                }
+            }
+            return RedirectToAction("Index", "KhoaNganh");
         }
     }
 }
