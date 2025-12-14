@@ -16,12 +16,16 @@ namespace QuanLyHocVu.Services
 
         public List<Nganh> GetAll()
         {
-            return _context.Nganhs.ToList();
+            return _context.Nganhs
+            .Include(n => n.KhoaNganhs)
+            .ToList();
         }
 
         public Nganh GetById(string id)
         {
-            return _context.Nganhs.FirstOrDefault(n => n.MaNganh == id);
+            return _context.Nganhs
+            .Include(n => n.KhoaNganhs)
+            .FirstOrDefault(n => n.MaNganh == id);
         }
 
         public void Add(Nganh nganh)

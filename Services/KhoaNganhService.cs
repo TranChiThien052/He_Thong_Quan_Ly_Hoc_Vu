@@ -17,7 +17,11 @@ namespace QuanLyHocVu.Services
         {
             return _context.KhoaNganhs.ToList();
         }
-
+        public KhoaNganh Get(KhoaNganh khoaNganh)
+        {
+            return _context.KhoaNganhs
+                    .FirstOrDefault(k => k.MaKhoa == khoaNganh.MaKhoa && k.MaNganh == khoaNganh.MaNganh);
+        }
         public void Add(KhoaNganh khoaNganh)
         {
             _context.KhoaNganhs.Add(khoaNganh);
