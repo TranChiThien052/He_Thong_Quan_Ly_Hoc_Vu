@@ -32,9 +32,13 @@
                     <tbody>
                     @foreach(var khoa in ViewBag.Khoas)
                     {
+                        bool isChecked = Model.KhoaNganhs.Any(kn => kn.MaKhoa == khoa.MaKhoa);
                         <tr>
                             <td class="text-center">
-                                <input type="checkbox" name="khoa[]" value="@khoa.MaKhoa">
+                                <input type="checkbox"
+                                    name="khoa[]"
+                                    value="@khoa.MaKhoa"
+                                    @(isChecked ? "checked" : "") />
                             </td>
                             <td>@khoa.TenKhoa</td>
                         </tr>

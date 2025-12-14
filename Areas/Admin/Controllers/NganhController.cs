@@ -11,10 +11,12 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
     {
         private readonly IKhoaService _khoaService;
         private readonly INganhService _nganhService;
-        public NganhController(IKhoaService khoaService, INganhService nganhService)
+        private readonly IKhoaNganhService _khoaNganhService;
+        public NganhController(IKhoaService khoaService, INganhService nganhService, IKhoaNganhService khoaNganhService)
         {
             _khoaService = khoaService;
             _nganhService = nganhService;
+            _khoaNganhService = khoaNganhService;
         }
         public IActionResult Create()
         {
@@ -23,41 +25,32 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("MaNganh,TenNganh")] Nganh nganh, List<string> maKhoas)
+        public IActionResult Create([Bind("MaNganh,TenNganh")] Nganh nganh, List<string> khoa)
         {
-            foreach (var maKhoa in maKhoas)
+            _nganhService.Add(nganh);
+
+            foreach (var maKhoa in khoa)
             {
-                var khoa = _khoaService.GetById(maKhoa);
-                if (khoa != null)
+                var khoaExisted = _khoaService.GetById(maKhoa);
+                if (khoaExisted != null)
                 {
-                    nganh.MaKhoas.Add(khoa);
+                    var khoaNganh = new KhoaNganh
+                    {
+                        MaKhoa = khoaExisted.MaKhoa,
+                        MaNganh = nganh.MaNganh
+                    };
+
+                    _khoaNganhService.Add(khoaNganh);
                 }
             }
-            _nganhService.Add(nganh);
+
             return RedirectToAction("Index", "KhoaNganh");
         }
-
         public IActionResult Edit(string id)
-        {
-            if(id == null)
-            {
-                return NotFound();
-            }
+        {   
             var nganh = _nganhService.GetById(id);
-            if(nganh == null)
-            {
-                return NotFound();
-            }
             ViewBag.Khoas = _khoaService.GetAll();
             return View(nganh);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit([Bind("MaNganh,TenNganh")] Nganh nganh)
-        {
-            _nganhService.Update(nganh);
-            return RedirectToAction("Index", "KhoaNganh");
         }
     }
 }

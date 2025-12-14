@@ -68,14 +68,6 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
             return View(sinhVien);
         }
 
-        // GET: Admin/SinhVien/Create
-        public IActionResult Create()
-        {
-            var nganhs = _nganhService.GetAll();
-            ViewData["MaNganh"] = new SelectList(nganhs, "MaNganh", "TenNganh");
-            return View();
-        }
-
         // POST: Admin/SinhVien/Create
         [HttpPost]
         [ValidateAntiForgeryToken]

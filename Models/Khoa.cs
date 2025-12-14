@@ -11,5 +11,5 @@ public partial class Khoa
 
     public virtual ICollection<GiangVien> GiangViens { get; set; } = new List<GiangVien>();
 
-    public virtual ICollection<Nganh> MaNganhs { get; set; } = new List<Nganh>();
+    public virtual ICollection<KhoaNganh> KhoaNganhs { get; set; } = new List<KhoaNganh>();
 }

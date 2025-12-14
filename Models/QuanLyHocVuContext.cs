@@ -39,6 +39,8 @@ public partial class QuanLyHocVuContext : DbContext
 
     public virtual DbSet<Khoa> Khoas { get; set; }
 
+    public virtual DbSet<KhoaNganh> KhoaNganhs { get; set; }
+
     public virtual DbSet<LopHocPhan> LopHocPhans { get; set; }
 
     public virtual DbSet<MonHoc> MonHocs { get; set; }
@@ -67,6 +69,7 @@ public partial class QuanLyHocVuContext : DbContext
     {
         modelBuilder.Entity<CanBo>(entity =>
         {
+            entity.HasBaseType<NguoiDung>();
             entity.ToTable("CanBo");
 
             entity.Property(e => e.TinhTrangCongTac).HasMaxLength(50);
@@ -193,7 +196,10 @@ public partial class QuanLyHocVuContext : DbContext
 
         modelBuilder.Entity<GiangVien>(entity =>
         {
+            entity.HasBaseType<NguoiDung>();
             entity.ToTable("GiangVien");
+
+            entity.Property(e => e.MaNguoiDung).HasColumnName("MaGiangVien");
 
             entity.Property(e => e.ChuyenMon).HasMaxLength(100);
             entity.Property(e => e.MaKhoa).HasMaxLength(10);
@@ -247,24 +253,10 @@ public partial class QuanLyHocVuContext : DbContext
             entity.Property(e => e.MaKhoa).HasMaxLength(10);
             entity.Property(e => e.TenKhoa).HasMaxLength(100);
 
-            entity.HasMany(d => d.MaNganhs).WithMany(p => p.MaKhoas)
-                .UsingEntity<Dictionary<string, object>>(
-                    "KhoaNganh",
-                    r => r.HasOne<Nganh>().WithMany()
-                        .HasForeignKey("MaNganh")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__Khoa_Ngan__MaNga__571DF1D5"),
-                    l => l.HasOne<Khoa>().WithMany()
-                        .HasForeignKey("MaKhoa")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__Khoa_Ngan__MaKho__5629CD9C"),
-                    j =>
-                    {
-                        j.HasKey("MaKhoa", "MaNganh").HasName("PK__Khoa_Nga__AF15EB55B424169C");
-                        j.ToTable("Khoa_Nganh");
-                        j.IndexerProperty<string>("MaKhoa").HasMaxLength(10);
-                        j.IndexerProperty<string>("MaNganh").HasMaxLength(10);
-                    });
+            entity.HasMany(d => d.KhoaNganhs).WithOne(p => p.Khoa)
+                .HasForeignKey(d => d.MaKhoa)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_KhoaNganh_Khoa");
         });
 
         modelBuilder.Entity<LopHocPhan>(entity =>
@@ -324,6 +316,33 @@ public partial class QuanLyHocVuContext : DbContext
 
             entity.Property(e => e.MaNganh).HasMaxLength(10);
             entity.Property(e => e.TenNganh).HasMaxLength(100);
+
+            entity.HasMany(d => d.KhoaNganhs).WithOne(p => p.Nganh)
+                .HasForeignKey(d => d.MaNganh)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__KhoaNganh__MaNga__571DF1D5");
+        });
+
+        modelBuilder.Entity<KhoaNganh>(entity =>
+        {
+            entity.HasKey(e => new { e.MaKhoa, e.MaNganh });
+
+            entity.ToTable("KhoaNganh");
+
+            entity.Property(e => e.MaKhoa).HasMaxLength(10);
+            entity.Property(e => e.MaNganh).HasMaxLength(10);
+
+            entity.HasOne(e => e.Khoa)
+                .WithMany(k => k.KhoaNganhs)
+                .HasForeignKey(e => e.MaKhoa)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_KhoaNganh_Khoa");
+
+            entity.HasOne(e => e.Nganh)
+                .WithMany(n => n.KhoaNganhs)
+                .HasForeignKey(e => e.MaNganh)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_KhoaNganh_Nganh");
         });
 
         modelBuilder.Entity<NguoiDung>(entity =>
@@ -361,7 +380,10 @@ public partial class QuanLyHocVuContext : DbContext
 
         modelBuilder.Entity<SinhVien>(entity =>
         {
+            entity.HasBaseType<NguoiDung>();
             entity.ToTable("SinhVien");
+
+            entity.Property(e => e.MaNguoiDung).HasColumnName("MaNguoiDung");
 
             entity.Property(e => e.MaNganh).HasMaxLength(10);
             entity.Property(e => e.NienKhoa).HasMaxLength(20);

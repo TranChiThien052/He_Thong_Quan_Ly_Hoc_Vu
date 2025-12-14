@@ -13,5 +13,5 @@ public partial class Nganh
 
     public virtual ICollection<SinhVien> SinhViens { get; set; } = new List<SinhVien>();
 
-    public virtual ICollection<Khoa> MaKhoas { get; set; } = new List<Khoa>();
+    public virtual ICollection<KhoaNganh> KhoaNganhs { get; set; } = new List<KhoaNganh>();
 }
