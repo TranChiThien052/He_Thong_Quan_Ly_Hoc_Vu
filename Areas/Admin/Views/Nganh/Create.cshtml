@@ -5,41 +5,46 @@
 }
 
     <div class="container bg-white p-4 rounded shadow-sm">
-        <h4 class="mb-4 text-primary">Thêm Khoa - Ngành</h4>
+        <h4 class="mb-4 text-primary">Thêm Ngành</h4>
 
-        <form>
-            <!-- Mã khoa -->
+        <form asp-action="Create" method="post">
+            <!-- Mã ngành -->
             <div class="mb-4">
-                <label for="maKhoa" class="form-label">Mã khoa</label>
-                <input type="text" class="form-control" id="maKhoa" placeholder="Nhập mã khoa (ví dụ: KH001)">
+                <label asp-for="MaNganh" class="form-label">Mã Ngành</label>
+                <input type="text" class="form-control" asp-for="MaNganh" placeholder="Nhập mã ngành (ví dụ: CNTT)">
+            </div>
+            <!-- Tên ngành -->
+            <div class="mb-4">
+                <label asp-for="TenNganh" class="form-label">Tên Ngành</label>
+                <input type="text" class="form-control" asp-for="TenNganh" placeholder="Nhập tên ngành">
             </div>
 
             <!-- Danh sách ngành dạng bảng -->
             <div class="mb-3">
-                <label class="form-label">Chọn các ngành</label>
+                <label class="form-label">Chọn các khoa</label>
                 <table class="table table-bordered align-middle">
                     <thead class="table-light">
                         <tr>
                             <th style="width: 50px;">Chọn</th>
-                            <th>Mã ngành</th>
+                            <th>Mã khoa</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td class="text-center">
-                                <input type="checkbox" name="nganh[]" value="GV001">
+                                <input type="checkbox" name="khoa[]" value="KTP">
                             </td>
-                            <td>GV001</td>
+                            <td>Khoa Công Nghệ Thực Phẩm</td>
                         </tr>
                         <tr>
                             <td class="text-center">
-                                <input type="checkbox" name="nganh[]" value="GV002">
+                                <input type="checkbox" name="khoa[]" value="KCB">
                             </td>
-                            <td>GV002</td>
+                            <td>Khoa Cơ Bản</td>
                         </tr>
                         <tr>
                             <td class="text-center">
-                                <input type="checkbox" name="nganh[]" value="GV003">
+                                <input type="checkbox" name="khoa[]" value="GV003">
                             </td>
                             <td>GV003</td>
                         </tr>

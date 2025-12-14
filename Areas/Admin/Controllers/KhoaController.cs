@@ -24,9 +24,31 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("MaKhoa,TenKhoa")] QuanLyHocVu.Models.Khoa khoa)
+        public IActionResult Create([Bind("MaKhoa,TenKhoa")] Khoa khoa)
         {
             _service.Add(khoa);
+            return RedirectToAction("Index", "KhoaNganh");
+        }
+
+        public IActionResult Edit(string id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+            var khoa = _service.GetById(id);
+            if(khoa == null)
+            {
+                return NotFound();
+            }
+            return View(khoa);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit([Bind("TenKhoa")] Khoa khoa)
+        {
+            _service.Update(khoa);
             return RedirectToAction("Index", "KhoaNganh");
         }
     }
