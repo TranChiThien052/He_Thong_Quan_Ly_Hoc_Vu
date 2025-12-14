@@ -19,6 +19,8 @@ builder.Services.AddScoped<QuanLyHocVu.Services.IHocKyService, QuanLyHocVu.Servi
 builder.Services.AddScoped<QuanLyHocVu.Services.IPhongHocService, QuanLyHocVu.Services.PhongHocService>();
 builder.Services.AddScoped<QuanLyHocVu.Services.IChuongTrinhDaoTaoService, QuanLyHocVu.Services.ChuongTrinhDaoTaoService>();
 builder.Services.AddScoped<QuanLyHocVu.Services.IHocPhiService, QuanLyHocVu.Services.HocPhiService>();
+builder.Services.AddScoped<QuanLyHocVu.Services.IKhoaNganhService, QuanLyHocVu.Services.KhoaNganhService>();
+
 
 // Thêm Authentication Service
 builder.Services.AddAuthentication(Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme)

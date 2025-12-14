@@ -18,7 +18,7 @@ namespace QuanLyHocVu.Services
         {
             return _context.SinhViens
                 .Include(s => s.MaNganhNavigation)
-                .Include(s => s.TaiKhoan) // Include account info from base NguoiDung
+                .Include(s => s.TaiKhoan)
                 .ToList();
         }
 

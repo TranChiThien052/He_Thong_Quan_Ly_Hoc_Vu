@@ -73,7 +73,7 @@ CREATE TABLE TaiKhoan (
     FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung)
 );
 
-CREATE TABLE Khoa_Nganh (
+CREATE TABLE KhoaNganh (
     MaKhoa NVARCHAR(10),
     MaNganh NVARCHAR(10),
     PRIMARY KEY (MaKhoa, MaNganh),
