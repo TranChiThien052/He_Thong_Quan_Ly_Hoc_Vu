@@ -1,0 +1,56 @@
+
+@{
+    ViewData["Title"] = "Thông tin giảng viên";
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<div class="container bg-white p-4 rounded shadow-sm">
+    <h4 class="mb-4 text-primary">Thông Tin Giảng Viên</h4>
+
+    <form>
+      <div class="row g-3">
+        <!-- Cột trái -->
+        <div class="col-md-6">
+          <label for="maGV" class="form-label">Mã giảng viên</label>
+          <input type="text" class="form-control" id="maGV" value="GV001" readonly>
+
+          <label for="hoTen" class="form-label mt-3">Họ tên</label>
+          <input type="text" class="form-control" id="hoTen" placeholder="Nhập họ và tên...">
+
+          <label for="email" class="form-label mt-3">Email</label>
+          <input type="email" class="form-control" id="email" placeholder="example@domain.com">
+
+          <label for="soDT" class="form-label mt-3">Số điện thoại</label>
+          <input type="text" class="form-control" id="soDT" placeholder="Nhập số điện thoại...">
+
+          <label for="cccd" class="form-label mt-3">CCCD/CMND</label>
+          <input type="text" class="form-control" id="cccd" placeholder="Nhập số CCCD/CMND...">
+
+          <label for="khoa" class="form-label mt-3">Khoa</label>
+          <input type="text" class="form-control" id="khoa" value="Khoa Công nghệ thông tin" readonly>
+
+          <label for="chuyenMon" class="form-label mt-3">Chuyên môn</label>
+          <input type="text" class="form-control" id="chuyenMon" value="Lập trình Web" readonly>
+        </div>
+
+        <!-- Cột phải -->
+        <div class="col-md-6">
+          <label for="ngaySinh" class="form-label">Ngày sinh</label>
+          <input type="date" class="form-control" id="ngaySinh">
+
+          <label for="queQuan" class="form-label mt-3">Quê quán</label>
+          <input type="text" class="form-control" id="queQuan" placeholder="Nhập quê quán...">
+
+          <label for="thuongTru" class="form-label mt-3">Địa chỉ thường trú</label>
+          <input type="text" class="form-control" id="thuongTru" placeholder="Nhập địa chỉ thường trú...">
+
+          <label for="tamTru" class="form-label mt-3">Địa chỉ tạm trú</label>
+          <input type="text" class="form-control" id="tamTru" placeholder="Nhập địa chỉ tạm trú...">
+
+          <div class="d-flex justify-content-end gap-2 mt-4">
+            <a href="#" class="btn btn-secondary">Quay lại</a>
+            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
