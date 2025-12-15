@@ -1,78 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Cổng Sinh Viên</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - QUẢN LÝ HỌC VỤ</title>
+    
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <style>
-        .sidebar {
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 250px;
-            background-color: #343a40;
-            padding-top: 60px;
-            color: white;
-        }
-        .sidebar a {
-            padding: 10px 15px;
-            text-decoration: none;
-            font-size: 18px;
-            color: #d1d1d1;
-            display: block;
-        }
-        .sidebar a:hover {
-            color: white;
-            background-color: #007bff;
-        }
-        .main-content {
-            margin-left: 250px;
-            padding: 20px;
-        }
-        .navbar-custom {
-            margin-left: 250px;
-            background-color: #f8f9fa;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
-    <div class="sidebar">
-        <h3 class="text-center text-light">Sinh Viên</h3>
-        <hr />
-        <a asp-area="SinhVien" asp-controller="Home" asp-action="Index">Trang chủ</a>
-        <a asp-area="SinhVien" asp-controller="DangKyHocPhan" asp-action="Index">Đăng ký học phần</a>
-        <a asp-area="SinhVien" asp-controller="KetQuaHocTap" asp-action="Index">Kết quả học tập</a>
-        <a asp-area="SinhVien" asp-controller="ThoiKhoaBieu" asp-action="Index">Thời khóa biểu</a>
-        <a asp-area="SinhVien" asp-controller="HocPhi" asp-action="Index">Học phí</a>
-        <hr />
-        <a asp-area="" asp-controller="Home" asp-action="Index">Về trang chính</a>
-        <a asp-area="" asp-controller="Account" asp-action="Logout">Đăng xuất</a>
-    </div>
-
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 navbar-custom">
-            <div class="container-fluid">
-                <span class="navbar-brand">Hệ thống quản lý học vụ</span>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-logo"> <a asp-controller="Home" asp-action="Index"><img src="~/img/Logo.png" alt="Logo" style="height: 30px; vertical-align: middle; margin-right: 5px;" /> STU</a></div>
+                <div class="brand-name">Trường Đại Học Công Nghệ Sài Gòn</div>
+                <hr>
+                <div class="user-info fs-6 fw-light">@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value - @User.FindFirst(System.Security.Claims.ClaimTypes.Name)?.Value</div>
             </div>
-        </nav>
-    </header>
+            <hr>
+            <nav class="menu">
+                <ul>
+                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "SinhVien" ? "active" : "")">
+                        <a asp-area="SinhVien" asp-controller="Info" asp-action="Index">Thông tin cá nhân</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
 
-    <div class="main-content">
-        <main role="main" class="pb-3">
+        <main class="main">
             @RenderBody()
         </main>
     </div>
 
+    <!-- jQuery -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- Original JS -->
+    <script src="~/js/script.js"></script>
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+

@@ -1,0 +1,67 @@
+@model QuanLyHocVu.Models.SinhVien
+@{
+    ViewData["Title"] = "Thông tin sinh viên";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<div class="container bg-white p-4 rounded shadow-sm">
+    <h1 class="mb-4 text-primary">Thông Tin Sinh Viên</h1>
+
+    <form asp-action="Edit" method="POST">
+       <div class="d-flex justify-content-between align-items-center mb-3">
+          <div class="fs-4 fw-bold">Thông tin cá nhân</div>
+      </div>
+      <div class="row g-3">
+        <!-- Cột trái -->
+        <div class="col-md-6">
+          <label for="maGV" class="form-label">Mã sinh viên</label>
+          <input asp-for="MaNguoiDung" type="text" class="form-control" readonly>
+
+          <label for="hoTen" class="form-label mt-3">Họ tên</label>
+          <input asp-for="HoTen" type="text" class="form-control" placeholder="Nhập họ và tên...">
+
+          <label for="email" class="form-label mt-3">Email</label>
+          <input asp-for="Email" type="email" class="form-control" placeholder="example@domain.com">
+
+          <label for="soDT" class="form-label mt-3">Số điện thoại</label>
+          <input asp-for="SoDienThoai" type="text" class="form-control" placeholder="Nhập số điện thoại...">
+
+          <label for="cccd" class="form-label mt-3">CCCD/CMND</label>
+          <input asp-for="Cccd" type="text" class="form-control" id="cccd" placeholder="Nhập số CCCD/CMND...">
+
+          
+        </div>
+
+        <!-- Cột phải -->
+        <div class="col-md-6">
+          <label for="ngaySinh" class="form-label">Ngày sinh</label>
+          <input asp-for="NgaySinh" type="date" class="form-control" id="ngaySinh">
+
+          <label for="queQuan" class="form-label mt-3">Quê quán</label>
+          <input asp-for="QueQuan" type="text" class="form-control" id="queQuan" placeholder="Nhập quê quán...">
+
+          <label for="thuongTru" class="form-label mt-3">Địa chỉ thường trú</label>
+          <input asp-for="DiaChiThuongTru" type="text" class="form-control" id="thuongTru" placeholder="Nhập địa chỉ thường trú...">
+
+          <label for="tamTru" class="form-label mt-3">Địa chỉ tạm trú</label>
+          <input asp-for="DiaChiTamTru" type="text" class="form-control" id="tamTru" placeholder="Nhập địa chỉ tạm trú...">
+
+        </div>
+      </div>
+      <hr>
+      <h4>Thông tin ngành học</h4>
+      <div>
+        <ul class="list-unstyled">
+            <li class="ms-3 mt-3"><span class="fw-bold">Ngành học: </span> @Model.MaNganhNavigation.TenNganh</li>
+            <li class="ms-3 mt-3"><span class="fw-bold">Khóa: </span> @Model.NienKhoa</li>
+        </ul>
+      </div>
+      <input asp-for="MaNganh" type="hidden">
+      <input asp-for="NienKhoa" type="hidden">
+      <input asp-for="TinhTrangHoc" type="hidden">
+      <div class="d-flex justify-content-end gap-2 mt-4">
+            <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+          </div>
+    </form>
+  </div>

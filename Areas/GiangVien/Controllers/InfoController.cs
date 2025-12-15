@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using QuanLyHocVu.Services;
 
 namespace QuanLyHocVu.Areas.GiangVien.Controllers
@@ -51,7 +52,6 @@ namespace QuanLyHocVu.Areas.GiangVien.Controllers
                 _giangVienService.Update(giangVien);
                 return RedirectToAction(nameof(Index));
             }
-            
 
         }
     }

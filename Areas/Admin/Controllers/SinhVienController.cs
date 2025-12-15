@@ -20,7 +20,6 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
             _nganhService = nganhService;
         }
 
-        // GET: Admin/SinhVien
         public IActionResult Index(string nienKhoa, string maNganh, string maSinhVien)
         {
             var sinhViens = _sinhVienService.GetAll();
@@ -48,7 +47,6 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
             return View(sinhViens);
         }
 
-        // GET: Admin/SinhVien/Details/5
         public IActionResult Details(string id)
         {
             if (id == null)
@@ -73,7 +71,6 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
             return View();
         }
 
-        // POST: Admin/SinhVien/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("HoTen,QueQuan,NgaySinh,Email,SoDienThoai,Cccd,DiaChiThuongTru,DiaChiTamTru,MaNganh,NienKhoa,TinhTrangHoc")] QuanLyHocVu.Models.SinhVien sinhVien)
@@ -94,7 +91,6 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
             return View(sinhVien);
         }
 
-        // GET: Admin/SinhVien/Edit/5
         public IActionResult Edit(string id)
         {
             if (id == null)
@@ -112,17 +108,15 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
             return View(sinhVien);
         }
 
-        // POST: Admin/SinhVien/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(string id, [Bind("MaNguoiDung,HoTen,QueQuan,NgaySinh,Email,SoDienThoai,Cccd,DiaChiThuongTru,DiaChiTamTru,MaNganh,NienKhoa,TinhTrangHoc")] QuanLyHocVu.Models.SinhVien sinhVien)
+        public IActionResult Edit(string id, [Bind("HoTen,QueQuan,NgaySinh,Email,SoDienThoai,Cccd,DiaChiThuongTru,DiaChiTamTru,MaNganh,NienKhoa,TinhTrangHoc")] QuanLyHocVu.Models.SinhVien sinhVien)
         {
             if (id != sinhVien.MaNguoiDung)
             {
                 return NotFound();
             }
 
-            // Bỏ qua xác thực cho các thuộc tính navigation
             ModelState.Remove("MaNganhNavigation");
             ModelState.Remove("TaiKhoan");
 
@@ -148,32 +142,6 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
             var nganhs = _nganhService.GetAll();
             ViewData["MaNganh"] = new SelectList(nganhs, "MaNganh", "TenNganh", sinhVien.MaNganh);
             return View(sinhVien);
-        }
-
-        // GET: Admin/SinhVien/Delete/5
-        public IActionResult Delete(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var sinhVien = _sinhVienService.GetById(id);
-
-            if (sinhVien == null)
-            {
-                return NotFound();
-            }
-
-            return View(sinhVien);
-        }
-
-        // POST: Admin/SinhVien/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(string id)
-        {
-            return RedirectToAction(nameof(Index));
         }
     }
 }
