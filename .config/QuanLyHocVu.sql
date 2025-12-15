@@ -82,7 +82,7 @@ CREATE TABLE KhoaNganh (
 );
 
 CREATE TABLE HocKy (
-    MaHocKy NVARCHAR(10) PRIMARY KEY,
+    MaHocKy NVARCHAR(20) PRIMARY KEY,
     NamHoc NVARCHAR(20) NOT NULL,     
     HocKySo INT NOT NULL,             
     NgayBatDau DATE NOT NULL,
@@ -102,7 +102,7 @@ CREATE TABLE LopHocPhan (
     MaLopHocPhan NVARCHAR(10) PRIMARY KEY,
     MaMonHoc NVARCHAR(10) NOT NULL,
     MaGiangVien NVARCHAR(10) NOT NULL,
-    MaHocKy NVARCHAR(10) NOT NULL,
+    MaHocKy NVARCHAR(20) NOT NULL,
     CaHoc INT,
     NgayHoc NVARCHAR(10), 
     PhongHoc NVARCHAR(10),
@@ -122,7 +122,7 @@ CREATE TABLE DangKyHocPhan (
 
 CREATE TABLE DiemRenLuyen (
     MaSinhVien NVARCHAR(10),
-    MaHocKy NVARCHAR(10),
+    MaHocKy NVARCHAR(20),
     Diem INT,
     PRIMARY KEY (MaSinhVien, MaHocKy),
     FOREIGN KEY (MaSinhVien) REFERENCES SinhVien(MaNguoiDung),

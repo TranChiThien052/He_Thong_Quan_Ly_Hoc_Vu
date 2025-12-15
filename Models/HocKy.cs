@@ -5,7 +5,7 @@ namespace QuanLyHocVu.Models;
 
 public partial class HocKy
 {
-    public string MaHocKy { get; set; } = null!;
+    public string? MaHocKy { get; set; } = null!;
 
     public string NamHoc { get; set; } = null!;
 

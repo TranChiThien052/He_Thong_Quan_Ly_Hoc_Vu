@@ -1,0 +1,93 @@
+@model IEnumerable<QuanLyHocVu.Models.HocKy>
+
+@{
+    ViewData["Title"] = "Quản lý Học kỳ (Admin)";
+}
+
+<header class="topbar">
+        <h1>Quản lý học kỳ</h1>
+</header>
+        <form method="get" asp-action="Index">
+          <div class="row">
+              <div class="col-md-3">
+                  <label class="form-label fw-bold">Mã học kỳ</label>
+                  <input type="text" name="MaHocKy" class="form-control" />
+              </div>
+              <div class="col-md-3">
+                  <label class="form-label fw-bold">Năm học</label>
+                  <input type="text" name="NamHoc" class="form-control"/>
+              </div>
+              <div class="col-md-4 d-flex align-items-end">
+                  <button type="submit" class="btn btn-primary me-2">
+                      <i class="fas fa-search"></i> Tìm kiếm
+                  </button>
+                  <a asp-action="Index" class="btn btn-secondary">
+                      <i class="fas fa-redo"></i> Làm mới
+                  </a>
+              </div>
+          </div>
+      </form>
+      <hr class="my-2">
+      <div>
+      <form asp-action="Create" method="post">
+        <div><h4 class="mb-3">Thêm mới</h4></div>
+          <input type="hidden" name="MaHocKy" value=""/>
+          <div class="row align-items-end">
+              <div class="col-md-3">
+                  <label class="form-label fw-bold">Năm học</label>
+                  <input type="text" name="NamHoc" class="form-control" placeholder="2024-2025" />
+              </div>
+
+              <div class="col-md-2">
+                  <label class="form-label fw-bold">Học kỳ số</label>
+                  <input type="number" name="HocKySo" class="form-control" min="1" max="3" />
+              </div>
+
+              <div class="col-md-3">
+                  <label class="form-label fw-bold">Ngày bắt đầu</label>
+                  <input type="date" name="NgayBatDau" class="form-control" />
+              </div>
+
+              <div class="col-md-3">
+                  <label class="form-label fw-bold">Ngày kết thúc</label>
+                  <input type="date" name="NgayKetThuc" class="form-control" />
+              </div>
+
+              <div class="col-md-1">
+                  <button type="submit" class="btn btn-primary w-100">
+                      + Thêm
+                  </button>
+              </div>
+          </div>
+      </form>
+      </div>
+      <hr>
+      <section class="card" id="list-subject">
+        <div class="card-header"><h2>Danh sách học kỳ</h2></div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Mã học kỳ</th>
+                <th>Năm học</th>
+                <th>Học kỳ số</th>
+                <th>Ngày bắt đầu</th>
+                <th>Ngày kết thúc</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach (var item in Model)
+              {
+                  <tr>
+                      <td>@item.MaHocKy</td><td>@item.NamHoc</td><td>@item.HocKySo</td><td>@item.NgayBatDau</td><td>@item.NgayKetThuc</td>
+                      <td>
+                          <a asp-action="Edit" asp-route-id="@item.MaHocKy" class="btn btn-small">Sửa</a>
+                      </td>
+                  </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">

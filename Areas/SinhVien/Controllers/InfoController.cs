@@ -46,7 +46,7 @@ namespace QuanLyHocVu.Areas.SinhVien
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditAsync([Bind("MaNguoiDung,HoTen,QueQuan,NgaySinh,Email,SoDienThoai,Cccd,DiaChiThuongTru,DiaChiTamTru,MaNganh,NienKhoa,TinhTrangHoc")] Models.SinhVien sinhVien)
+        public async Task<IActionResult> Edit([Bind("MaNguoiDung,HoTen,QueQuan,NgaySinh,Email,SoDienThoai,Cccd,DiaChiThuongTru,DiaChiTamTru,MaNganh,NienKhoa,TinhTrangHoc")] Models.SinhVien sinhVien)
         {
             ModelState.Remove("MaNganhNavigation");
             ModelState.Remove("TaiKhoan");
