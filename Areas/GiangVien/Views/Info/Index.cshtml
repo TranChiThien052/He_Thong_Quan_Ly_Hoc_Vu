@@ -1,4 +1,4 @@
-
+@model QuanLyHocVu.Models.GiangVien
 @{
     ViewData["Title"] = "Thông tin giảng viên";
 }
@@ -6,51 +6,52 @@
 <div class="container bg-white p-4 rounded shadow-sm">
     <h4 class="mb-4 text-primary">Thông Tin Giảng Viên</h4>
 
-    <form>
-      <div class="row g-3">
+    <form asp-action="Edit" method="get">
+      <div class="row g-3" >
         <!-- Cột trái -->
         <div class="col-md-6">
           <label for="maGV" class="form-label">Mã giảng viên</label>
-          <input type="text" class="form-control" id="maGV" value="GV001" readonly>
+          <input type="text" class="form-control" id="maGV" value="@Model.MaNguoiDung" readonly>
 
           <label for="hoTen" class="form-label mt-3">Họ tên</label>
-          <input type="text" class="form-control" id="hoTen" placeholder="Nhập họ và tên...">
+          <input type="text" class="form-control" id="hoTen" value="@Model.HoTen" readonly>
 
           <label for="email" class="form-label mt-3">Email</label>
-          <input type="email" class="form-control" id="email" placeholder="example@domain.com">
+          <input type="email" class="form-control" id="email" value="@Model.Email" readonly>
 
           <label for="soDT" class="form-label mt-3">Số điện thoại</label>
-          <input type="text" class="form-control" id="soDT" placeholder="Nhập số điện thoại...">
+          <input type="text" class="form-control" id="soDT" value="@Model.SoDienThoai" readonly>
 
           <label for="cccd" class="form-label mt-3">CCCD/CMND</label>
-          <input type="text" class="form-control" id="cccd" placeholder="Nhập số CCCD/CMND...">
+          <input type="text" class="form-control" id="cccd" value="@Model.Cccd" readonly>
 
           <label for="khoa" class="form-label mt-3">Khoa</label>
-          <input type="text" class="form-control" id="khoa" value="Khoa Công nghệ thông tin" readonly>
+          <input type="text" class="form-control" id="khoa" value="@Model.MaKhoaNavigation.TenKhoa" readonly>
 
-          <label for="chuyenMon" class="form-label mt-3">Chuyên môn</label>
-          <input type="text" class="form-control" id="chuyenMon" value="Lập trình Web" readonly>
+          <label for="khoa" class="form-label mt-3">Chuyên môn</label>
+          <input type="text" class="form-control" id="khoa" value="@Model.ChuyenMon" readonly>
+
         </div>
 
         <!-- Cột phải -->
         <div class="col-md-6">
           <label for="ngaySinh" class="form-label">Ngày sinh</label>
-          <input type="date" class="form-control" id="ngaySinh">
+          <input type="date" class="form-control" id="ngaySinh" value="@Model.NgaySinh?.ToString("yyyy-MM-dd")" readonly>
 
           <label for="queQuan" class="form-label mt-3">Quê quán</label>
-          <input type="text" class="form-control" id="queQuan" placeholder="Nhập quê quán...">
+          <input type="text" class="form-control" id="queQuan" value="@Model.QueQuan" readonly>
 
           <label for="thuongTru" class="form-label mt-3">Địa chỉ thường trú</label>
-          <input type="text" class="form-control" id="thuongTru" placeholder="Nhập địa chỉ thường trú...">
+          <input type="text" class="form-control" id="thuongTru" value="@Model.DiaChiThuongTru" readonly>
 
           <label for="tamTru" class="form-label mt-3">Địa chỉ tạm trú</label>
-          <input type="text" class="form-control" id="tamTru" placeholder="Nhập địa chỉ tạm trú...">
+          <input type="text" class="form-control" id="tamTru" value="@Model.DiaChiTamTru" readonly>
 
           <div class="d-flex justify-content-end gap-2 mt-4">
-            <a href="#" class="btn btn-secondary">Quay lại</a>
-            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+            <button asp-action="Edit" asp-route-id="@Model.MaNguoiDung" class="btn btn-primary">Sửa thông tin cá nhân</button>
           </div>
         </div>
       </div>
     </form>
+    
   </div>

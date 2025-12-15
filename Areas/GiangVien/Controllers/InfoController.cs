@@ -27,5 +27,32 @@ namespace QuanLyHocVu.Areas.GiangVien.Controllers
             }
             return View(giangVien);
         }
+
+        public IActionResult Edit(string id){
+            if(id == null){
+                return NotFound();
+            }
+            var giangVien = _giangVienService.GetById(id);
+            if(giangVien == null){
+                return NotFound();
+            }
+            return View(giangVien);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(string id, QuanLyHocVu.Models.GiangVien giangVien)
+        {
+            ModelState.Remove("MaKhoaNavigation");
+            if(id != giangVien.MaNguoiDung){
+                return NotFound();
+            }
+            else{
+                _giangVienService.Update(giangVien);
+                return RedirectToAction(nameof(Index));
+            }
+            
+
+        }
     }
 }

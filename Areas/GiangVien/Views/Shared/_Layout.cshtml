@@ -10,6 +10,15 @@
     <link rel="stylesheet" href="~/css/style.css" />
     @await RenderSectionAsync("Styles", required: false)
 </head>
+<style>
+    .menu a.active {
+        font-weight: bold;
+        background-color: #e9ecef;
+        color: #0d6efd;
+        border-radius: 4px;
+        padding: 6px 12px;
+    }
+</style>
 <body>
     <div class="layout">
         <aside class="sidebar">

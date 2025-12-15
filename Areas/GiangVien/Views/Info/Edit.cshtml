@@ -1,0 +1,52 @@
+@model QuanLyHocVu.Models.GiangVien
+@{
+    ViewData["Title"] = "Sửa thông tin giảng viên";
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<div class="container bg-white p-4 rounded shadow-sm">
+    <h4 class="mb-4 text-primary">Sửa thông tin giảng viên</h4>
+
+    <form asp-action="Edit" method="post">
+      <div class="row g-3">
+        <!-- Cột trái -->
+        <div class="col-md-6">
+          <input type="hidden" class="form-control" asp-for="MaNguoiDung">
+
+          <label for="hoTen" class="form-label mt-3">Họ tên</label>
+          <input type="text" class="form-control" asp-for="HoTen">
+
+          <label for="email" class="form-label mt-3">Email</label>
+          <input type="email" class="form-control" asp-for="Email">
+
+          <label for="soDT" class="form-label mt-3">Số điện thoại</label>
+          <input type="text" class="form-control" asp-for="SoDienThoai">
+
+          <input type="hidden" class="form-control" asp-for="Cccd">
+
+          <input type="hidden" class="form-control" asp-for="MaKhoa" >
+
+          <input type="hidden" class="form-control" asp-for="ChuyenMon">
+
+        </div>
+
+        <!-- Cột phải -->
+        <div class="col-md-6">
+
+          <input type="hidden" class="form-control" asp-for="NgaySinh" >
+
+          <input type="hidden" class="form-control" asp-for="QueQuan" >
+
+          <label for="thuongTru" class="form-label mt-3">Địa chỉ thường trú</label>
+          <input type="text" class="form-control" asp-for="DiaChiThuongTru">
+
+          <label for="tamTru" class="form-label mt-3">Địa chỉ tạm trú</label>
+          <input type="text" class="form-control" asp-for="DiaChiTamTru">
+
+          <div class="d-flex justify-content-end gap-2 mt-4">
+            <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
