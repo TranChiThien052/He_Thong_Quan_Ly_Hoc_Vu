@@ -6,8 +6,6 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<QuanLyHocVu.Models.QuanLyHocVuContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
-// Đăng ký Service vào Container
 builder.Services.AddScoped<IMonHocService, MonHocService>();
 builder.Services.AddScoped<ISinhVienService, SinhVienService>();
 builder.Services.AddScoped<IGiangVienService, GiangVienService>();
@@ -23,7 +21,6 @@ builder.Services.AddScoped<IKhoaNganhService, KhoaNganhService>();
 builder.Services.AddScoped<IChiTietChuongTrinhService, ChiTietChuongTrinhService>();
 builder.Services.AddScoped<ITaiKhoanService, TaiKhoanService>();
 
-// Thêm Authentication Service
 builder.Services.AddAuthentication(Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -49,10 +46,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication(); // BẮT BUỘC: Phải đứng trước Authorization
+app.UseAuthentication();
 app.UseAuthorization();
 
-// Định tuyến cho Areas (QUAN TRỌNG: Phải đặt trước route mặc định)
 app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");

@@ -18,8 +18,5 @@ public partial class SinhVien : NguoiDung
     public virtual ICollection<DiemRenLuyen> DiemRenLuyens { get; set; } = new List<DiemRenLuyen>();
 
     public virtual Nganh MaNganhNavigation { get; set; } = null!;
-
-    public virtual ICollection<SinhVienHoatDongCtxh> SinhVienHoatDongCtxhs { get; set; } = new List<SinhVienHoatDongCtxh>();
-
     public virtual ICollection<DiemHocPhan> DiemHocPhans { get; set; } = new List<DiemHocPhan>();
 }

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - QUẢN LÝ HỌC VỤ</title>
+    
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-logo"> <a asp-controller="Home" asp-action="Index"><img src="~/img/Logo.png" alt="Logo" style="height: 30px; vertical-align: middle; margin-right: 5px;" /> STU</a></div>
+                <div class="brand-name">Trường Đại Học Công Nghệ Sài Gòn</div>
+                <hr>
+                <div class="user-info fs-6 fw-light">@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value - @User.FindFirst(System.Security.Claims.ClaimTypes.Name)?.Value</div>
+            </div>
+            <hr>
+            <nav class="menu">
+                <ul>
+                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "SinhVien" ? "active" : "")">
+                        <a asp-area="GiangVien" asp-controller="Info" asp-action="Index">Thông tin cá nhân</a>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "GiangVien" ? "active" : "")">
+                        <a asp-area="GiangVien" asp-controller="GiangVien" asp-action="Index">Quản lý giảng viên</a>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "MonHoc" ? "active" : "")">
+                        <a asp-area="GiangVien" asp-controller="MonHoc" asp-action="Index">Quản lý môn học</a>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "ChuongTrinhDaoTao" ? "active" : "")">
+                        <a asp-area="GiangVien" asp-controller="ChuongTrinhDaoTao" asp-action="Index">Quản lý chương trình đào tạo</a>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "KhoaNganh" ? "active" : "")">
+                        <a asp-area="GiangVien" asp-controller="KhoaNganh" asp-action="Index">Quản lý khoa-ngành</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- jQuery -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Original JS -->
+    <script src="~/js/script.js"></script>
+    
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
