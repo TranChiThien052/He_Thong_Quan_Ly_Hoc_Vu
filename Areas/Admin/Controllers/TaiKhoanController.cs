@@ -1,36 +1,29 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QuanLyHocVu.Models;
+using QuanLyHocVu.Services;
 
 namespace QuanLyHocVu.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class TaiKhoanController : Controller
     {
-        private readonly QuanLyHocVuContext _context;
-        private readonly Services.ISinhVienService _sinhVienService;
-        private readonly Services.IGiangVienService _giangVienService;
+        private readonly ISinhVienService _sinhVienService;
+        private readonly IGiangVienService _giangVienService;
+        private readonly ITaiKhoanService _taiKhoanServices;
 
-        public TaiKhoanController(QuanLyHocVuContext context, Services.ISinhVienService sinhVienService, Services.IGiangVienService giangVienService)
+        public TaiKhoanController(ISinhVienService sinhVienService, IGiangVienService giangVienService, ITaiKhoanService taiKhoanService)
         {
-            _context = context;
             _sinhVienService = sinhVienService;
             _giangVienService = giangVienService;
+            _taiKhoanServices = taiKhoanService;
         }
 
-        // GET: Admin/TaiKhoan
-        public IActionResult Index()
-        {
-            var taiKhoans = _context.TaiKhoans
-                .Include(t => t.MaNguoiDungNavigation)
-                .ToList();
-            return View(taiKhoans);
-        }
-
-        // POST: Admin/TaiKhoan/CreateAccountBulk
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateAccountBulk([FromForm] List<string> studentIds)
+        public IActionResult CreateAccountBulkForSinhVien([FromForm] List<string> studentIds)
         {
             try
             {
@@ -40,9 +33,6 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
                     return RedirectToAction("Index", "SinhVien");
                 }
 
-                int successCount = 0;
-                int errorCount = 0;
-
                 foreach (var studentId in studentIds)
                 {
                     try
@@ -50,7 +40,6 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
                         var sinhVien = _sinhVienService.GetById(studentId);
                         if (sinhVien == null || sinhVien.TaiKhoan != null)
                         {
-                            errorCount++;
                             continue;
                         }
 
@@ -62,29 +51,17 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
                             TrangThai = "Hoạt động"
                         };
 
-                        _context.TaiKhoans.Add(taiKhoan);
-                        successCount++;
+                        _taiKhoanServices.Add(taiKhoan);
                     }
                     catch (Exception ex)
                     {
-                        errorCount++;
-                        // Log error if needed
                     }
-                }
-
-                _context.SaveChanges();
-                
-                TempData["SuccessMessage"] = $"Tạo thành công {successCount} tài khoản!";
-                if (errorCount > 0)
-                {
-                    TempData["WarningMessage"] = $"Có {errorCount} sinh viên không thể tạo tài khoản (đã có tài khoản hoặc không tồn tại).";
                 }
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = $"Lỗi khi lưu dữ liệu: {ex.Message}";
+                TempData["ErrorMessage"] = ex.Message;
             }
-
             return RedirectToAction("Index", "SinhVien");
         }
 
@@ -95,15 +72,6 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
         {
             try
             {
-                if (giangVienIds == null || giangVienIds.Count == 0)
-                {
-                    TempData["ErrorMessage"] = "Không có giảng viên nào được chọn!";
-                    return RedirectToAction("Index", "GiangVien");
-                }
-
-                int successCount = 0;
-                int errorCount = 0;
-
                 foreach (var id in giangVienIds)
                 {
                     try
@@ -111,7 +79,6 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
                         var giangVien = _giangVienService.GetById(id);
                         if (giangVien == null || giangVien.TaiKhoan != null)
                         {
-                            errorCount++;
                             continue;
                         }
 
@@ -123,32 +90,22 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
                             TrangThai = "Hoạt động"
                         };
 
-                        _context.TaiKhoans.Add(taiKhoan);
-                        successCount++;
+                        _taiKhoanServices.Add(taiKhoan);
                     }
                     catch (Exception)
                     {
-                        errorCount++;
+
                     }
-                }
-
-                _context.SaveChanges();
-
-                TempData["SuccessMessage"] = $"Tạo thành công {successCount} tài khoản giảng viên!";
-                if (errorCount > 0)
-                {
-                    TempData["WarningMessage"] = $"Có {errorCount} giảng viên không thể tạo tài khoản (đã có tài khoản hoặc không tồn tại).";
                 }
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = $"Lỗi khi lưu dữ liệu: {ex.Message}";
+                TempData["ErrorMessage"] = ex.Message;
             }
 
             return RedirectToAction("Index", "GiangVien");
         }
 
-        // GET: Admin/TaiKhoan/Edit/5
         public IActionResult Edit(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -156,9 +113,7 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var taiKhoan = _context.TaiKhoans
-                .Include(t => t.MaNguoiDungNavigation)
-                .FirstOrDefault(t => t.MaNguoiDung == id);
+            var taiKhoan = _taiKhoanServices.GetById(id);
 
             if (taiKhoan == null)
             {
@@ -168,7 +123,6 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
             return View(taiKhoan);
         }
 
-        // POST: Admin/TaiKhoan/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(string id, [Bind("MaNguoiDung,TenDangNhap,MatKhau,TrangThai")] TaiKhoan taiKhoan)
@@ -184,11 +138,7 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(taiKhoan);
-                    _context.SaveChanges();
-                    TempData["SuccessMessage"] = "Cập nhật tài khoản thành công!";
-                    
-                    // Determine where to redirect based on user role (prefix check)
+                    _taiKhoanServices.Update(taiKhoan);
                     string referer = Request.Headers["Referer"].ToString();
                     if (referer.Contains("GiangVien"))
                     {
@@ -202,10 +152,6 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
                 }
             }
             return View(taiKhoan);
@@ -213,7 +159,7 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
 
         private bool TaiKhoanExists(string id)
         {
-            return _context.TaiKhoans.Any(e => e.MaNguoiDung == id);
+            return _taiKhoanServices.Exists(id);
         }
     }
 }

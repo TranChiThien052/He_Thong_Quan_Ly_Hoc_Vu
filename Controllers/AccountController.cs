@@ -28,7 +28,6 @@ namespace QuanLyHocVu.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(TaiKhoan model)
         {
-            // Bỏ qua lỗi validate của MaNguoiDung vì khi login chưa có thông tin này
             ModelState.Remove("MaNguoiDung");
             ModelState.Remove("MaNguoiDungNavigation");
 
@@ -37,7 +36,6 @@ namespace QuanLyHocVu.Controllers
                 return View(model);
             }
 
-            // 1. Tìm tài khoản
             var taiKhoan = _context.TaiKhoans.FirstOrDefault(tk => tk.TenDangNhap == model.TenDangNhap && tk.MatKhau == model.MatKhau);
 
             if (taiKhoan == null)
@@ -46,34 +44,29 @@ namespace QuanLyHocVu.Controllers
                 return View(model);
             }
 
-            if (taiKhoan.TrangThai == "Khoa" || taiKhoan.TrangThai == "Locked") // Ví dụ kiểm tra trạng thái
+            if (taiKhoan.TrangThai == "Khóa")
             {
                 ModelState.AddModelError("", "Tài khoản đã bị khóa");
                 return View(model);
             }
 
-            // 2. Xác định vai trò (Role)
             string role = "User";
             string maNguoiDung = taiKhoan.MaNguoiDung;
             string hoTen = _context.NguoiDungs.Find(maNguoiDung)?.HoTen ?? "User";
 
-            // Kiểm tra xem ID này có nằm trong bảng SinhVien k?
             if (_context.SinhViens.Any(sv => sv.MaNguoiDung == maNguoiDung))
             {
                 role = "SinhVien";
             }
-            // Kiểm tra xem ID này có nằm trong bảng GiangVien k?
             else if (_context.GiangViens.Any(gv => gv.MaNguoiDung == maNguoiDung))
             {
                 role = "GiangVien";
             }
-            // Kiểm tra xem ID này có nằm trong bảng CanBo k?
             else if (_context.CanBos.Any(cb => cb.MaNguoiDung == maNguoiDung))
             {
-                role = "Admin"; // Hoặc CanBo
+                role = "Admin";
             }
 
-            // 3. Tạo Claims
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, hoTen),
@@ -84,13 +77,11 @@ namespace QuanLyHocVu.Controllers
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var authProperties = new AuthenticationProperties
             {
-                IsPersistent = true // Giữ đăng nhập
+                IsPersistent = false
             };
 
-            // 4. Sign In
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
-            // 5. Điều hướng dựa trên Role
             return RedirectToRoleArea(role);
         }
 
@@ -113,7 +104,6 @@ namespace QuanLyHocVu.Controllers
                 case "SinhVien":
                     return RedirectToAction("Index", "Home", new { area = "SinhVien" });
                 case "GiangVien":
-                    // Giả sử bạn sẽ tạo Area GiangVien sau
                     return RedirectToAction("Index", "Home", new { area = "GiangVien" });
                 case "Admin":
                     return RedirectToAction("Index", "Home", new { area = "Admin" });

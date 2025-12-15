@@ -1,7 +1,5 @@
 using QuanLyHocVu.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace QuanLyHocVu.Services
 {
@@ -54,18 +52,14 @@ namespace QuanLyHocVu.Services
 
         public string GenerateStudentId(SinhVien sinhVien)
         {
-            // 1. Số thứ tự ngành
             var nganhs = _context.Nganhs.OrderBy(n => n.MaNganh).Select(n => n.MaNganh).ToList();
             int majorIndex = nganhs.IndexOf(sinhVien.MaNganh) + 1;
 
-            // 2. 2 số đuôi năm bắt đầu học (lấy năm hiện tại)
             string yearSuffix = DateTime.Now.Year.ToString().Substring(2, 2);
 
-            // 3. Số thứ tự sinh viên trong ngành và niên khóa đó
             int count = _context.SinhViens.Count(s => s.MaNganh == sinhVien.MaNganh && s.NienKhoa == sinhVien.NienKhoa);
             int sequence = count + 1;
 
-            // Format: DH + MaNganh(1 so) + Nam(2 so) + STT(5 so)
             return $"DH{majorIndex}{yearSuffix}{sequence:D5}";
         }
     }

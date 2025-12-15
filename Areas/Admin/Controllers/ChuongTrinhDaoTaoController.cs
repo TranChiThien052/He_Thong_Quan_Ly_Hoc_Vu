@@ -1,6 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using QuanLyHocVu.Models;
 using QuanLyHocVu.Services;
 using System.Text.Json;
@@ -8,6 +8,7 @@ using System.Text.Json;
 namespace QuanLyHocVu.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class ChuongTrinhDaoTaoController : Controller
     {
         private readonly IChuongTrinhDaoTaoService _chuongTrinhDaoTaoservice;

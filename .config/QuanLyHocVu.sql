@@ -115,7 +115,6 @@ CREATE TABLE LopHocPhan (
 CREATE TABLE DangKyHocPhan (
     MaSinhVien NVARCHAR(10),
     MaLopHocPhan NVARCHAR(10),
-    TrangThai NVARCHAR(20),
     PRIMARY KEY (MaSinhVien, MaLopHocPhan),
     FOREIGN KEY (MaSinhVien) REFERENCES SinhVien(MaNguoiDung),
     FOREIGN KEY (MaLopHocPhan) REFERENCES LopHocPhan(MaLopHocPhan)
@@ -125,36 +124,14 @@ CREATE TABLE DiemRenLuyen (
     MaSinhVien NVARCHAR(10),
     MaHocKy NVARCHAR(10),
     Diem INT,
-    XepLoai NVARCHAR(20),
-    GhiChu NVARCHAR(200),
     PRIMARY KEY (MaSinhVien, MaHocKy),
     FOREIGN KEY (MaSinhVien) REFERENCES SinhVien(MaNguoiDung),
     FOREIGN KEY (MaHocKy) REFERENCES HocKy(MaHocKy)
 );
 
-CREATE TABLE HoatDongCTXH (
-    MaHoatDong NVARCHAR(10) PRIMARY KEY,
-    TenHoatDong NVARCHAR(200),
-    Diem INT,                 -- Có thể âm hoặc dương
-    NgayToChuc DATE,
-    GhiChu NVARCHAR(200)
-);
-
-CREATE TABLE SinhVien_HoatDongCTXH (
-    MaSinhVien NVARCHAR(10),
-    MaHoatDong NVARCHAR(10),
-    NgayThamGia DATE,
-    DiemThucTe INT NULL,      -- Nếu NULL → dùng điểm mặc định của hoạt động
-    GhiChu NVARCHAR(200),
-    PRIMARY KEY (MaSinhVien, MaHoatDong),
-    FOREIGN KEY (MaSinhVien) REFERENCES SinhVien(MaNguoiDung),
-    FOREIGN KEY (MaHoatDong) REFERENCES HoatDongCTXH(MaHoatDong)
-);
-
 CREATE TABLE DiemCongTacXaHoi (
     MaSinhVien NVARCHAR(10) PRIMARY KEY,
     TongDiem INT,
-    GhiChu NVARCHAR(200),
     FOREIGN KEY (MaSinhVien) REFERENCES SinhVien(MaNguoiDung)
 );
 

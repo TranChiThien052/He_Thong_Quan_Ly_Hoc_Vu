@@ -1,5 +1,4 @@
 using QuanLyHocVu.Models;
-using System.Collections.Generic;
 
 namespace QuanLyHocVu.Services
 {

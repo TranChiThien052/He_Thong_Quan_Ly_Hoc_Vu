@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using QuanLyHocVu.Services;
 namespace QuanLyHocVu.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class SinhVienController : Controller
     {
         private readonly ISinhVienService _sinhVienService;
@@ -23,25 +25,21 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
         {
             var sinhViens = _sinhVienService.GetAll();
 
-            // Lọc theo Niên khóa
             if (!string.IsNullOrEmpty(nienKhoa))
             {
                 sinhViens = sinhViens.Where(s => s.NienKhoa != null && s.NienKhoa.Contains(nienKhoa)).ToList();
             }
 
-            // Lọc theo Ngành
             if (!string.IsNullOrEmpty(maNganh))
             {
                 sinhViens = sinhViens.Where(s => s.MaNganh == maNganh).ToList();
             }
 
-            // Lọc theo Mã sinh viên
             if (!string.IsNullOrEmpty(maSinhVien))
             {
                 sinhViens = sinhViens.Where(s => s.MaNguoiDung.Contains(maSinhVien)).ToList();
             }
 
-            // Truyền danh sách ngành cho dropdown
             ViewBag.MaNganh = new SelectList(_nganhService.GetAll(), "MaNganh", "TenNganh");
             ViewBag.CurrentNienKhoa = nienKhoa;
             ViewBag.CurrentMaNganh = maNganh;
@@ -68,19 +66,24 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
             return View(sinhVien);
         }
 
+        public IActionResult Create()
+        {
+            var nganhs = _nganhService.GetAll();
+            ViewData["MaNganh"] = new SelectList(nganhs, "MaNganh", "TenNganh");
+            return View();
+        }
+
         // POST: Admin/SinhVien/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("HoTen,QueQuan,NgaySinh,Email,SoDienThoai,Cccd,DiaChiThuongTru,DiaChiTamTru,MaNganh,NienKhoa,TinhTrangHoc")] QuanLyHocVu.Models.SinhVien sinhVien)
         {
-            // Bỏ qua xác thực cho các thuộc tính navigation và MaNguoiDung (vì sẽ tự sinh)
             ModelState.Remove("MaNganhNavigation");
             ModelState.Remove("TaiKhoan");
             ModelState.Remove("MaNguoiDung");
 
             if (ModelState.IsValid)
             {
-                // Tự động sinh Mã sinh viên
                 sinhVien.MaNguoiDung = _sinhVienService.GenerateStudentId(sinhVien);
                 
                 _sinhVienService.Add(sinhVien);

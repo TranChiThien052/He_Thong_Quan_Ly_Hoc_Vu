@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Chỉnh Sửa Tài Khoản";
-}
+}   
 
 <div class="container-fluid px-4">
     <h1 class="mt-4">Chỉnh Sửa Tài Khoản</h1>
@@ -53,7 +53,6 @@
                             <select asp-for="TrangThai" class="form-select">
                                 <option value="Hoạt động">Hoạt động</option>
                                 <option value="Khóa">Khóa</option>
-                                <option value="Tạm ngưng">Tạm ngưng</option>
                             </select>
                             <span asp-validation-for="TrangThai" class="text-danger"></span>
                         </div>
@@ -63,7 +62,7 @@
                 <div class="form-group mt-3 d-flex justify-content-end">
                     <a asp-controller="SinhVien" asp-action="Index" class="btn btn-secondary me-2">Quay Lại</a>
                     <button type="submit" class="btn btn-warning text-dark">
-                        <i class="fas fa-save me-1"></i> Lưu Thay Đổi
+                        Lưu Thay Đổi
                     </button>
                 </div>
             </form>

@@ -9,33 +9,6 @@
 </head>
 <body>
     <div class="layout">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="brand">
-                <div class="brand-logo"> <a asp-controller="Home" asp-action="Index"><img src="~/img/Logo.png" alt="Logo" style="height: 30px; vertical-align: middle; margin-right: 5px;" /> STU</a></div>
-                <div class="brand-name">Trường Đại Học Công Nghệ Sài Gòn</div>
-            </div>
-            <nav class="menu">
-                <ul>
-                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Admin" ? "active" : "")">
-                        <a asp-controller="Admin" asp-action="Index">Quản lý sinh viên</a>
-                    </li>
-                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "GiangVien" ? "active" : "")">
-                        <a href="#">Quản lý giảng viên</a>
-                    </li>
-                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "MonHoc" ? "active" : "")">
-                        <a asp-area="Admin" asp-controller="MonHoc" asp-action="Index">Quản lý môn học</a>
-                    </li>
-                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "DaoTao" ? "active" : "")">
-                        <a href="#">Quản lý chương trình đào tạo</a>
-                    </li>
-                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "TaiKhoan" ? "active" : "")">
-                        <a href="#">Quản lý tài khoản</a>
-                    </li>
-                </ul>
-            </nav>
-        </aside>
-
         <!-- Main -->
         <main class="main">
             @RenderBody()

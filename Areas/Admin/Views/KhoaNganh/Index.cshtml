@@ -3,20 +3,16 @@
 }
 
 @section Styles {
-    <!-- Liên kết CSS cục bộ -->
     <link rel="stylesheet" href="~/css/admin/style.css" />
 }
 
+<h1 class="mb-4">Quản lý Khoa - Ngành</h1>
 <div class="container bg-white p-4 rounded shadow-sm">
-    <h3 class="mb-4">Quản lý Khoa - Ngành</h3>
-
-    <!-- Danh sách Khoa -->
     <div class="mb-5">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h5>Danh sách Khoa</h5>
         <div>
           <a asp-controller="Khoa" asp-action="Create" class="btn btn-primary">+ Thêm Khoa</a>
-          <!-- <button class="btn btn-danger btn-sm">Xóa</button> -->
         </div>
       </div>
       <table class="table table-bordered table-hover">
@@ -43,13 +39,11 @@
       </table>
     </div>
 
-    <!-- Danh sách Ngành -->
     <div>
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h5>Danh sách Ngành</h5>
         <div>
           <a asp-controller="Nganh" asp-action="Create" class="btn btn-primary">+ Thêm Ngành</a>
-          <!-- <button class="btn btn-danger btn-sm">Xóa</button> -->
         </div>
       </div>
       <table class="table table-bordered table-hover">

@@ -1,12 +1,13 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using QuanLyHocVu.Models;
 using QuanLyHocVu.Services;
 
 namespace QuanLyHocVu.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class GiangVienController : Controller
     {
         private readonly IGiangVienService _giangVienService;
@@ -72,7 +73,7 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
         // POST: Admin/GiangVien/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("HoTen,QueQuan,NgaySinh,Email,SoDienThoai,Cccd,DiaChiThuongTru,DiaChiTamTru,MaKhoa,ChuyenMon,TinhTrangCongTac")] GiangVien giangVien)
+        public IActionResult Create([Bind("HoTen,QueQuan,NgaySinh,Email,SoDienThoai,Cccd,DiaChiThuongTru,DiaChiTamTru,MaKhoa,ChuyenMon,TinhTrangCongTac")] QuanLyHocVu.Models.GiangVien giangVien)
         {
             // Bỏ qua xác thực cho các thuộc tính navigation và MaNguoiDung (vì sẽ tự sinh)
             ModelState.Remove("MaKhoaNavigation");
@@ -113,7 +114,7 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
         // POST: Admin/GiangVien/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(string id, [Bind("MaNguoiDung,HoTen,QueQuan,NgaySinh,Email,SoDienThoai,Cccd,DiaChiThuongTru,DiaChiTamTru,MaKhoa,ChuyenMon,TinhTrangCongTac")] GiangVien giangVien)
+        public IActionResult Edit(string id, [Bind("MaNguoiDung,HoTen,QueQuan,NgaySinh,Email,SoDienThoai,Cccd,DiaChiThuongTru,DiaChiTamTru,MaKhoa,ChuyenMon,TinhTrangCongTac")] QuanLyHocVu.Models.GiangVien giangVien)
         {
             if (id != giangVien.MaNguoiDung)
             {

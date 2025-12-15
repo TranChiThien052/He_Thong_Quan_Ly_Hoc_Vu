@@ -31,8 +31,6 @@ public partial class QuanLyHocVuContext : DbContext
 
     public virtual DbSet<GiangVien> GiangViens { get; set; }
 
-    public virtual DbSet<HoatDongCtxh> HoatDongCtxhs { get; set; }
-
     public virtual DbSet<HocKy> HocKies { get; set; }
 
     public virtual DbSet<HocPhi> HocPhis { get; set; }
@@ -52,8 +50,6 @@ public partial class QuanLyHocVuContext : DbContext
     public virtual DbSet<PhongHoc> PhongHocs { get; set; }
 
     public virtual DbSet<SinhVien> SinhViens { get; set; }
-
-    public virtual DbSet<SinhVienHoatDongCtxh> SinhVienHoatDongCtxhs { get; set; }
 
     public virtual DbSet<TaiKhoan> TaiKhoans { get; set; }
 
@@ -209,17 +205,6 @@ public partial class QuanLyHocVuContext : DbContext
                 .HasForeignKey(d => d.MaKhoa)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__GiangVien__MaKho__4CA06362");
-        });
-
-        modelBuilder.Entity<HoatDongCtxh>(entity =>
-        {
-            entity.HasKey(e => e.MaHoatDong).HasName("PK__HoatDong__BD808BE705646F0D");
-
-            entity.ToTable("HoatDongCTXH");
-
-            entity.Property(e => e.MaHoatDong).HasMaxLength(10);
-            entity.Property(e => e.GhiChu).HasMaxLength(200);
-            entity.Property(e => e.TenHoatDong).HasMaxLength(200);
         });
 
         modelBuilder.Entity<HocKy>(entity =>
@@ -393,27 +378,6 @@ public partial class QuanLyHocVuContext : DbContext
                 .HasForeignKey(d => d.MaNganh)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__SinhVien__MaNgan__48CFD27E");
-        });
-
-        modelBuilder.Entity<SinhVienHoatDongCtxh>(entity =>
-        {
-            entity.HasKey(e => new { e.MaSinhVien, e.MaHoatDong }).HasName("PK__SinhVien__F842EFCBFCAD311B");
-
-            entity.ToTable("SinhVien_HoatDongCTXH");
-
-            entity.Property(e => e.MaSinhVien).HasMaxLength(10);
-            entity.Property(e => e.MaHoatDong).HasMaxLength(10);
-            entity.Property(e => e.GhiChu).HasMaxLength(200);
-
-            entity.HasOne(d => d.MaHoatDongNavigation).WithMany(p => p.SinhVienHoatDongCtxhs)
-                .HasForeignKey(d => d.MaHoatDong)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__SinhVien___MaHoa__76969D2E");
-
-            entity.HasOne(d => d.MaSinhVienNavigation).WithMany(p => p.SinhVienHoatDongCtxhs)
-                .HasForeignKey(d => d.MaSinhVien)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__SinhVien___MaSin__75A278F5");
         });
 
         modelBuilder.Entity<TaiKhoan>(entity =>

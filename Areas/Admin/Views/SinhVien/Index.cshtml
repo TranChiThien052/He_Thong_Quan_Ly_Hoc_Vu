@@ -7,16 +7,12 @@
 <div class="container-fluid px-4">
     <h1 class="mt-4">Danh Sách Sinh Viên</h1>
     <div class="card mb-4 shadow-sm">
-        <div class="card-header bg-primary text-white">
-            Thông Tin Sinh Viên
-        </div>
         <div class="card-body">
-            <!-- Form tìm kiếm/lọc -->
             <form method="get" asp-action="Index" class="mb-4">
                 <div class="row g-3">
                     <div class="col-md-3">
-                        <label class="form-label fw-bold">Niên Khóa</label>
-                        <input type="text" name="nienKhoa" class="form-control" placeholder="VD: 2024-2028" value="@ViewBag.CurrentNienKhoa" />
+                        <label class="form-label fw-bold">Khóa</label>
+                        <input type="text" name="nienKhoa" class="form-control" placeholder="VD: 2025" value="@ViewBag.CurrentNienKhoa" />
                     </div>
                     <div class="col-md-3">
                         <label class="form-label fw-bold">Ngành</label>
@@ -47,7 +43,7 @@
             <hr />
             <div class="d-flex justify-content-between mb-3">
                 <div>
-                    <button type="button" id="btnCreateAccountBulk" class="btn btn-success" disabled>
+                    <button type="button" id="btnCreateAccountBulk" class="btn btn-primary" disabled>
                        Tạo tài khoản
                     </button>
                 </div>
@@ -67,7 +63,7 @@
                             <th>Email</th>
                             <th>Số Điện Thoại</th>
                             <th>Ngành</th>
-                            <th>Niên Khóa</th>
+                            <th>Khóa</th>
                             <th>Tình Trạng</th>
                             <th>Thao Tác</th>
                         </tr>
@@ -154,7 +150,6 @@
 
 @section Scripts {
     <script>
-        // Select all checkbox functionality
         const selectAllCheckbox = document.getElementById('selectAll');
         const studentCheckboxes = document.querySelectorAll('.student-checkbox');
         const btnCreateAccountBulk = document.getElementById('btnCreateAccountBulk');
@@ -166,7 +161,6 @@
             updateBulkButton();
         });
 
-        // Update bulk button state when individual checkboxes change
         studentCheckboxes.forEach(checkbox => {
             checkbox.addEventListener('change', updateBulkButton);
         });
@@ -176,7 +170,6 @@
             btnCreateAccountBulk.disabled = checkedCount === 0;
         }
 
-        // Bulk create account
         btnCreateAccountBulk.addEventListener('click', function() {
             const selectedIds = Array.from(document.querySelectorAll('.student-checkbox:checked'))
                 .map(cb => cb.value);
@@ -187,10 +180,9 @@
             }
 
             if (confirm(`Bạn có chắc muốn tạo tài khoản cho ${selectedIds.length} sinh viên đã chọn?`)) {
-                // Send POST request to TaiKhoan controller
                 const form = document.createElement('form');
                 form.method = 'POST';
-                form.action = '@Url.Action("CreateAccountBulk", "TaiKhoan", new { area = "Admin" })';
+                form.action = '@Url.Action("CreateAccountBulkForSinhVien", "TaiKhoan", new { area = "Admin" })';
                 
                 selectedIds.forEach(id => {
                     const input = document.createElement('input');
@@ -200,7 +192,6 @@
                     form.appendChild(input);
                 });
 
-                // Add anti-forgery token
                 const token = document.querySelector('input[name="__RequestVerificationToken"]');
                 if (token) {
                     const tokenInput = document.createElement('input');

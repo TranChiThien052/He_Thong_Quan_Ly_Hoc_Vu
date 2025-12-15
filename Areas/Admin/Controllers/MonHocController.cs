@@ -2,11 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using QuanLyHocVu.Models;
 using QuanLyHocVu.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace QuanLyHocVu.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class MonHocController : Controller
     {
         private readonly IMonHocService _service;

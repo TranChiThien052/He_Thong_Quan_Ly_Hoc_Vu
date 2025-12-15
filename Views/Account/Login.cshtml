@@ -1,40 +1,39 @@
 @model QuanLyHocVu.Models.TaiKhoan
-
 @{
+    Layout = null;
     ViewData["Title"] = "Đăng nhập";
 }
 
-<div class="row justify-content-center mt-5">
-    <div class="col-md-4">
-        <div class="card shadow">
-            <div class="card-header bg-primary text-white text-center">
-                <h3>Đăng Nhập</h3>
-            </div>
-            <div class="card-body">
-                <form asp-action="Login">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group mb-3">
-                        <label asp-for="TenDangNhap" class="control-label mb-1">Tên đăng nhập</label>
-                        <input asp-for="TenDangNhap" class="form-control" placeholder="Nhập tên đăng nhập..." />
-                        <span asp-validation-for="TenDangNhap" class="text-danger"></span>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Quản Lý Học Vụ</title>
+    <link rel="stylesheet" href="~/css/login/style.css" />
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-left"></div>
+
+        <div class="login-right">
+            <div class="login-form-wrapper">
+                <div class="login-header">
+                    <h2>Đăng Nhập</h2>
+                </div>
+                <form asp-action="Login" method="post">
+                    <div class="form-group">
+                        <label asp-for="TenDangNhap" class="form-label">Tên đăng nhập</label>
+                        <input asp-for="TenDangNhap" class="form-control"/>
                     </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="MatKhau" class="control-label mb-1">Mật khẩu</label>
-                        <input asp-for="MatKhau" class="form-control" placeholder="Nhập mật khẩu..." />
-                        <span asp-validation-for="MatKhau" class="text-danger"></span>
+                    <div class="form-group">
+                        <label asp-for="MatKhau" class="form-label">Mật khẩu</label>
+                        <input asp-for="MatKhau" type="password" class="form-control"/>
                     </div>
-                    <div class="form-group d-grid">
-                        <input type="submit" value="Đăng Nhập" class="btn btn-primary btn-block" />
-                    </div>
+                    <button type="submit" class="btn-login">Đăng Nhập</button>
                 </form>
-            </div>
-            <div class="card-footer text-center">
-                <a href="#">Quên mật khẩu?</a>
             </div>
         </div>
     </div>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+</body>
+</html>

@@ -13,8 +13,7 @@
     </ol>
 
     <div class="card mb-4 shadow-sm">
-        <div class="card-header bg-success text-white">
-            <i class="fas fa-user-plus me-1"></i>
+        <div class="card-header">
             Thông Tin Sinh Viên
         </div>
         <div class="card-body">
@@ -52,8 +51,8 @@
                             <span asp-validation-for="MaNganh" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
-                            <label asp-for="NienKhoa" class="control-label fw-bold">Niên Khóa</label>
-                            <input type="text" asp-for="NienKhoa" class="form-control" value="@(DateTime.Now.Year)-@(DateTime.Now.Year + 4)" readonly/>
+                            <label asp-for="NienKhoa" class="control-label fw-bold">Khóa</label>
+                            <input type="text" asp-for="NienKhoa" class="form-control" value="@(DateTime.Now.Year)" readonly/>
                             <span asp-validation-for="NienKhoa" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
@@ -84,8 +83,8 @@
                      </div>
                 </div>
                 <div class="form-group mt-3 d-flex justify-content-end">
-                    <a asp-action="Index" class="btn btn-secondary me-2">Quay Lại</a>
-                    <button type="submit" class="btn btn-success"><i class="fas fa-save me-1"></i> Tạo Mới</button>
+                    <a asp-action="Index" class="btn btn-primary me-2">Quay Lại</a>
+                    <button type="submit" class="btn btn-primary">Tạo Mới</button>
                 </div>
             </form>
         </div>

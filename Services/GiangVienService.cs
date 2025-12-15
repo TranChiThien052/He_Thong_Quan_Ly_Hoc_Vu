@@ -1,7 +1,5 @@
 using QuanLyHocVu.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace QuanLyHocVu.Services
 {
