@@ -1,8 +1,11 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QuanLyHocVu.Services;
+using SQLitePCL;
 
 namespace QuanLyHocVu.Areas.GiangVien.Controllers
 {
@@ -42,7 +45,7 @@ namespace QuanLyHocVu.Areas.GiangVien.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(string id, QuanLyHocVu.Models.GiangVien giangVien)
+        public async Task<IActionResult> Edit(string id, QuanLyHocVu.Models.GiangVien giangVien)
         {
             ModelState.Remove("MaKhoaNavigation");
             if(id != giangVien.MaNguoiDung){
@@ -50,6 +53,20 @@ namespace QuanLyHocVu.Areas.GiangVien.Controllers
             }
             else{
                 _giangVienService.Update(giangVien);
+                var identity = (ClaimsIdentity)User.Identity;
+                    var claims = identity.Claims.ToList();
+                    var tenCu = claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+                    if (tenCu != null)
+                    {
+                        identity.RemoveClaim(tenCu);
+                    }
+                    identity.AddClaim(new Claim(ClaimTypes.Name, giangVien.HoTen));
+                    var principal = new ClaimsPrincipal(identity);
+                    await HttpContext.SignInAsync(
+                        CookieAuthenticationDefaults.AuthenticationScheme,
+                        principal,
+                        new AuthenticationProperties { IsPersistent = true }
+                    );
                 return RedirectToAction(nameof(Index));
             }
 
