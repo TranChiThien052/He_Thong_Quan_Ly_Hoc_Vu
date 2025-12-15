@@ -38,6 +38,9 @@
                     <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "KhoaNganh" ? "active" : "")">
                         <a asp-area="Admin" asp-controller="KhoaNganh" asp-action="Index">Quản lý khoa-ngành</a>
                     </li>
+                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "PhongHoc" ? "active" : "")">
+                        <a asp-area="Admin" asp-controller="PhongHoc" asp-action="Index">Quản lý phòng học</a>
+                    </li>
                 </ul>
             </nav>
         </aside>
