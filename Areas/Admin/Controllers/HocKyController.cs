@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using QuanLyHocVu.Models;
 using QuanLyHocVu.Services;
 
@@ -34,17 +35,20 @@ namespace QuanLyHocVu.Areas.Admin
         public IActionResult Create([Bind("MaHocKy,NamHoc,HocKySo,NgayBatDau,NgayKetThuc")] HocKy hocKy)
         {
             hocKy.MaHocKy = hocKy.NamHoc + "-" + hocKy.HocKySo;
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _hocKyService.Add(hocKy);
-                    return RedirectToAction("Index");
-                }
-                catch (Exception ex)
-                {
-                }
-            }
+            _hocKyService.Add(hocKy);
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Edit(string id) {
+            var HocKy = _hocKyService.GetById(id);
+            return View(HocKy);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit([Bind("MaHocKy,NamHoc,HocKySo,NgayBatDau,NgayKetThuc")] HocKy hocKy)
+        {
+            _hocKyService.Update(hocKy);
             return RedirectToAction("Index");
         }
     }

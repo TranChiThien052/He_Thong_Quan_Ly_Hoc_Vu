@@ -1,0 +1,40 @@
+@model QuanLyHocVu.Models.HocKy
+@{
+    ViewData["Title"] = "Sửa Học Kỳ";
+}
+
+<div class="container bg-white p-4 rounded shadow-sm" style="max-width: 600px;">
+    <h4 class="mb-4">Sửa Học Kỳ</h4>
+
+    <form asp-action="Edit" method="post">
+      <div class="mb-3">
+        <label asp-for="MaHocKy" class="form-label">Mã Học Kỳ</label>
+        <input type="text" class="form-control" asp-for="MaHocKy" value="@Model.MaHocKy" readonly>
+      </div>
+
+      <div class="mb-3">
+        <label asp-for="NamHoc" class="form-label">Năm học</label>
+        <input type="text" class="form-control" asp-for="NamHoc" value="@Model.NamHoc">
+      </div>
+
+      <div class="mb-3">
+        <label asp-for="HocKySo" class="form-label">Học kỳ số</label>
+        <input type="text" class="form-control" asp-for="HocKySo" value="@Model.HocKySo">
+      </div>
+
+      <div class="mb-3">
+        <label asp-for="NgayBatDau" class="form-label">Ngày bắt đầu</label>
+        <input type="date" class="form-control" asp-for="NgayBatDau">
+      </div>
+
+      <div class="mb-3">
+        <label asp-for="NgayKetThuc" class="form-label">Ngày kết thúc</label>
+        <input type="date" class="form-control" asp-for="NgayKetThuc">
+      </div>
+
+      <div class="d-flex justify-content-end mt-4">
+        <a asp-controller="HocKy" asp-action="Index" class="btn btn-secondary me-2">Hủy</a>
+        <button type="submit" class="btn btn-primary">Lưu</button>
+      </div>
+    </form>
+  </div>
