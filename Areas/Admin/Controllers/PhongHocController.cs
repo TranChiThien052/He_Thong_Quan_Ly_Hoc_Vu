@@ -44,5 +44,17 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
             _phongHocService.Add(phongHoc);
             return RedirectToAction("Index");
         }
+
+        public IActionResult Edit(string id){
+            var phongHoc = _phongHocService.GetById(id);
+            return View(phongHoc);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(PhongHoc phongHoc){
+            _phongHocService.Update(phongHoc);
+            return RedirectToAction("Index");
+        }
     }
 }
