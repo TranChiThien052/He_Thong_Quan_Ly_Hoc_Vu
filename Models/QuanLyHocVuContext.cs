@@ -176,8 +176,6 @@ public partial class QuanLyHocVuContext : DbContext
 
             entity.Property(e => e.MaSinhVien).HasMaxLength(10);
             entity.Property(e => e.MaHocKy).HasMaxLength(10);
-            entity.Property(e => e.GhiChu).HasMaxLength(200);
-            entity.Property(e => e.XepLoai).HasMaxLength(20);
 
             entity.HasOne(d => d.MaHocKyNavigation).WithMany(p => p.DiemRenLuyens)
                 .HasForeignKey(d => d.MaHocKy)

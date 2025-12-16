@@ -11,10 +11,6 @@ public partial class DiemRenLuyen
 
     public int? Diem { get; set; }
 
-    public string? XepLoai { get; set; }
-
-    public string? GhiChu { get; set; }
-
     public virtual HocKy MaHocKyNavigation { get; set; } = null!;
 
     public virtual SinhVien MaSinhVienNavigation { get; set; } = null!;

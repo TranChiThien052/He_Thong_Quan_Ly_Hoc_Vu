@@ -35,8 +35,6 @@ namespace QuanLyHocVu.Services
                     MaSinhVien = student.MaNguoiDung,
                     MaHocKy = hocKy.MaHocKy,
                     Diem = 0,
-                    XepLoai = null,
-                    GhiChu = null
                 });
             }
 
