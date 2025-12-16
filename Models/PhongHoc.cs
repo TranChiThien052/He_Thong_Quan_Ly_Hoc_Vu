@@ -12,6 +12,7 @@ public partial class PhongHoc
     public string Khu { get; set; } = null!;
 
     public string LoaiPhong { get; set; } = null!;
+    public int SoPhong { get; set; }
 
     public virtual ICollection<LopHocPhan> LopHocPhans { get; set; } = new List<LopHocPhan>();
 }

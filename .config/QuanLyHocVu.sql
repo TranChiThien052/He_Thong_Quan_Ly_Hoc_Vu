@@ -94,6 +94,7 @@ CREATE TABLE PhongHoc (
     MaPhong NVARCHAR(10) PRIMARY KEY,   
     Tang INT NOT NULL,                  
     Khu NVARCHAR(50) NOT NULL,          
+    SoPhong INT,
     LoaiPhong NVARCHAR(50) NOT NULL     
 );
 

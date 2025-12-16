@@ -24,6 +24,23 @@ namespace QuanLyHocVu.Services
         public void Add(HocKy hocKy)
         {
             _context.HocKies.Add(hocKy);
+            
+            var activeStudents = _context.SinhViens.Where(sv => sv.TinhTrangHoc == "Đang học").ToList();
+            var diemRenLuyens = new List<DiemRenLuyen>();
+
+            foreach (var student in activeStudents)
+            {
+                diemRenLuyens.Add(new DiemRenLuyen
+                {
+                    MaSinhVien = student.MaNguoiDung,
+                    MaHocKy = hocKy.MaHocKy,
+                    Diem = 0,
+                    XepLoai = null,
+                    GhiChu = null
+                });
+            }
+
+            _context.DiemRenLuyens.AddRange(diemRenLuyens);
             _context.SaveChanges();
         }
 

@@ -50,9 +50,9 @@ INSERT INTO HocKy VALUES
 -- 7. PHÒNG HỌC
 ------------------------------------------------------------
 INSERT INTO PhongHoc VALUES
-('A101', 1, N'Khu A', N'Lý thuyết'),
-('B102', 1, N'Khu A', N'Thực hành'),
-('B201', 2, N'Khu B', N'Đồ án');
+('A101', 1, N'Khu A', N'Lý thuyết', 1),
+('B102', 1, N'Khu A', N'Thực hành', 2),
+('B201', 2, N'Khu B', N'Đồ án', 3);
 
 ------------------------------------------------------------
 -- 8. NGƯỜI DÙNG (20 SINH VIÊN CNTT + QTRI)
