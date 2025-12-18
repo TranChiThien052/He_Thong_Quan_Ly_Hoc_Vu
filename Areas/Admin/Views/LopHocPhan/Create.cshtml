@@ -92,12 +92,10 @@
 </div>
 
 <script>
-    // Receive JSON strings directly from the Controller
     const monHocs = @Html.Raw(ViewBag.MonHocJson ?? "[]");
     const giangViens = @Html.Raw(ViewBag.GiangVienJson ?? "[]");
     const hocKies = @Html.Raw(ViewBag.HocKyJson ?? "[]");
 
-    // --- Mon Hoc Autocomplete ---
     const tenMonHocInput = document.getElementById("tenMonHocInput");
     const maMonHocHidden = document.getElementById("maMonHocHidden");
     const goiYMonHocBox = document.getElementById("goiYMonHocBox");
@@ -129,7 +127,6 @@
         }
     });
 
-    // --- Giang Vien Autocomplete ---
     const tenGiangVienInput = document.getElementById("tenGiangVienInput");
     const maGiangVienHidden = document.getElementById("maGiangVienHidden");
     const goiYGiangVienBox = document.getElementById("goiYGiangVienBox");
@@ -152,7 +149,7 @@
                 btn.textContent = g.HoTen;
                 btn.onclick = function() {
                     tenGiangVienInput.value = g.HoTen;
-                    maGiangVienHidden.value = g.MaNguoiDung; // Updated to match Controller's JSON
+                    maGiangVienHidden.value = g.MaNguoiDung;
                     goiYGiangVienBox.innerHTML = '';
                     goiYGiangVienBox.style.display = 'none';
                 };
@@ -161,10 +158,8 @@
         }
     });
 
-    // --- Year & Semester Logic ---
     const hocKySelect = document.getElementById("hocKySelect");
 
-    // Sort: Latest Year first, then Semester
     hocKies.sort((a,b) => {
         if (a.NamHoc !== b.NamHoc) return b.NamHoc.localeCompare(a.NamHoc);
         return a.HocKySo - b.HocKySo;
@@ -173,11 +168,10 @@
     hocKies.forEach(h => {
         const opt = document.createElement("option");
         opt.value = h.MaHocKy;
-        opt.textContent = `${h.NamHoc} - Học kỳ ${h.HocKySo}`;
+        opt.textContent = h.MaHocKy;
         hocKySelect.appendChild(opt);
     });
 
-    // Close suggestions when clicking outside
     document.addEventListener('click', function(e) {
         if (!tenMonHocInput.contains(e.target) && !goiYMonHocBox.contains(e.target)) {
             goiYMonHocBox.style.display = 'none';

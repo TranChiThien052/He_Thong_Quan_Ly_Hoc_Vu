@@ -42,12 +42,10 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
             var newId = GenerateLopHocPhanId();
             ViewBag.MaLopHocPhan = newId;
 
-            // Serialize data to JSON for client-side use
             ViewBag.GiangVienJson = JsonSerializer.Serialize(_giangVienService.GetAll().Select(g => new { g.MaNguoiDung, g.HoTen }));
             ViewBag.HocKyJson = JsonSerializer.Serialize(_hocKyService.GetAll().Select(h => new { h.MaHocKy, h.NamHoc, h.HocKySo }));
             ViewBag.MonHocJson = JsonSerializer.Serialize(_monHocService.GetAll().Select(m => new { m.MaMonHoc, m.TenMonHoc }));
 
-            // PhongHoc is used for server-side rendering of select options
             ViewBag.PhongHoc = _phongHocService.GetAll();
             return View();
         }
