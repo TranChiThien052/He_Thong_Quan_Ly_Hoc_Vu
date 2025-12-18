@@ -1,0 +1,180 @@
+@model QuanLyHocVu.Models.LopHocPhan
+
+@{
+    ViewData["Title"] = "Sửa lớp học phần";
+    var phongHocs = ViewBag.PhongHoc as IEnumerable<QuanLyHocVu.Models.PhongHoc>;
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<div class="container bg-white p-4 rounded shadow-sm">
+    <h4 class="mb-4 text-primary">Sửa lớp học phần</h4>
+
+    <form asp-action="Edit" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row g-3">
+            <!-- Mã lớp học phần -->
+            <div class="col-md-4">
+                <label class="form-label">Mã lớp học phần</label>
+                <input type="text" asp-for="MaLopHocPhan" class="form-control" readonly>
+            </div>
+
+            <!-- Tên môn học -->
+            <div class="col-md-4 position-relative">
+                <label class="form-label">Tên môn học</label>
+                <input type="text" class="form-control" id="tenMonHocInput" value="@ViewBag.TenMonHoc" placeholder="Nhập tên môn học..." autocomplete="off">
+                <input type="hidden" asp-for="MaMonHoc" id="maMonHocHidden">
+                <div id="goiYMonHocBox" class="list-group position-absolute w-100" style="z-index: 1000; max-height: 200px; overflow-y: auto; display:none;"></div>
+            </div>
+
+            <!-- Giảng viên -->
+            <div class="col-md-4 position-relative">
+                <label class="form-label">Giảng viên</label>
+                <input type="text" class="form-control" id="tenGiangVienInput" value="@ViewBag.TenGiangVien" placeholder="Nhập tên giảng viên..." autocomplete="off">
+                <input type="hidden" asp-for="MaGiangVien" id="maGiangVienHidden">
+                <div id="goiYGiangVienBox" class="list-group position-absolute w-100" style="z-index: 1000; max-height: 200px; overflow-y: auto; display:none;"></div>
+            </div>
+
+            <!-- Học kỳ -->
+            <div class="col-md-6">
+                <label class="form-label">Học kỳ</label>
+                <select asp-for="MaHocKy" class="form-select" id="hocKySelect">
+                    <option value="" disabled>-- Chọn học kỳ --</option>
+                    @if (ViewBag.HocKyList != null)
+                    {
+                        foreach (var hk in ViewBag.HocKyList)
+                        {
+                            <option value="@hk.MaHocKy">@hk.MaHocKy</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <!-- Ca học -->
+            <div class="col-md-6">
+                <label class="form-label">Ca học</label>
+                <select asp-for="CaHoc" class="form-select">
+                    <option selected disabled>-- Chọn ca học --</option>
+                    <option value="1">Ca 1</option>
+                    <option value="2">Ca 2</option>
+                    <option value="3">Ca 3</option>
+                    <option value="4">Ca 4</option>
+                </select>
+            </div>
+
+            <!-- Ngày học -->
+            <div class="col-md-3">
+                <label class="form-label">Ngày học</label>
+                <select asp-for="NgayHoc" class="form-select">
+                    <option selected disabled>-- Chọn ngày học --</option>
+                    <option value="2">Thứ 2</option>
+                    <option value="3">Thứ 3</option>
+                    <option value="4">Thứ 4</option>
+                    <option value="5">Thứ 5</option>
+                    <option value="6">Thứ 6</option>
+                    <option value="7">Thứ 7</option>
+                </select>
+            </div>
+
+            <!-- Phòng học -->
+            <div class="col-md-4">
+                <label class="form-label">Phòng học</label>
+                <select asp-for="PhongHoc" class="form-select">
+                    <option selected disabled>-- Chọn phòng học --</option>
+                    @if (phongHocs != null)
+                    {
+                        foreach (var ph in phongHocs)
+                        {
+                            <option value="@ph.MaPhong">@ph.MaPhong</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+            <button type="submit" class="btn btn-primary">Lưu</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    const monHocs = @Html.Raw(ViewBag.MonHocJson ?? "[]");
+    const giangViens = @Html.Raw(ViewBag.GiangVienJson ?? "[]");
+    const hocKies = @Html.Raw(ViewBag.HocKyJson ?? "[]");
+
+    const tenMonHocInput = document.getElementById("tenMonHocInput");
+    const maMonHocHidden = document.getElementById("maMonHocHidden");
+    const goiYMonHocBox = document.getElementById("goiYMonHocBox");
+
+    tenMonHocInput.addEventListener("input", function() {
+        const val = this.value.toLowerCase();
+        goiYMonHocBox.innerHTML = '';
+        goiYMonHocBox.style.display = 'none';
+
+        if (!val) return;
+
+        const matches = monHocs.filter(m => m.TenMonHoc && m.TenMonHoc.toLowerCase().includes(val));
+        
+        if (matches.length > 0) {
+            goiYMonHocBox.style.display = 'block';
+            matches.forEach(m => {
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = "list-group-item list-group-item-action";
+                btn.textContent = m.TenMonHoc;
+                btn.onclick = function() {
+                    tenMonHocInput.value = m.TenMonHoc;
+                    maMonHocHidden.value = m.MaMonHoc;
+                    goiYMonHocBox.innerHTML = '';
+                    goiYMonHocBox.style.display = 'none';
+                };
+                goiYMonHocBox.appendChild(btn);
+            });
+        }
+    });
+
+    const tenGiangVienInput = document.getElementById("tenGiangVienInput");
+    const maGiangVienHidden = document.getElementById("maGiangVienHidden");
+    const goiYGiangVienBox = document.getElementById("goiYGiangVienBox");
+
+    tenGiangVienInput.addEventListener("input", function() {
+        const val = this.value.toLowerCase();
+        goiYGiangVienBox.innerHTML = '';
+        goiYGiangVienBox.style.display = 'none';
+
+        if (!val) return;
+
+        const matches = giangViens.filter(g => g.HoTen && g.HoTen.toLowerCase().includes(val));
+
+        if (matches.length > 0) {
+            goiYGiangVienBox.style.display = 'block';
+            matches.forEach(g => {
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = "list-group-item list-group-item-action";
+                btn.textContent = g.HoTen;
+                btn.onclick = function() {
+                    tenGiangVienInput.value = g.HoTen;
+                    maGiangVienHidden.value = g.MaNguoiDung;
+                    goiYGiangVienBox.innerHTML = '';
+                    goiYGiangVienBox.style.display = 'none';
+                };
+                goiYGiangVienBox.appendChild(btn);
+            });
+        }
+    });
+
+
+
+    document.addEventListener('click', function(e) {
+        if (!tenMonHocInput.contains(e.target) && !goiYMonHocBox.contains(e.target)) {
+            goiYMonHocBox.style.display = 'none';
+        }
+        if (!tenGiangVienInput.contains(e.target) && !goiYGiangVienBox.contains(e.target)) {
+            goiYGiangVienBox.style.display = 'none';
+        }
+    });
+
+
+</script>
