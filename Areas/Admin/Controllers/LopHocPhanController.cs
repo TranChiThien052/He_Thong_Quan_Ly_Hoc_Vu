@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using QuanLyHocVu.Models;
 using QuanLyHocVu.Services;
+using System.Text.Json;
 
 namespace QuanLyHocVu.Areas.Admin.Controllers
 {
@@ -38,33 +39,45 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.GiangVien = new SelectList(_giangVienService.GetAll(), "MaGiangVien", "HoTen");
-            ViewBag.HocKy = new SelectList(_hocKyService.GetAll(), "NamHoc", "HocKySo");
-            ViewBag.MonHoc = new SelectList(_monHocService.GetAll(), "MaMonHoc", "TenMonHoc");
-            ViewBag.PhongHoc = new SelectList(_phongHocService.GetAll(), "MaPhong");
+            var newId = GenerateLopHocPhanId();
+            ViewBag.MaLopHocPhan = newId;
+
+            // Serialize data to JSON for client-side use
+            ViewBag.GiangVienJson = JsonSerializer.Serialize(_giangVienService.GetAll().Select(g => new { g.MaNguoiDung, g.HoTen }));
+            ViewBag.HocKyJson = JsonSerializer.Serialize(_hocKyService.GetAll().Select(h => new { h.MaHocKy, h.NamHoc, h.HocKySo }));
+            ViewBag.MonHocJson = JsonSerializer.Serialize(_monHocService.GetAll().Select(m => new { m.MaMonHoc, m.TenMonHoc }));
+
+            // PhongHoc is used for server-side rendering of select options
+            ViewBag.PhongHoc = _phongHocService.GetAll();
             return View();
+        }
+
+        private string GenerateLopHocPhanId(){
+            const string prefix = "LHP";
+            var existingIds = _lopHocPhanService.GetAll()
+            .Select(l=>l.MaLopHocPhan)
+            .Where(id => id.StartsWith(prefix))
+            .Select(id => int.Parse(id.Substring(prefix.Length)))
+            .ToList();
+            int nextId = existingIds.Any() ? existingIds.Max() + 1 : 1;
+            return prefix + nextId.ToString("D5");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(LopHocPhan lopHocPhan)
         {
-            // Note: Assuming validation is handled client-side or implicit strictness is low as per other controllers in snippet
-            // If stricter validation is needed, we would check ModelState.IsValid.
-            // Following pattern from PhongHocController snippet which just calls Add.
-            
             try 
             {
-                 _lopHocPhanService.Add(lopHocPhan);
-                 return RedirectToAction(nameof(Index));
+                _lopHocPhanService.Add(lopHocPhan);
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
-                // Republish viewbags on failure if needed, but for now simple redirect or re-view
-                ViewBag.GiangVien = new SelectList(_giangVienService.GetAll(), "MaGiangVien", "HoTen");
-                ViewBag.HocKy = new SelectList(_hocKyService.GetAll(), "NamHoc", "HocKySo");
-                ViewBag.MonHoc = new SelectList(_monHocService.GetAll(), "MaMonHoc", "TenMonHoc");
-                ViewBag.PhongHoc = new SelectList(_phongHocService.GetAll(), "MaPhong");
+                ViewBag.GiangVienJson = JsonSerializer.Serialize(_giangVienService.GetAll().Select(g => new { g.MaNguoiDung, g.HoTen }));
+                ViewBag.HocKyJson = JsonSerializer.Serialize(_hocKyService.GetAll().Select(h => new { h.MaHocKy, h.NamHoc, h.HocKySo }));
+                ViewBag.MonHocJson = JsonSerializer.Serialize(_monHocService.GetAll().Select(m => new { m.MaMonHoc, m.TenMonHoc }));
+                ViewBag.PhongHoc = _phongHocService.GetAll();
                 return View(lopHocPhan);
             }
         }
