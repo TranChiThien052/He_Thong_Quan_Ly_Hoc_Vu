@@ -88,10 +88,21 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            ViewBag.GiangVien = new SelectList(_giangVienService.GetAll(), "MaGiangVien", "HoTen", lopHocPhan.MaGiangVien);
-            ViewBag.HocKy = new SelectList(_hocKyService.GetAll(), "NamHoc", "HocKySo","MaHocKy", lopHocPhan.MaHocKy);
-            ViewBag.MonHoc = new SelectList(_monHocService.GetAll(), "MaMonHoc", "TenMonHoc", lopHocPhan.MaMonHoc);
-            ViewBag.PhongHoc = new SelectList(_phongHocService.GetAll(), "MaPhong", lopHocPhan.PhongHoc);
+            // Get names for display in inputs
+            var monHoc = _monHocService.GetById(lopHocPhan.MaMonHoc);
+            ViewBag.TenMonHoc = monHoc?.TenMonHoc;
+
+            var giangVien = _giangVienService.GetById(lopHocPhan.MaGiangVien);
+            ViewBag.TenGiangVien = giangVien?.HoTen;
+
+            ViewBag.HocKyList = _hocKyService.GetAll();
+
+            // Keep JSON for autocomplete suggestions
+            ViewBag.GiangVienJson = JsonSerializer.Serialize(_giangVienService.GetAll().Select(g => new { g.MaNguoiDung, g.HoTen }));
+            ViewBag.HocKyJson = JsonSerializer.Serialize(_hocKyService.GetAll().Select(h => new { h.MaHocKy, h.NamHoc, h.HocKySo }));
+            ViewBag.MonHocJson = JsonSerializer.Serialize(_monHocService.GetAll().Select(m => new { m.MaMonHoc, m.TenMonHoc }));
+            ViewBag.PhongHoc = _phongHocService.GetAll();
+            
             return View(lopHocPhan);
         }
 
@@ -106,10 +117,14 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
              }
              catch
              {
-                ViewBag.GiangVien = new SelectList(_giangVienService.GetAll(), "MaGiangVien", "HoTen", lopHocPhan.MaGiangVien);
-                ViewBag.HocKy = new SelectList(_hocKyService.GetAll(), "NamHoc", "HocKySo","MaHocKy", lopHocPhan.MaHocKy);
-                ViewBag.MonHoc = new SelectList(_monHocService.GetAll(), "MaMonHoc", "TenMonHoc", lopHocPhan.MaMonHoc);
-                ViewBag.PhongHoc = new SelectList(_phongHocService.GetAll(), "MaPhong", lopHocPhan.PhongHoc);
+                ViewBag.TenMonHoc = _monHocService.GetById(lopHocPhan.MaMonHoc)?.TenMonHoc;
+                ViewBag.TenGiangVien = _giangVienService.GetById(lopHocPhan.MaGiangVien)?.HoTen;
+                ViewBag.HocKyList = _hocKyService.GetAll();
+
+                ViewBag.GiangVienJson = JsonSerializer.Serialize(_giangVienService.GetAll().Select(g => new { g.MaNguoiDung, g.HoTen }));
+                ViewBag.HocKyJson = JsonSerializer.Serialize(_hocKyService.GetAll().Select(h => new { h.MaHocKy, h.NamHoc, h.HocKySo }));
+                ViewBag.MonHocJson = JsonSerializer.Serialize(_monHocService.GetAll().Select(m => new { m.MaMonHoc, m.TenMonHoc }));
+                ViewBag.PhongHoc = _phongHocService.GetAll();
                 return View(lopHocPhan);
              }
         }
