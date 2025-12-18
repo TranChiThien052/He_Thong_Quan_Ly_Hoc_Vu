@@ -10,6 +10,6 @@ namespace QuanLyHocVu.Services
         List<DiemRenLuyen> Search(string term);
         DiemRenLuyen GetById(string maSv, string maHocKy);
         void Update(string maSv, string maHocKy, int? diem);
-        void CreateForSinhVien(string maSv);
+        void CreateForSinhVien(string maSv, string maHocKy);
     }
 }

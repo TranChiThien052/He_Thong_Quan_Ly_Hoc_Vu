@@ -132,7 +132,7 @@ CREATE TABLE DiemRenLuyen (
 
 CREATE TABLE DiemCongTacXaHoi (
     MaSinhVien NVARCHAR(10) PRIMARY KEY,
-    TongDiem INT,
+    TongDiem FLOAT(24),
     FOREIGN KEY (MaSinhVien) REFERENCES SinhVien(MaNguoiDung)
 );
 

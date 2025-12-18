@@ -71,14 +71,19 @@ namespace QuanLyHocVu.Services
             }
         }
 
-        public void CreateForSinhVien(string maSv) // Potentially useful if we need to backfill
+        public void CreateForSinhVien(string maSv, string maHocKy)
         {
-             // This logic depends on business rule: create for all semesters? or current?
-             // Leaving empty or basic for now as requirement is focused on input/edit and list
-             // However, for consistency, if a student is added, we typically add DRL for current semester?
-             // User request: "sửa lại chức năng thêm một sinh viên sẽ tự động tạo model điểm công tác xã hội"
-             // User did NOT ask to auto create DiemRenLuyen here (it was in previous convo for Semester creation).
-             // But for completeness, good to have placeholders.
+            if (!_context.DiemRenLuyens.Any(d => d.MaSinhVien == maSv && d.MaHocKy == maHocKy))
+            {
+                var drl = new DiemRenLuyen 
+                { 
+                    MaSinhVien = maSv, 
+                    MaHocKy = maHocKy,
+                    Diem = null // Để null ban đầu, admin sẽ cập nhật sau
+                };
+                _context.DiemRenLuyens.Add(drl);
+                _context.SaveChanges();
+            }
         }
     }
 }

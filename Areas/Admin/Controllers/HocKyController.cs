@@ -11,9 +11,14 @@ namespace QuanLyHocVu.Areas.Admin
     public class HocKyController : Controller
     {
         private readonly IHocKyService _hocKyService;
-        public HocKyController(IHocKyService hocKyService)
+        private readonly IDiemRenLuyenService _diemRenLuyenService;
+        private readonly ISinhVienService _sinhVienService;
+
+        public HocKyController(IHocKyService hocKyService, IDiemRenLuyenService diemRenLuyenService, ISinhVienService sinhVienService)
         {
             _hocKyService = hocKyService;
+            _diemRenLuyenService = diemRenLuyenService;
+            _sinhVienService = sinhVienService;
         }
         public IActionResult Index(string maHocKy, string namHoc)
         {
@@ -36,6 +41,13 @@ namespace QuanLyHocVu.Areas.Admin
         {
             hocKy.MaHocKy = hocKy.NamHoc + "-" + hocKy.HocKySo;
             _hocKyService.Add(hocKy);
+
+            var sinhViensDangHoc = _sinhVienService.GetAll().Where(s => s.TinhTrangHoc == "Đang học").ToList();
+            foreach (var sinhVien in sinhViensDangHoc)
+            {
+                _diemRenLuyenService.CreateForSinhVien(sinhVien.MaNguoiDung, hocKy.MaHocKy);
+            }
+
             return RedirectToAction("Index");
         }
 

@@ -12,11 +12,13 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
     {
         private readonly ISinhVienService _sinhVienService;
         private readonly INganhService _nganhService;
+        private readonly IDiemCongTacXaHoiService _diemCongTacXaHoiService;
 
-        public SinhVienController(ISinhVienService sinhVienService, INganhService nganhService)
+        public SinhVienController(ISinhVienService sinhVienService, INganhService nganhService, IDiemCongTacXaHoiService diemCongTacXaHoiService)
         {
             _sinhVienService = sinhVienService;
             _nganhService = nganhService;
+            _diemCongTacXaHoiService = diemCongTacXaHoiService;
         }
 
         public IActionResult Index(string nienKhoa, string maNganh, string maSinhVien)
@@ -83,6 +85,7 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
                 sinhVien.MaNguoiDung = _sinhVienService.GenerateStudentId(sinhVien);
                 
                 _sinhVienService.Add(sinhVien);
+                _diemCongTacXaHoiService.Create(sinhVien.MaNguoiDung);
                 return RedirectToAction(nameof(Index));
             }
             var nganhs = _nganhService.GetAll();

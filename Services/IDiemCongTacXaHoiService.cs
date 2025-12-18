@@ -7,7 +7,7 @@ namespace QuanLyHocVu.Services
         List<DiemCongTacXaHoi> GetAll();
         DiemCongTacXaHoi GetBySinhVien(string maSv);
         List<DiemCongTacXaHoi> Search(string term);
-        void Update(string maSv, int? tongDiem);
+        void Update(string maSv, float? tongDiem);
         void Create(string maSv);
     }
 }

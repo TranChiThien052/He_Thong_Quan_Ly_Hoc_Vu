@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuanLyHocVu.Services;
+using QuanLyHocVu.Models;
 
 namespace QuanLyHocVu.Areas.Admin.Controllers
 {
@@ -22,10 +23,21 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
             return View(list);
         }
 
-        [HttpPost]
-        public IActionResult Edit(string maSinhVien, int? tongDiem)
+        public IActionResult Edit(string maSinhVien)
         {
-            _diemCongTacXaHoiService.Update(maSinhVien, tongDiem);
+            var diemCongTacXaHoi = _diemCongTacXaHoiService.GetBySinhVien(maSinhVien);
+            if (diemCongTacXaHoi == null)
+            {
+                return NotFound();
+            }
+            return View(diemCongTacXaHoi);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(DiemCongTacXaHoi diemCongTacXaHoi)
+        {
+            _diemCongTacXaHoiService.Update(diemCongTacXaHoi.MaSinhVien, diemCongTacXaHoi.TongDiem);
             return RedirectToAction(nameof(Index));
         }
     }

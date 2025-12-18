@@ -40,7 +40,7 @@ namespace QuanLyHocVu.Services
                 .ToList();
         }
 
-        public void Update(string maSv, int? tongDiem)
+        public void Update(string maSv, float? tongDiem)
         {
             var ctxh = _context.DiemCongTacXaHois.Find(maSv);
             if (ctxh != null)
@@ -64,7 +64,7 @@ namespace QuanLyHocVu.Services
                 var ctxh = new DiemCongTacXaHoi 
                 { 
                     MaSinhVien = maSv, 
-                    TongDiem = 0,
+                    TongDiem = 0f,
                 };
                 _context.DiemCongTacXaHois.Add(ctxh);
                 _context.SaveChanges();
