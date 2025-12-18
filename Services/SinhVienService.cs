@@ -6,10 +6,12 @@ namespace QuanLyHocVu.Services
     public class SinhVienService : ISinhVienService
     {
         private readonly QuanLyHocVuContext _context;
+        private readonly IDiemCongTacXaHoiService _diemCongTacXaHoiService;
 
-        public SinhVienService(QuanLyHocVuContext context)
+        public SinhVienService(QuanLyHocVuContext context, IDiemCongTacXaHoiService diemCongTacXaHoiService)
         {
             _context = context;
+            _diemCongTacXaHoiService = diemCongTacXaHoiService;
         }
 
         public List<SinhVien> GetAll()
@@ -32,6 +34,7 @@ namespace QuanLyHocVu.Services
         {
             _context.SinhViens.Add(sinhVien);
             _context.SaveChanges();
+            _diemCongTacXaHoiService.Create(sinhVien.MaNguoiDung);
         }
 
         public void Update(SinhVien sinhVien)

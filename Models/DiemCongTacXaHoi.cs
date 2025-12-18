@@ -9,7 +9,5 @@ public partial class DiemCongTacXaHoi
 
     public int? TongDiem { get; set; }
 
-    public string? GhiChu { get; set; }
-
     public virtual SinhVien MaSinhVienNavigation { get; set; } = null!;
 }

@@ -160,7 +160,6 @@ public partial class QuanLyHocVuContext : DbContext
             entity.ToTable("DiemCongTacXaHoi");
 
             entity.Property(e => e.MaSinhVien).HasMaxLength(10);
-            entity.Property(e => e.GhiChu).HasMaxLength(200);
 
             entity.HasOne(d => d.MaSinhVienNavigation).WithOne(p => p.DiemCongTacXaHoi)
                 .HasForeignKey<DiemCongTacXaHoi>(d => d.MaSinhVien)
