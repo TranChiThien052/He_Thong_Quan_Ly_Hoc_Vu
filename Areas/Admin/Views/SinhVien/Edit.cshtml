@@ -20,13 +20,12 @@
         <div class="card-body">
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="MaNguoiDung" />
                 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label asp-for="MaNguoiDung" class="control-label fw-bold">Mã Sinh Viên</label>
-                            <input asp-for="MaNguoiDung" class="form-control" disabled />
+                            <input asp-for="MaNguoiDung" class="form-control" readonly />
                         </div>
                         <div class="mb-3">
                             <label asp-for="HoTen" class="control-label fw-bold">Họ Tên</label>

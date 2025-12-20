@@ -112,12 +112,8 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(string id, [Bind("HoTen,QueQuan,NgaySinh,Email,SoDienThoai,Cccd,DiaChiThuongTru,DiaChiTamTru,MaNganh,NienKhoa,TinhTrangHoc")] QuanLyHocVu.Models.SinhVien sinhVien)
+        public IActionResult Edit([Bind("MaNguoiDung,HoTen,QueQuan,NgaySinh,Email,SoDienThoai,Cccd,DiaChiThuongTru,DiaChiTamTru,MaNganh,NienKhoa,TinhTrangHoc")] QuanLyHocVu.Models.SinhVien sinhVien)
         {
-            if (id != sinhVien.MaNguoiDung)
-            {
-                return NotFound();
-            }
 
             ModelState.Remove("MaNganhNavigation");
             ModelState.Remove("TaiKhoan");
