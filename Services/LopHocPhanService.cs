@@ -19,6 +19,7 @@ namespace QuanLyHocVu.Services
                 .Include(l => l.MaGiangVienNavigation)
                 .Include(l => l.MaHocKyNavigation)
                 .Include(l => l.PhongHocNavigation)
+                .OrderBy(l => l.MaHocKy)
                 .ToList();
         }
 
