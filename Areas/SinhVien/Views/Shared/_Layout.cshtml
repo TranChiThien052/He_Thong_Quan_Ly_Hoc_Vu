@@ -22,11 +22,14 @@
             <hr>
             <nav class="menu">
                 <ul>
-                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "SinhVien" ? "active" : "")">
+                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Info" ? "active" : "")">
                         <a asp-area="SinhVien" asp-controller="Info" asp-action="Index">Thông tin cá nhân</a>
                     </li>
                     <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "DangKyHocPhan" ? "active" : "")">
                         <a asp-area="SinhVien" asp-controller="DangKyHocPhan" asp-action="Index">Đăng ký học phần</a>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "LichHoc" ? "active" : "")">
+                        <a asp-area="SinhVien" asp-controller="LichHoc" asp-action="Index">Lịch học</a>
                     </li>
                 </ul>
             </nav>

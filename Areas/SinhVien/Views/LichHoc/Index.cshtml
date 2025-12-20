@@ -1,0 +1,60 @@
+@model IEnumerable<QuanLyHocVu.Models.DangKyHocPhan>
+@{
+    ViewData["Title"] = "Lịch học";
+}
+
+<div class="container bg-white p-4 rounded shadow-sm">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-primary">@ViewData["Title"]</h1>
+    </div>
+
+    <form method="get" asp-action="Index" class="mb-4">
+        <div class="form-group">
+            <label for="maHocKy">Chọn học kỳ:</label>
+            <select name="maHocKy" id="maHocKy" class="form-control" onchange="this.form.submit()">
+                @foreach (var hocKy in ViewBag.HocKys as IEnumerable<QuanLyHocVu.Models.HocKy>)
+                {
+                    <option value="@hocKy.MaHocKy" selected="@(hocKy.MaHocKy == ViewBag.SelectedHocKy)">
+                        @hocKy.NamHoc - Học kỳ @hocKy.HocKySo
+                    </option>
+                }
+            </select>
+        </div>
+    </form>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">Mã lớp học phần</th>
+                        <th scope="col">Môn học</th>
+                        <th scope="col">Giảng viên</th>
+                        <th scope="col">Ca học</th>
+                        <th scope="col">Ngày học</th>
+                        <th scope="col">Phòng học</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var dangKy in Model)
+                    {
+                        var lopHocPhan = dangKy.MaLopHocPhanNavigation;
+                        <tr style="height: 50px;">
+                            <td>@lopHocPhan.MaLopHocPhan</td>
+                            <td>@lopHocPhan.MaMonHocNavigation.TenMonHoc</td>
+                            <td>@lopHocPhan.MaGiangVienNavigation.HoTen</td>
+                            <td>@lopHocPhan.CaHoc</td>
+                            <td>@lopHocPhan.NgayHoc</td>
+                            <td>@lopHocPhan.PhongHoc</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p>Không có thông tin lịch học</p>
+    }
+</div>

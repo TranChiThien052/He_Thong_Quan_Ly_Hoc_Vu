@@ -13,17 +13,14 @@ namespace QuanLyHocVu.Areas.SinhVien.Controllers
         private readonly IHocKyService _hocKyService;
         private readonly ISinhVienService _sinhVienService;
         private readonly IDangKyHocPhanService _dangKyHocPhanService;
-
-        public DangKyHocPhanController(
-            ILopHocPhanService lopHocPhanService, 
-            IHocKyService hocKyService,
-            ISinhVienService sinhVienService,
-            IDangKyHocPhanService dangKyHocPhanService)
+        private readonly IDiemHocPhanService _diemHocPhanService;
+        public DangKyHocPhanController(ILopHocPhanService lopHocPhanService, IHocKyService hocKyService, ISinhVienService sinhVienService, IDangKyHocPhanService dangKyHocPhanService, IDiemHocPhanService diemHocPhanService)
         {
             _lopHocPhanService = lopHocPhanService;
             _hocKyService = hocKyService;
             _sinhVienService = sinhVienService;
             _dangKyHocPhanService = dangKyHocPhanService;
+            _diemHocPhanService = diemHocPhanService;
         }
 
         public IActionResult Index()
@@ -62,15 +59,19 @@ namespace QuanLyHocVu.Areas.SinhVien.Controllers
 
             var dangKyHocPhan = new DangKyHocPhan { MaSinhVien = maSinhVien, MaLopHocPhan = maLopHocPhan};
             
+            var diemHocPhan = new DiemHocPhan { MaSinhVien = maSinhVien, MaLopHocPhan = maLopHocPhan, DiemChuyenCan = 0, DiemGiuaKy = 0, DiemCuoiKy = 0};
+
             _dangKyHocPhanService.Add(dangKyHocPhan);
+            _diemHocPhanService.Add(diemHocPhan);
 
             return RedirectToAction("Index");
         }
 
-        public IActionResult Delete(String MaLopHocPhan) 
+        public IActionResult Delete(string MaLopHocPhan) 
         {
             var maSinhVien = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
             _dangKyHocPhanService.Delete(maSinhVien, MaLopHocPhan);
+            _diemHocPhanService.Delete(maSinhVien, MaLopHocPhan);
             return RedirectToAction("Index");
         }
     }
