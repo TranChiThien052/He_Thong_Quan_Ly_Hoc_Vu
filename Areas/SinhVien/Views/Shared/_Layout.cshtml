@@ -31,6 +31,13 @@
                     <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "LichHoc" ? "active" : "")">
                         <a asp-area="SinhVien" asp-controller="LichHoc" asp-action="Index">Lịch học</a>
                     </li>
+                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "XemDiem" ? "active" : "")">
+                        <a asp-area="SinhVien" asp-controller="XemDiem" asp-action="Index">Xem điểm</a>
+                    </li>
+                    <hr>
+                    <li>
+                        <a asp-area="" asp-controller="Account" asp-action="Logout">Đăng xuất</a>
+                    </li>
                 </ul>
             </nav>
         </aside>
