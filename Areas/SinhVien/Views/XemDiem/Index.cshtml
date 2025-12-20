@@ -1,0 +1,89 @@
+@model List<QuanLyHocVu.Models.DiemHocPhan>
+@{
+    ViewData["Title"] = "Xem điểm học phần";
+    var danhSachNamHoc = ViewBag.DanhSachNamHoc as List<string>;
+    var danhSachHocKy = ViewBag.DanhSachHocKy as List<int>;
+    var namHocDuocChon = ViewBag.NamHocDuocChon as string;
+    var hocKyDuocChon = ViewBag.HocKyDuocChon as int?;
+}
+
+<div class="container bg-white p-4 rounded shadow-sm">
+    <div class="mb-4">
+        <h1 class="text-primary mb-3">Kết Quả Học Tập</h1>
+        <form method="get" class="row g-3 align-items-end">
+             <div class="col-auto">
+                <label class="form-label fw-bold" for="namHocSelect">Năm học</label>
+                <select name="namHoc" id="namHocSelect" class="form-select" style="min-width: 200px;">
+                    @if (danhSachNamHoc != null)
+                    {
+                        foreach (var nam in danhSachNamHoc)
+                        {
+                            <option value="@nam" selected="@(nam == namHocDuocChon ? "selected" : null)">@nam</option>
+                        }
+                    }
+                </select>
+             </div>
+             
+             <div class="col-auto">
+                <label class="form-label fw-bold" for="hocKySelect">Học kỳ</label>
+                <select name="hocKySo" id="hocKySelect" class="form-select" style="min-width: 150px;">
+                    @if (danhSachHocKy != null)
+                    {
+                        foreach (var ky in danhSachHocKy)
+                        {
+                            <option value="@ky" selected="@(ky == hocKyDuocChon ? "selected" : null)">Học kỳ @ky</option>
+                        }
+                    }
+                </select>
+             </div>
+
+             <div class="col-auto">
+                <button type="submit" class="btn btn-primary px-4">
+                    <i class="fas fa-search me-1"></i> Tìm
+                </button>
+             </div>
+        </form>
+    </div>
+
+    <!-- Bảng điểm -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle text-center">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col" class="text-start">Mã Môn</th>
+                    <th scope="col" class="text-start">Tên Môn Học</th>
+                    <th scope="col">Số TC</th>
+                    <th scope="col" class="text-start">Giảng Viên</th>
+                    <th scope="col">Chuyên Cần</th>
+                    <th scope="col">Giữa Kỳ</th>
+                    <th scope="col">Cuối Kỳ</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var diem in Model)
+                    {
+                        <tr>
+                            <td class="text-start">@diem.MaLopHocPhanNavigation.MaMonHoc</td>
+                            <td class="text-start fw-bold text-primary">@diem.MaLopHocPhanNavigation.MaMonHocNavigation?.TenMonHoc</td>
+                            <td>@diem.MaLopHocPhanNavigation.MaMonHocNavigation?.SoTinChi</td>
+                            <td class="text-start">@diem.MaLopHocPhanNavigation.MaGiangVienNavigation?.HoTen</td>
+                            <td>@(diem.DiemChuyenCan.HasValue ? diem.DiemChuyenCan.Value.ToString("0.##") : "-")</td>
+                            <td>@(diem.DiemGiuaKy.HasValue ? diem.DiemGiuaKy.Value.ToString("0.##") : "-")</td>
+                            <td>@(diem.DiemCuoiKy.HasValue ? diem.DiemCuoiKy.Value.ToString("0.##") : "-")</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-center py-4 text-muted">
+                            Chưa có dữ liệu điểm cho học kỳ này.
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

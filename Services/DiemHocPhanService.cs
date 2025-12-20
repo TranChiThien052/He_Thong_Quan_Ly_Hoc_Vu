@@ -11,6 +11,12 @@ namespace QuanLyHocVu.Services
         {
             _context = context;
         }
+        
+        public void Add(DiemHocPhan diemHocPhan)
+        {
+            _context.DiemHocPhans.Add(diemHocPhan);
+            _context.SaveChanges();
+        }
 
         public List<DiemHocPhan> GetByLopHocPhan(string maLopHocPhan)
         {
@@ -40,6 +46,29 @@ namespace QuanLyHocVu.Services
                 existingDiem.DiemCuoiKy = diemHocPhan.DiemCuoiKy;
                 _context.SaveChanges();
             }
+        }
+
+        public void Delete(string maSinhVien, string maLopHocPhan)
+        {
+            var diemHocPhan = _context.DiemHocPhans
+                .FirstOrDefault(d => d.MaSinhVien == maSinhVien && d.MaLopHocPhan == maLopHocPhan);
+
+            if (diemHocPhan != null)
+            {
+                _context.DiemHocPhans.Remove(diemHocPhan);
+                _context.SaveChanges();
+            }
+        }
+
+        public List<DiemHocPhan> GetBySinhVienAndHocKy(string maSinhVien, string maHocKy)
+        {
+            return _context.DiemHocPhans
+                .Include(d => d.MaLopHocPhanNavigation)
+                .ThenInclude(l => l.MaMonHocNavigation)
+                .Include(d => d.MaLopHocPhanNavigation)
+                .ThenInclude(l => l.MaGiangVienNavigation)
+                .Where(d => d.MaSinhVien == maSinhVien && d.MaLopHocPhanNavigation.MaHocKy == maHocKy)
+                .ToList();
         }
     }
 }
