@@ -21,7 +21,7 @@
 </style>
 <body>
     <div class="layout">
-        <aside class="sidebar">
+        <aside class="sidebar" style="position: relative;">
             <div class="brand">
                 <div class="brand-logo"> <a asp-controller="Home" asp-action="Index"><img src="~/img/Logo.png" alt="Logo" style="height: 30px; vertical-align: middle; margin-right: 5px;" /> STU</a></div>
                 <div class="brand-name">Trường Đại Học Công Nghệ Sài Gòn</div>
@@ -37,7 +37,11 @@
                     <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "LopHocPhan" ? "active" : "")">
                         <a asp-area="GiangVien" asp-controller="LopHocPhan" asp-action="Index">Lớp học phần</a>
                     </li>
-                </ul>
+                    <hr>
+                    <li>
+                        <a asp-area="" asp-controller="Account" asp-action="Logout">Đăng xuất</a>
+                    </li>
+                </ul>   
             </nav>
         </aside>
 

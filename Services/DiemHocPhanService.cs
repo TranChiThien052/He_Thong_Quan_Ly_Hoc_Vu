@@ -29,6 +29,7 @@ namespace QuanLyHocVu.Services
         public DiemHocPhan GetById(string maSinhVien, string maLopHocPhan){
             return _context.DiemHocPhans
                 .Include(d=>d.MaSinhVienNavigation)
+                .OrderBy(d => d.MaSinhVienNavigation.HoTen)
                 .FirstOrDefault(d => d.MaSinhVien == maSinhVien && d.MaLopHocPhan == maLopHocPhan);
         }
 
