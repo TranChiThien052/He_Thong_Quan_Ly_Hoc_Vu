@@ -1,0 +1,35 @@
+@model IEnumerable<QuanLyHocVu.Models.LopHocPhan>
+@{
+    ViewData["Title"] = "Danh sách lớp học phần";
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<div class="container bg-white p-4 rounded shadow-sm">
+    <h4 class="mb-4">Danh sách lớp học phần</h4>
+
+    <table class="table table-bordered table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>Mã lớp</th>
+          <th>Môn học</th>
+          <th>Mã học kỳ</th>
+          <th>Ca học</th>
+          <th>Ngày học</th>
+          <th>Phòng học</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+      @foreach(var item in Model){
+        <tr>
+          <td>@item.MaLopHocPhan</td>
+          <td>@item.MaMonHocNavigation?.TenMonHoc</td>
+          <td>@item.MaHocKy</td>
+          <td>@item.CaHoc</td>
+          <td>@item.NgayHoc</td>
+          <td>@item.PhongHoc</td>
+          <td><a asp-action="Details" asp-route-id="@item.MaLopHocPhan" class="btn btn-sm btn-warning">Xem chi tiết</a></td>
+        </tr>
+      }
+      </tbody>
+    </table>
+  </div>

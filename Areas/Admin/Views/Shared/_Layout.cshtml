@@ -21,6 +21,7 @@
                 <div class="brand-logo"> <a asp-controller="Home" asp-action="Index"><img src="~/img/Logo.png" alt="Logo" style="height: 30px; vertical-align: middle; margin-right: 5px;" /> STU</a></div>
                 <div class="brand-name">Trường Đại Học Công Nghệ Sài Gòn</div>
             </div>
+            <hr>
             <nav class="menu">
                 <ul>
                     <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "SinhVien" ? "active" : "")">
