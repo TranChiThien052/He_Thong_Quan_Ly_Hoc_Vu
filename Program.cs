@@ -22,6 +22,7 @@ builder.Services.AddScoped<IChiTietChuongTrinhService, ChiTietChuongTrinhService
 builder.Services.AddScoped<ITaiKhoanService, TaiKhoanService>();
 builder.Services.AddScoped<IDiemRenLuyenService, DiemRenLuyenService>();
 builder.Services.AddScoped<IDiemCongTacXaHoiService, DiemCongTacXaHoiService>();
+builder.Services.AddScoped<IDiemHocPhanService, DiemHocPhanService>();
 
 builder.Services.AddAuthentication(Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

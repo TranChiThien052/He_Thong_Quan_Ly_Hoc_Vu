@@ -9,11 +9,11 @@ public partial class DiemHocPhan
 
     public string MaLopHocPhan { get; set; } = null!;
 
-    public double? DiemChuyenCan { get; set; }
+    public decimal? DiemChuyenCan { get; set; }
 
-    public double? DiemGiuaKy { get; set; }
+    public decimal? DiemGiuaKy { get; set; }
 
-    public double? DiemCuoiKy { get; set; }
+    public decimal? DiemCuoiKy { get; set; }
 
     public virtual LopHocPhan MaLopHocPhanNavigation { get; set; } = null!;
 

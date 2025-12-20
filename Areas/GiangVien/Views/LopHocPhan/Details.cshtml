@@ -1,0 +1,123 @@
+@model QuanLyHocVu.Models.LopHocPhan
+
+@{
+    ViewData["Title"] = "Chi tiết lớp học phần";
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<div class="container bg-white p-4 rounded shadow-sm">
+    <h4 class="mb-4 text-primary">Chi tiết lớp học phần</h4>
+
+    <!-- Thông tin lớp học phần -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-3">
+        <strong>Mã lớp học phần: </strong>
+        <span class="text-danger fw-bold">@Model.MaLopHocPhan</span>
+      </div>
+      <div class="col-md-3">
+        <strong>Môn học: </strong>
+        <span class="text-danger fw-bold">@Model.MaMonHocNavigation?.TenMonHoc</span>
+      </div>
+      <div class="col-md-2">
+        <strong>Mã phòng học: </strong>
+        <span class="text-danger fw-bold">@Model.PhongHoc</span>
+      </div>
+      <div class="col-md-2">
+        <strong>Ca học:</strong>
+        <span class="text-danger fw-bold"> @Model.CaHoc </span>
+      </div>
+      <div class="col-md-2">
+        <strong>Ngày học:</strong>
+        <span class="text-danger fw-bold"> @Model.NgayHoc </span>
+      </div>
+    </div>
+
+    <!-- Danh sách sinh viên -->
+    <div class="d-flex justify-content-between align-items-center mb-3"> 
+        <h5 class="mb-0">Danh sách sinh viên</h5> 
+        <a asp-action="Index" class="btn btn-danger btn-sm">Thoát</a> 
+    </div>
+    <table class="table table-bordered table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>Mã số sinh viên</th>
+          <th>Họ tên</th>
+          <th>Điểm chuyên cần</th>
+          <th>Điểm giữa kỳ</th>
+          <th>Điểm cuối kỳ</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach (var item in ViewBag.DiemList)
+        {
+            <tr>
+              <td>@item.MaSinhVien</td>
+              <td>@item.MaSinhVienNavigation?.HoTen</td>
+              <td>@item.DiemChuyenCan</td>
+              <td>@item.DiemGiuaKy</td>
+              <td>@item.DiemCuoiKy</td>
+              <td>
+                <a asp-action="NhapDiem" asp-route-maSinhVien="@item.MaSinhVien" asp-route-maLopHocPhan="@item.MaLopHocPhan" class="btn btn-primary btn-sm">Nhập điểm</a>
+              </td>
+            </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- <script>
+    // Lưu giá trị gốc trước khi nhập
+    const originalValues = {};
+
+    function batNhap(id) {
+      // Lưu giá trị hiện tại trước khi cho nhập
+      originalValues[`cc-${id}`] = document.getElementById(`cc-${id}`).value;
+      originalValues[`gk-${id}`] = document.getElementById(`gk-${id}`).value;
+      originalValues[`ck-${id}`] = document.getElementById(`ck-${id}`).value;
+
+      // Cho phép nhập
+      document.getElementById(`cc-${id}`).removeAttribute("readonly");
+      document.getElementById(`gk-${id}`).removeAttribute("readonly");
+      document.getElementById(`ck-${id}`).removeAttribute("readonly");
+
+      // Đổi nút
+      document.querySelector(`#row-${id} .btn-primary`).classList.add("d-none");
+      document.getElementById(`luu-${id}`).classList.remove("d-none");
+      document.getElementById(`huy-${id}`).classList.remove("d-none");
+    }
+
+    function huyNhap(id) {
+      // Khôi phục giá trị gốc
+      document.getElementById(`cc-${id}`).value = originalValues[`cc-${id}`];
+      document.getElementById(`gk-${id}`).value = originalValues[`gk-${id}`];
+      document.getElementById(`ck-${id}`).value = originalValues[`ck-${id}`];
+
+      // Khóa lại input
+      document.getElementById(`cc-${id}`).setAttribute("readonly", true);
+      document.getElementById(`gk-${id}`).setAttribute("readonly", true);
+      document.getElementById(`ck-${id}`).setAttribute("readonly", true);
+
+      // Đổi nút về trạng thái ban đầu
+      document.querySelector(`#row-${id} .btn-primary`).classList.remove("d-none");
+      document.getElementById(`luu-${id}`).classList.add("d-none");
+      document.getElementById(`huy-${id}`).classList.add("d-none");
+    }
+
+    function luuNhap(id) {
+      const cc = document.getElementById(`cc-${id}`).value;
+      const gk = document.getElementById(`gk-${id}`).value;
+      const ck = document.getElementById(`ck-${id}`).value;
+
+      console.log(`Lưu điểm SV ${id}: CC=${cc}, GK=${gk}, CK=${ck}`);
+
+      // Sau khi lưu thì khóa lại input
+      document.getElementById(`cc-${id}`).setAttribute("readonly", true);
+      document.getElementById(`gk-${id}`).setAttribute("readonly", true);
+      document.getElementById(`ck-${id}`).setAttribute("readonly", true);
+
+      // Đổi nút về trạng thái ban đầu
+      document.querySelector(`#row-${id} .btn-primary`).classList.remove("d-none");
+      document.getElementById(`luu-${id}`).classList.add("d-none");
+      document.getElementById(`huy-${id}`).classList.add("d-none");
+    }
+  </script> -->
