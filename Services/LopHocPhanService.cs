@@ -53,5 +53,33 @@ namespace QuanLyHocVu.Services
                 _context.SaveChanges();
             }
         }
+
+        public List<LopHocPhan> GetByHocKy(string maHocKy)
+        {
+            return _context.LopHocPhans
+                .Include(l => l.MaMonHocNavigation)
+                .Include(l => l.MaGiangVienNavigation)
+                .Include(l => l.MaHocKyNavigation)
+                .Include(l => l.PhongHocNavigation)
+                .Where(l => l.MaHocKy == maHocKy)
+                .ToList();
+        }
+
+        public List<LopHocPhan> GetByHocKyAndNganh(string maHocKy, string maNganh)
+        {
+            var query = _context.LopHocPhans
+                .Include(l => l.MaMonHocNavigation)
+                    .ThenInclude(m => m.ChiTietChuongTrinhDaoTaos)
+                        .ThenInclude(ct => ct.MaCtdtNavigation)
+                .Include(l => l.MaGiangVienNavigation)
+                .Include(l => l.MaHocKyNavigation)
+                .Include(l => l.PhongHocNavigation)
+                .Where(l => l.MaHocKy == maHocKy && l.MaMonHocNavigation.ChiTietChuongTrinhDaoTaos
+                    .Any(ct => ct.MaCtdtNavigation.MaNganh == maNganh));
+                    
+            return query
+                .Distinct()
+                .ToList();
+        }
     }
 }

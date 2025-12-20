@@ -25,6 +25,9 @@
                     <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "SinhVien" ? "active" : "")">
                         <a asp-area="SinhVien" asp-controller="Info" asp-action="Index">Thông tin cá nhân</a>
                     </li>
+                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "DangKyHocPhan" ? "active" : "")">
+                        <a asp-area="SinhVien" asp-controller="DangKyHocPhan" asp-action="Index">Đăng ký học phần</a>
+                    </li>
                 </ul>
             </nav>
         </aside>

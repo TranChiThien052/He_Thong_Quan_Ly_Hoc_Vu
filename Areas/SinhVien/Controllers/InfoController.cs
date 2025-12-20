@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QuanLyHocVu.Services;
-using SQLitePCL;
 
 namespace QuanLyHocVu.Areas.SinhVien
 {

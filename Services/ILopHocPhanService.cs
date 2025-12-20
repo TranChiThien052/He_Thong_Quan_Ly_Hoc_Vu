@@ -8,6 +8,7 @@ namespace QuanLyHocVu.Services
         LopHocPhan GetById(string id);
         void Add(LopHocPhan lopHocPhan);
         void Update(LopHocPhan lopHocPhan);
-        void Delete(string id);
+        List<LopHocPhan> GetByHocKy(string maHocKy);
+        List<LopHocPhan> GetByHocKyAndNganh(string maHocKy, string maNganh);
     }
 }

@@ -9,5 +9,6 @@ namespace QuanLyHocVu.Services
         void Add(HocKy hocKy);
         void Update(HocKy hocKy);
         void Delete(string id);
+        HocKy GetNewest();
     }
 }

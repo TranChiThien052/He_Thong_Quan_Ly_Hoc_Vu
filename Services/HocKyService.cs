@@ -1,4 +1,5 @@
 using QuanLyHocVu.Models;
+using SQLitePCL;
 
 namespace QuanLyHocVu.Services
 {
@@ -56,6 +57,13 @@ namespace QuanLyHocVu.Services
                 _context.HocKies.Remove(hocKy);
                 _context.SaveChanges();
             }
+        }
+
+        public HocKy GetNewest()
+        {
+            return _context.HocKies
+                .OrderByDescending(h => h.MaHocKy)
+                .FirstOrDefault();
         }
     }
 }

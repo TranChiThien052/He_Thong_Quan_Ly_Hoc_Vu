@@ -120,7 +120,6 @@ public partial class QuanLyHocVuContext : DbContext
 
             entity.Property(e => e.MaSinhVien).HasMaxLength(10);
             entity.Property(e => e.MaLopHocPhan).HasMaxLength(10);
-            entity.Property(e => e.TrangThai).HasMaxLength(20);
 
             entity.HasOne(d => d.MaLopHocPhanNavigation).WithMany(p => p.DangKyHocPhans)
                 .HasForeignKey(d => d.MaLopHocPhan)

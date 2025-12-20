@@ -32,6 +32,9 @@ namespace QuanLyHocVu.Services
         {
              return _context.DangKyHocPhans
                 .Include(d => d.MaLopHocPhanNavigation)
+                    .ThenInclude(l => l.MaMonHocNavigation)
+                .Include(d => d.MaLopHocPhanNavigation)
+                    .ThenInclude(l => l.MaGiangVienNavigation)
                 .Where(d => d.MaSinhVien == maSinhVien)
                 .ToList();
         }

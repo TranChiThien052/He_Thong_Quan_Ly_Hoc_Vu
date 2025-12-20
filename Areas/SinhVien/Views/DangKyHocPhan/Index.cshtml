@@ -1,0 +1,119 @@
+@using QuanLyHocVu.Models
+@{
+    ViewData["Title"] = "Đăng ký học phần";
+    var lopHocPhans = ViewBag.LopHocPhans as List<LopHocPhan>;
+    var lopHocPhanDaDangKys = ViewBag.LopHocPhanDaDangKys as List<LopHocPhan> ?? new List<LopHocPhan>();
+    var registeredIds = lopHocPhanDaDangKys.Select(l => l.MaLopHocPhan).ToList();
+    var hocKy = ViewBag.HocKy as HocKy;
+}
+
+<div class="container bg-white p-4 rounded shadow-sm">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-primary">Đăng Ký Học Phần</h1>
+        <div class="fs-5 text-secondary">
+            Học kỳ: <strong>@(hocKy?.MaHocKy)</strong>
+        </div>
+    </div>
+    <h4 class="mb-3 text-dark fw-bold">Danh sách môn học</h4>
+    <div class="table-responsive mb-5">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Mã Lớp</th>
+                    <th scope="col">Mã Môn</th>
+                    <th scope="col">Tên Môn Học</th>
+                    <th scope="col">Giảng Viên</th>
+                    <th scope="col">Ca Học</th>
+                    <th scope="col">Ngày Học</th>
+                    <th scope="col" class="text-center">Thao Tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (lopHocPhans != null && lopHocPhans.Any())
+                {
+                    foreach (var lop in lopHocPhans.Where(l => !registeredIds.Contains(l.MaLopHocPhan)))
+                    {
+                        <tr>
+                            <td>@lop.MaLopHocPhan</td>
+                            <td>@lop.MaMonHoc</td>
+                            <td>@lop.MaMonHocNavigation?.TenMonHoc</td>
+                            <td>@lop.MaGiangVienNavigation?.HoTen</td>
+                            <td>@lop.CaHoc</td>
+                            <td>@lop.NgayHoc</td>
+                            <td class="text-center">
+                                <form asp-action="Add" method="post" class="d-inline">
+                                    <input type="hidden" name="maLopHocPhan" value="@lop.MaLopHocPhan" />
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        Đăng ký
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7">
+                            &nbsp;
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <hr class="my-5" />
+
+    <h4 class="mb-3 text-dark fw-bold">Danh sách môn học đã đăng ký</h4>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Mã Lớp</th>
+                    <th scope="col">Mã Môn</th>
+                    <th scope="col">Tên Môn Học</th>
+                    <th scope="col">Giảng Viên</th>
+                    <th scope="col">Ca Học</th>
+                    <th scope="col">Ngày Học</th>
+                    <th scope="col" class="text-center">Trạng Thái</th>
+                    <th scope="col" class="text-center">Thao Tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (lopHocPhanDaDangKys.Any())
+                {
+                    foreach (var lop in lopHocPhanDaDangKys)
+                    {
+                        <tr>
+                            <td>@lop.MaLopHocPhan</td>
+                            <td>@lop.MaMonHoc</td>
+                            <td>@lop.MaMonHocNavigation?.TenMonHoc</td>
+                            <td>@lop.MaGiangVienNavigation?.HoTen</td>
+                            <td>@lop.CaHoc</td>
+                            <td>@lop.NgayHoc</td>
+                            <td class="text-center">
+                                <span class="badge bg-success">
+                                    Đã đăng ký
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <a asp-action="Delete" asp-route-MaLopHocPhan="@lop.MaLopHocPhan" class="btn btn-primary btn-sm">
+                                    Hủy đăng ký
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7">
+                            &nbsp;
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

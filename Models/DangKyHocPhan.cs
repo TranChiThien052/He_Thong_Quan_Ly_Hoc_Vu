@@ -9,8 +9,6 @@ public partial class DangKyHocPhan
 
     public string MaLopHocPhan { get; set; } = null!;
 
-    public string? TrangThai { get; set; }
-
     public virtual LopHocPhan MaLopHocPhanNavigation { get; set; } = null!;
 
     public virtual SinhVien MaSinhVienNavigation { get; set; } = null!;
