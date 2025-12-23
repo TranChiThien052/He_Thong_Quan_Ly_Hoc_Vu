@@ -1,7 +1,5 @@
 using QuanLyHocVu.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace QuanLyHocVu.Services
 {
@@ -29,7 +27,7 @@ namespace QuanLyHocVu.Services
             
             foreach(var item in chiTietList)
             {
-                item.MaCtdt = maCTDT; // Ensure consistency
+                item.MaCtdt = maCTDT;
                 _context.ChiTietChuongTrinhDaoTaos.Add(item);
             }
             
