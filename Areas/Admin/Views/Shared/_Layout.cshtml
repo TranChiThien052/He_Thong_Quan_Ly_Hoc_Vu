@@ -50,6 +50,9 @@
                     <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "LopHocPhan" ? "active" : "")">
                         <a asp-area="Admin" asp-controller="LopHocPhan" asp-action="Index">Quản lý lớp học phần</a>
                     </li>
+                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "HocPhi" ? "active" : "")">
+                        <a asp-area="Admin" asp-controller="HocPhi" asp-action="Index">Quản lý học phí</a>
+                    </li>
                     <hr>
                     <li>
                         <a asp-area="" asp-controller="Account" asp-action="Logout">Đăng xuất</a>
