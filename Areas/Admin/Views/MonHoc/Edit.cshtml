@@ -34,8 +34,11 @@
                 @Html.DropDownListFor(model => model.LoaiMon,
                 new SelectList(new[] {"Lý thuyết", "Thực hành", "Đồ án"}, Model.LoaiMon),
                 new { @class = "form-control" , id = "subject-type"})
-                
-                <input type="hidden" id="fee-code" name="MaHocPhi" />
+            </div>
+            <div class="form-group">
+                <label for="fee-code">Mã học phí</label>
+                <select id="fee-code" name="MaHocPhi" class="form-control" asp-for="MaHocPhi" asp-items="ViewBag.maHocPhi" required>
+                </select>
             </div>
         </div>
         <div class="form-actions">
