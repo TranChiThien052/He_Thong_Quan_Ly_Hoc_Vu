@@ -12,10 +12,12 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
     public class MonHocController : Controller
     {
         private readonly IMonHocService _service;
+        private readonly IHocPhiService _hocphiService;
 
-        public MonHocController(IMonHocService service)
+        public MonHocController(IMonHocService service, IHocPhiService hocphiService)
         {
             _service = service;
+            _hocphiService = hocphiService;
         }
 
         public IActionResult Index(string loaiMon, string tenMonHoc)
@@ -45,7 +47,9 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
 
         public IActionResult Create(){
             var newId= GenerateNextId();
+            var hocPhiList = _hocphiService.GetAll();
             ViewBag.Newid = newId;
+            ViewBag.maHocPhi = new SelectList(hocPhiList, "MaHocPhi", "MaHocPhi");
             return View();
         }
 
@@ -65,11 +69,13 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
                                    .Select(id => int.Parse(id.Substring(prefix.Length)))
                                    .ToList();
             int next = existing.Any() ? existing.Max() + 1 : 1;
-            return prefix + next.ToString("D3");   // MH001, MH002, …
+            return prefix + next.ToString("D3");
         }
 
         public IActionResult Edit(string id){
             var data = _service.GetById(id);
+            var hocPhiList = _hocphiService.GetAll();
+            ViewBag.maHocPhi = new SelectList(hocPhiList,"MaHocPhi", "MaHocPhi");
             return View(data);
         }
 

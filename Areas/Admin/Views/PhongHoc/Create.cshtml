@@ -10,16 +10,17 @@
 
     <form asp-action="Create" method = "post">
       <div class="row g-3">
+      
+      <!-- Khu -->
+        <div class="col-md-3">
+          <label for="khu" class="form-label">Khu</label>
+          <input type="text" class="form-control" name="khu" id="khu" placeholder="VD: A" oninput="capNhatMaPhong()" required>
+        </div>
+
         <!-- Tầng -->
         <div class="col-md-3">
           <label for="tang" class="form-label">Tầng</label>
           <input type="text" class="form-control" name="tang" id="tang" placeholder="VD: 1" oninput="capNhatMaPhong() required">
-        </div>
-
-        <!-- Khu -->
-        <div class="col-md-3">
-          <label for="khu" class="form-label">Khu</label>
-          <input type="text" class="form-control" name="khu" id="khu" placeholder="VD: A" oninput="capNhatMaPhong()" required>
         </div>
 
         <!-- 2 số cuối -->
