@@ -131,7 +131,7 @@ html, body {
 /* Main */
 .main {
   display: grid;
-  grid-template-rows: auto auto 1fr auto auto;
+  grid-template-rows: auto auto auto auto;
   gap: 16px;
   padding: 20px;
 }
