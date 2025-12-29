@@ -46,13 +46,11 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
                 .Select(ct => new { 
                     MaMonHoc = ct.MaMonHoc, 
                     TenMonHoc = ct.MaMonHocNavigation.TenMonHoc, 
-                    HocKy = ct.HocKy 
+                    HocKy = ct.HocKy
                 }).ToList();
-
             ViewBag.AllMonHocJson = JsonSerializer.Serialize(allMonHoc);
             ViewBag.ChiTietJson = JsonSerializer.Serialize(chiTietList);
             
-            // For SelectLists
             ViewBag.Nganhs = new SelectList(_nganhService.GetAll(), "MaNganh", "TenNganh", ctdt.MaNganh);
             
             return View(ctdt);
@@ -63,7 +61,6 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
         {
             if (string.IsNullOrEmpty(maCTDT))
                 return BadRequest("Mã CTĐT không hợp lệ");
-
             try 
             {
                 _chiTietService.UpdateChiTiet(maCTDT, chiTietList);
@@ -80,7 +77,6 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
         {
             if (string.IsNullOrEmpty(maCTDTMoi) || string.IsNullOrEmpty(tenCTDTMoi) || string.IsNullOrEmpty(nganhMoi))
             {
-                 // Handle error - for now redirecting back or returning view with error
                  return RedirectToAction("Index");
             }
 
@@ -89,7 +85,6 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
                 MaCtdt = maCTDTMoi,
                 TenCtdt = tenCTDTMoi,
                 MaNganh = nganhMoi,
-               // TongTinChi = 0 // Default value
             };
 
             try
@@ -99,7 +94,6 @@ namespace QuanLyHocVu.Areas.Admin.Controllers
             }
             catch (Exception)
             {
-                // Log error
                 return RedirectToAction("Index");
             }
         }

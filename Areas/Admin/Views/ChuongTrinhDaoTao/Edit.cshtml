@@ -8,7 +8,6 @@
 <div class="container bg-white p-4 rounded shadow-sm">
     <h4 class="mb-4 text-primary">Sửa chương trình đào tạo</h4>
 
-    <!-- Form thông tin chương trình -->
     <form id="formCTDT">
       <div class="row g-3 mb-4">
         <div class="col-md-4">
@@ -65,7 +64,6 @@
         </tr>
       </thead>
       <tbody id="danhSachMonHoc">
-        <!-- JS sẽ render danh sách tại đây -->
       </tbody>
     </table>
   </div>
@@ -73,11 +71,9 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    // Initialize data from Server
     let danhSachMonHoc = @chiTiet;
     const danhSachGoc = @allMonHoc;
 
-    // Initial render
     document.addEventListener('DOMContentLoaded', () => {
         capNhatBang();
     });
@@ -95,7 +91,7 @@
         item.textContent = mon.TenMonHoc;
         item.onclick = () => {
           document.getElementById("tenMonHoc").value = mon.TenMonHoc;
-          document.getElementById("tenMonHoc").dataset.ma = mon.MaMonHoc; // Store ID
+          document.getElementById("tenMonHoc").dataset.ma = mon.MaMonHoc; 
           goiY.innerHTML = "";
         };
         goiY.appendChild(item);
@@ -110,14 +106,12 @@
 
       if (!ma || !hocKy) return alert("Vui lòng chọn môn học từ danh sách gợi ý và chọn học kỳ.");
       
-      // Check duplicate
       const exists = danhSachMonHoc.some(x => x.MaMonHoc === ma);
       if(exists) return alert("Môn học này đã có trong danh sách");
 
       danhSachMonHoc.push({ MaMonHoc: ma, TenMonHoc: ten, HocKy: parseInt(hocKy) });
       capNhatBang();
       
-      // Reset input
       tenInput.value = "";
       delete tenInput.dataset.ma;
       document.getElementById("hocKy").value = "";
@@ -147,21 +141,19 @@
     async function luuDuLieu() {
         const maCTDT = document.getElementById("maCTDT").value;
         
-        // Map directly to Model properties: MaCtdt, MaMonHoc, HocKy
         const data = danhSachMonHoc.map(m => ({
-            MaCtdt: maCTDT,     // Although we pass in query param, property check might require it or it's good practice
+            MaCtdt: maCTDT,
             MaMonHoc: m.MaMonHoc,
             HocKy: parseInt(m.HocKy)
         }));
 
         try {
-            // Pass maCTDT via query string to identify the parent
             const response = await fetch(`/Admin/ChuongTrinhDaoTao/SaveChiTiet?maCTDT=${maCTDT}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data) // Send the List directly
+                body: JSON.stringify(data)
             });
 
             if (response.ok) {
