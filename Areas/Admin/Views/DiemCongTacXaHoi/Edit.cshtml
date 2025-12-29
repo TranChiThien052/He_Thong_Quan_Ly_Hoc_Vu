@@ -1,41 +1,31 @@
 @model QuanLyHocVu.Models.DiemCongTacXaHoi
 
 @{
-    ViewData["Title"] = "Sửa điểm công tác xã hội";
+    ViewData["Title"] = "Cập nhật điểm công tác xã hội";
 }
 
-<h1>Sửa điểm công tác xã hội</h1>
+<div class="container bg-white p-4 rounded shadow-sm" style="max-width: 600px;">
+    <h4 class="mb-4 text-primary">Cập nhật điểm công tác xã hội</h4>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <form asp-action="Edit" method="post">
             <input type="hidden" asp-for="MaSinhVien" />
             <div class="form-group">
-                <label asp-for="MaSinhVien" class="control-label"></label>
+                <label asp-for="MaSinhVien" class="control-label">Mã sinh viên</label>
                 <input asp-for="MaSinhVien" class="form-control" readonly />
             </div>
             <div class="form-group">
-                <label asp-for="MaSinhVienNavigation.HoTen" class="control-label"></label>
+                <label asp-for="MaSinhVienNavigation.HoTen" class="control-label">Họ tên</label>
                 <input asp-for="MaSinhVienNavigation.HoTen" class="form-control" readonly />
             </div>
             <div class="form-group">
-                <label asp-for="TongDiem" class="control-label"></label>
-                <input asp-for="TongDiem" class="form-control" type="number" step="0.01" min="0" />
+                <label asp-for="TongDiem" class="control-label">Tổng điểm</label>
+                <input asp-for="TongDiem" class="form-control" type="number" step="0.5" min="0" />
                 <span asp-validation-for="TongDiem" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Lưu" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
 
-<div>
-    <a asp-action="Index">Quay lại danh sách</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+      <div class="d-flex justify-content-end mt-4">
+        <a asp-action="Index" class="btn btn-secondary me-2">Hủy</a>
+        <button type="submit" class="btn btn-primary">Lưu</button>
+      </div>
+    </form>
+  </div>

@@ -76,7 +76,7 @@
                         <td>@item.ChiTietChuongTrinhDaoTaos.Sum(ct => ct.MaMonHocNavigation?.SoTinChi ?? 0)</td>
                         <td>
                             <a href="@Url.Action("Edit", new { id = item.MaCtdt })" class="btn btn-sm btn-warning">Sửa</a>
-                            <a href="@Url.Action("Delete", new { id = item.MaCtdt })" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc muốn xóa không?');">Xóa</a>
+                            @* <a href="@Url.Action("Delete", new { id = item.MaCtdt })" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc muốn xóa không?');">Xóa</a> *@
                         </td>
                     </tr>
                 }
